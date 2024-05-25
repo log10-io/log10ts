@@ -1,0 +1,12 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    default:
+        inputs:
+            - location: openapi.yaml
+        registry:
+            location: registry.speakeasyapi.dev/log10/log10/default
+targets:
+    my-first-target:
+        target: typescript
+        source: default
