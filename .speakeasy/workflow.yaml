@@ -12,4 +12,4 @@ targets:
         source: default
         publish:
             npm:
-                token: $npm_tqf1isst3v16bx1uz0ndehyobpnbwx0lqjpr
+                token: $npmsecret
