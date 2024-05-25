@@ -10,3 +10,6 @@ targets:
     my-first-target:
         target: typescript
         source: default
+        publish:
+            npm:
+                token: $npm_tqf1isst3v16bx1uz0ndehyobpnbwx0lqjpr
