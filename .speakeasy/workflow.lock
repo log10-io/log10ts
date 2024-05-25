@@ -2,18 +2,17 @@ speakeasyVersion: 1.296.1
 sources:
     default:
         sourceNamespace: default
-        sourceRevisionDigest: sha256:792dbd01a09a643056094d59228097e722bdcfcdd02ad47fd2ef4858de713212
-        sourceBlobDigest: sha256:3ec92119b04b5301697a25fc0d890d3aace8103f8d6a26dff33c1d2779237e5b
+        sourceRevisionDigest: sha256:d85910034fa21004d36520efa2c6115549ab92fed5ebc75aa0d645c5269811de
+        sourceBlobDigest: sha256:c308fbe03d4912eef94619e105bb7667a453731b94f0f5ca33d33b17f86a185a
         tags:
             - latest
-            - main
 targets:
     my-first-target:
         source: default
         sourceNamespace: default
-        sourceRevisionDigest: sha256:792dbd01a09a643056094d59228097e722bdcfcdd02ad47fd2ef4858de713212
-        sourceBlobDigest: sha256:3ec92119b04b5301697a25fc0d890d3aace8103f8d6a26dff33c1d2779237e5b
-        outLocation: /github/workspace/repo
+        sourceRevisionDigest: sha256:d85910034fa21004d36520efa2c6115549ab92fed5ebc75aa0d645c5269811de
+        sourceBlobDigest: sha256:c308fbe03d4912eef94619e105bb7667a453731b94f0f5ca33d33b17f86a185a
+        outLocation: /Users/niklasqnielsen/workspace/log10/log10ts
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
@@ -27,3 +26,6 @@ workflow:
         my-first-target:
             target: typescript
             source: default
+            publish:
+                npm:
+                    token: $npm_token

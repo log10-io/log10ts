@@ -14,13 +14,13 @@
 ### NPM
 
 ```bash
-npm add https://github.com/log10-io/log10ts
+npm add log10ts
 ```
 
 ### Yarn
 
 ```bash
-yarn add https://github.com/log10-io/log10ts
+yarn add log10ts
 ```
 <!-- End SDK Installation [installation] -->
 
