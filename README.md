@@ -14,13 +14,13 @@
 ### NPM
 
 ```bash
-npm add <UNSET>
+npm add https://github.com/log10-io/log10ts
 ```
 
 ### Yarn
 
 ```bash
-yarn add <UNSET>
+yarn add https://github.com/log10-io/log10ts
 ```
 <!-- End SDK Installation [installation] -->
 
