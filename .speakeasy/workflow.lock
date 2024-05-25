@@ -2,7 +2,7 @@ speakeasyVersion: 1.296.1
 sources:
     default:
         sourceNamespace: default
-        sourceRevisionDigest: sha256:d5794f0399ce3e2c61e3fa237ad0aa1cecaae8bb411338fa9fa7dfce06b153f3
+        sourceRevisionDigest: sha256:dd5cead9361560316e9c739f0108a03472d866a98a9304037aa5c2d98d8923b9
         sourceBlobDigest: sha256:c308fbe03d4912eef94619e105bb7667a453731b94f0f5ca33d33b17f86a185a
         tags:
             - latest
@@ -10,7 +10,7 @@ targets:
     my-first-target:
         source: default
         sourceNamespace: default
-        sourceRevisionDigest: sha256:d5794f0399ce3e2c61e3fa237ad0aa1cecaae8bb411338fa9fa7dfce06b153f3
+        sourceRevisionDigest: sha256:dd5cead9361560316e9c739f0108a03472d866a98a9304037aa5c2d98d8923b9
         sourceBlobDigest: sha256:c308fbe03d4912eef94619e105bb7667a453731b94f0f5ca33d33b17f86a185a
         outLocation: /Users/niklasqnielsen/workspace/log10/log10ts
 workflow:
