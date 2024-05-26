@@ -2,17 +2,18 @@ speakeasyVersion: 1.296.1
 sources:
     default:
         sourceNamespace: default
-        sourceRevisionDigest: sha256:d85910034fa21004d36520efa2c6115549ab92fed5ebc75aa0d645c5269811de
-        sourceBlobDigest: sha256:c308fbe03d4912eef94619e105bb7667a453731b94f0f5ca33d33b17f86a185a
+        sourceRevisionDigest: sha256:94abcb319e3ebd02a6fa9c72ee5ff7b93fd18d797e842990c70bdbd5775609ef
+        sourceBlobDigest: sha256:3ec92119b04b5301697a25fc0d890d3aace8103f8d6a26dff33c1d2779237e5b
         tags:
             - latest
+            - main
 targets:
     my-first-target:
         source: default
         sourceNamespace: default
-        sourceRevisionDigest: sha256:d85910034fa21004d36520efa2c6115549ab92fed5ebc75aa0d645c5269811de
-        sourceBlobDigest: sha256:c308fbe03d4912eef94619e105bb7667a453731b94f0f5ca33d33b17f86a185a
-        outLocation: /Users/niklasqnielsen/workspace/log10/log10ts
+        sourceRevisionDigest: sha256:94abcb319e3ebd02a6fa9c72ee5ff7b93fd18d797e842990c70bdbd5775609ef
+        sourceBlobDigest: sha256:3ec92119b04b5301697a25fc0d890d3aace8103f8d6a26dff33c1d2779237e5b
+        outLocation: /github/workspace/repo
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
