@@ -1,3 +1,6 @@
+## 2024-05-28
+### Changes
+- Triggering publishing workflow without 2FA
 
 ## 2024-05-25
 ### Changes
