@@ -117,10 +117,10 @@ components:
             type: string
         request:
           type: object
-          $ref: "openapi.yaml#/components/schemas/CreateChatCompletionRequest"
+          $ref: "./openai.yaml#/components/schemas/CreateChatCompletionRequest"
         response:
           type: object
-          $ref: "openapi.yaml#/components/schemas/CreateChatCompletionResponse"
+          $ref: "./openai.yaml#/components/schemas/CreateChatCompletionResponse"
         stacktrace:
           type: array
           description: The stacktrace for this completion.
