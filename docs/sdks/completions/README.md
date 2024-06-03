@@ -18,8 +18,13 @@ Create a completion
 ### Example Usage
 
 ```typescript
-import { Log10 } from "log10ts";
-import { ChatCompletionRequestAssistantMessageRole, CreateChatCompletionRequestType, Two } from "log10ts/models/components";
+import {
+  ChatCompletionRequestAssistantMessageRole,
+  CreateChatCompletionRequestType,
+  Kind,
+  Log10,
+  Two,
+} from "log10ts";
 
 const log10 = new Log10({
   log10Token: "<YOUR_API_KEY_HERE>",
@@ -29,6 +34,7 @@ const log10 = new Log10({
 async function run() {
   const result = await log10.completions.create({
     organizationId: "<value>",
+    kind: Kind.Chat,
     request: {
       messages: [
           {
@@ -57,7 +63,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `completion`                                                                                                                                                                   | [components.Completion](../../models/components/completion.md)                                                                                                                 | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `completion`                                                                                                                                                                   | [models.Completion](../../models/completion.md)                                                                                                                                | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
 | `xLog10Organization`                                                                                                                                                           | *string*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | N/A                                                                                                                                                                            |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
@@ -65,12 +71,12 @@ run();
 
 ### Response
 
-**Promise\<[operations.CreateResponse](../../models/operations/createresponse.md)\>**
+**Promise\<[models.CreateResponse](../../models/createresponse.md)\>**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
+| models.SDKError | 4xx-5xx         | */*             |
 
 ## update
 
@@ -79,8 +85,7 @@ Update completion by id.
 ### Example Usage
 
 ```typescript
-import { Log10 } from "log10ts";
-import { ChatCompletionRequestFunctionMessageRole, CreateChatCompletionRequestType, Two } from "log10ts/models/components";
+import { CreateChatCompletionRequestType, Kind, Log10, Role, Two } from "log10ts";
 
 const log10 = new Log10({
   log10Token: "<YOUR_API_KEY_HERE>",
@@ -90,12 +95,12 @@ const log10 = new Log10({
 async function run() {
   const result = await log10.completions.update("<value>", {
     organizationId: "<value>",
+    kind: Kind.Prompt,
     request: {
       messages: [
           {
-            role: ChatCompletionRequestFunctionMessageRole.Function,
             content: "<value>",
-            name: "<value>",
+            role: Role.System,
           },
       ],
     model: Two.Gpt4Turbo,
@@ -121,7 +126,7 @@ run();
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `completionId`                                                                                                                                                                 | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | The completion id to update.                                                                                                                                                   |
-| `completion`                                                                                                                                                                   | [components.Completion](../../models/components/completion.md)                                                                                                                 | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `completion`                                                                                                                                                                   | [models.Completion](../../models/completion.md)                                                                                                                                | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
 | `xLog10Organization`                                                                                                                                                           | *string*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | N/A                                                                                                                                                                            |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
@@ -129,12 +134,12 @@ run();
 
 ### Response
 
-**Promise\<[operations.UpdateResponse](../../models/operations/updateresponse.md)\>**
+**Promise\<[models.UpdateResponse](../../models/updateresponse.md)\>**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
+| models.SDKError | 4xx-5xx         | */*             |
 
 ## listUngraded
 
@@ -171,9 +176,9 @@ run();
 
 ### Response
 
-**Promise\<[operations.ListUngradedResponse](../../models/operations/listungradedresponse.md)\>**
+**Promise\<[models.ListUngradedResponse](../../models/listungradedresponse.md)\>**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
+| models.SDKError | 4xx-5xx         | */*             |

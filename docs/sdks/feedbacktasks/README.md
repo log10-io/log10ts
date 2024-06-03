@@ -45,12 +45,12 @@ run();
 
 ### Response
 
-**Promise\<[operations.ListFeedbackTasksResponse](../../models/operations/listfeedbacktasksresponse.md)\>**
+**Promise\<[models.ListFeedbackTasksResponse](../../models/listfeedbacktasksresponse.md)\>**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
+| models.SDKError | 4xx-5xx         | */*             |
 
 ## create
 
@@ -85,19 +85,19 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [components.Task](../../models/components/task.md)                                                                                                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [models.Task](../../models/task.md)                                                                                                                                            | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
 
-**Promise\<[operations.CreateFeedbackTaskResponse](../../models/operations/createfeedbacktaskresponse.md)\>**
+**Promise\<[models.CreateFeedbackTaskResponse](../../models/createfeedbacktaskresponse.md)\>**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
+| models.SDKError | 4xx-5xx         | */*             |
 
 ## get
 
@@ -134,9 +134,9 @@ run();
 
 ### Response
 
-**Promise\<[operations.GetFeedbackTaskResponse](../../models/operations/getfeedbacktaskresponse.md)\>**
+**Promise\<[models.GetFeedbackTaskResponse](../../models/getfeedbacktaskresponse.md)\>**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
+| models.SDKError | 4xx-5xx         | */*             |

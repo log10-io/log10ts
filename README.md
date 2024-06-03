@@ -68,10 +68,10 @@ run();
 
 * [create](docs/sdks/sessions/README.md#create) - Create a session
 
-### [feedback](docs/sdks/feedback/README.md)
+### [feedback](docs/sdks/feedbacksdk/README.md)
 
-* [get](docs/sdks/feedback/README.md#get) - Fetch feedback by id.
-* [upload](docs/sdks/feedback/README.md#upload) - Upload a piece of feedback
+* [get](docs/sdks/feedbacksdk/README.md#get) - Fetch feedback by id.
+* [upload](docs/sdks/feedbacksdk/README.md#upload) - Upload a piece of feedback
 
 ### [feedbackTasks](docs/sdks/feedbacktasks/README.md)
 
@@ -100,12 +100,7 @@ The following global parameter is available. The required parameter must be set 
 ### Example
 
 ```typescript
-import { Log10 } from "log10ts";
-import {
-    ChatCompletionRequestFunctionMessageRole,
-    CreateChatCompletionRequestType,
-    Two,
-} from "log10ts/models/components";
+import { CreateChatCompletionRequestType, Kind, Log10, Role, Two } from "log10ts";
 
 const log10 = new Log10({
     log10Token: "<YOUR_API_KEY_HERE>",
@@ -117,12 +112,12 @@ async function run() {
         "<value>",
         {
             organizationId: "<value>",
+            kind: Kind.Prompt,
             request: {
                 messages: [
                     {
-                        role: ChatCompletionRequestFunctionMessageRole.Function,
                         content: "<value>",
-                        name: "<value>",
+                        role: Role.System,
                     },
                 ],
                 model: Two.Gpt4Turbo,
@@ -154,19 +149,20 @@ All SDK methods return a response object or throw an error. If Error objects are
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
+| models.SDKError | 4xx-5xx         | */*             |
 
 Validation errors can also occur when either method arguments or data returned from the server do not match the expected format. The `SDKValidationError` that is thrown as a result will capture the raw value that failed validation in an attribute called `rawValue`. Additionally, a `pretty()` method is available on this error that can be used to log a nicely formatted string since validation errors can list many issues and the plain error string may be difficult read when debugging. 
 
 
 ```typescript
-import { Log10 } from "log10ts";
 import {
     ChatCompletionRequestAssistantMessageRole,
     CreateChatCompletionRequestType,
+    Kind,
+    Log10,
     Two,
-} from "log10ts/models/components";
-import * as errors from "log10ts/models/errors";
+} from "log10ts";
+import * as errors from "log10ts/models";
 
 const log10 = new Log10({
     log10Token: "<YOUR_API_KEY_HERE>",
@@ -179,6 +175,7 @@ async function run() {
         result = await log10.completions.create(
             {
                 organizationId: "<value>",
+                kind: Kind.Chat,
                 request: {
                     messages: [
                         {
@@ -233,12 +230,13 @@ You can override the default server globally by passing a server index to the `s
 | 0 | `https://log10.io` | None |
 
 ```typescript
-import { Log10 } from "log10ts";
 import {
     ChatCompletionRequestAssistantMessageRole,
     CreateChatCompletionRequestType,
+    Kind,
+    Log10,
     Two,
-} from "log10ts/models/components";
+} from "log10ts";
 
 const log10 = new Log10({
     serverIdx: 0,
@@ -250,6 +248,7 @@ async function run() {
     const result = await log10.completions.create(
         {
             organizationId: "<value>",
+            kind: Kind.Chat,
             request: {
                 messages: [
                     {
@@ -283,12 +282,13 @@ run();
 The default server can also be overridden globally by passing a URL to the `serverURL` optional parameter when initializing the SDK client instance. For example:
 
 ```typescript
-import { Log10 } from "log10ts";
 import {
     ChatCompletionRequestAssistantMessageRole,
     CreateChatCompletionRequestType,
+    Kind,
+    Log10,
     Two,
-} from "log10ts/models/components";
+} from "log10ts";
 
 const log10 = new Log10({
     serverURL: "https://log10.io",
@@ -300,6 +300,7 @@ async function run() {
     const result = await log10.completions.create(
         {
             organizationId: "<value>",
+            kind: Kind.Chat,
             request: {
                 messages: [
                     {
@@ -390,12 +391,13 @@ This SDK supports the following security scheme globally:
 
 To authenticate with the API the `log10Token` parameter must be set when initializing the SDK client instance. For example:
 ```typescript
-import { Log10 } from "log10ts";
 import {
     ChatCompletionRequestAssistantMessageRole,
     CreateChatCompletionRequestType,
+    Kind,
+    Log10,
     Two,
-} from "log10ts/models/components";
+} from "log10ts";
 
 const log10 = new Log10({
     log10Token: "<YOUR_API_KEY_HERE>",
@@ -406,6 +408,7 @@ async function run() {
     const result = await log10.completions.create(
         {
             organizationId: "<value>",
+            kind: Kind.Chat,
             request: {
                 messages: [
                     {

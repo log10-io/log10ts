@@ -8,8 +8,7 @@ import * as enc$ from "../lib/encodings";
 import { HTTPClient } from "../lib/http";
 import * as schemas$ from "../lib/schemas";
 import { ClientSDK, RequestOptions } from "../lib/sdks";
-import * as components from "../models/components";
-import * as operations from "../models/operations";
+import * as models from "../models";
 
 export class Completions extends ClientSDK {
     private readonly options$: SDKOptions & { hooks?: SDKHooks };
@@ -42,11 +41,11 @@ export class Completions extends ClientSDK {
      * Create a completion
      */
     async create(
-        completion: components.Completion,
+        completion: models.Completion,
         xLog10Organization?: string | undefined,
         options?: RequestOptions
-    ): Promise<operations.CreateResponse> {
-        const input$: operations.CreateRequest = {
+    ): Promise<models.CreateResponse> {
+        const input$: models.CreateRequest = {
             xLog10Organization: xLog10Organization,
             completion: completion,
         };
@@ -57,7 +56,7 @@ export class Completions extends ClientSDK {
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => operations.CreateRequest$.outboundSchema.parse(value$),
+            (value$) => models.CreateRequest$.outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = enc$.encodeJSON("body", payload$.Completion, { explode: true });
@@ -110,9 +109,9 @@ export class Completions extends ClientSDK {
             HttpMeta: { Response: response, Request: request$ },
         };
 
-        const [result$] = await this.matcher<operations.CreateResponse>()
-            .json(200, operations.CreateResponse$, { key: "any" })
-            .json(201, operations.CreateResponse$, { key: "Completion" })
+        const [result$] = await this.matcher<models.CreateResponse>()
+            .json(200, models.CreateResponse$, { key: "any" })
+            .json(201, models.CreateResponse$, { key: "Completion" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 
@@ -124,11 +123,11 @@ export class Completions extends ClientSDK {
      */
     async update(
         completionId: string,
-        completion: components.Completion,
+        completion: models.Completion,
         xLog10Organization?: string | undefined,
         options?: RequestOptions
-    ): Promise<operations.UpdateResponse> {
-        const input$: operations.UpdateRequest = {
+    ): Promise<models.UpdateResponse> {
+        const input$: models.UpdateRequest = {
             completionId: completionId,
             xLog10Organization: xLog10Organization,
             completion: completion,
@@ -140,7 +139,7 @@ export class Completions extends ClientSDK {
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => operations.UpdateRequest$.outboundSchema.parse(value$),
+            (value$) => models.UpdateRequest$.outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = enc$.encodeJSON("body", payload$.Completion, { explode: true });
@@ -199,8 +198,8 @@ export class Completions extends ClientSDK {
             HttpMeta: { Response: response, Request: request$ },
         };
 
-        const [result$] = await this.matcher<operations.UpdateResponse>()
-            .json(200, operations.UpdateResponse$, { key: "Completion" })
+        const [result$] = await this.matcher<models.UpdateResponse>()
+            .json(200, models.UpdateResponse$, { key: "Completion" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 
@@ -213,8 +212,8 @@ export class Completions extends ClientSDK {
     async listUngraded(
         xLog10Organization?: string | undefined,
         options?: RequestOptions
-    ): Promise<operations.ListUngradedResponse> {
-        const input$: operations.ListUngradedRequest = {
+    ): Promise<models.ListUngradedResponse> {
+        const input$: models.ListUngradedRequest = {
             xLog10Organization: xLog10Organization,
         };
         const headers$ = new Headers();
@@ -223,7 +222,7 @@ export class Completions extends ClientSDK {
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => operations.ListUngradedRequest$.outboundSchema.parse(value$),
+            (value$) => models.ListUngradedRequest$.outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = null;
@@ -276,8 +275,8 @@ export class Completions extends ClientSDK {
             HttpMeta: { Response: response, Request: request$ },
         };
 
-        const [result$] = await this.matcher<operations.ListUngradedResponse>()
-            .json(200, operations.ListUngradedResponse$, { key: "object" })
+        const [result$] = await this.matcher<models.ListUngradedResponse>()
+            .json(200, models.ListUngradedResponse$, { key: "object" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 

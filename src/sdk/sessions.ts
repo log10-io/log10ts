@@ -8,7 +8,7 @@ import * as enc$ from "../lib/encodings";
 import { HTTPClient } from "../lib/http";
 import * as schemas$ from "../lib/schemas";
 import { ClientSDK, RequestOptions } from "../lib/sdks";
-import * as operations from "../models/operations";
+import * as models from "../models";
 
 export class Sessions extends ClientSDK {
     private readonly options$: SDKOptions & { hooks?: SDKHooks };
@@ -43,8 +43,8 @@ export class Sessions extends ClientSDK {
     async create(
         xLog10Organization?: string | undefined,
         options?: RequestOptions
-    ): Promise<operations.CreateSessionResponse> {
-        const input$: operations.CreateSessionRequest = {
+    ): Promise<models.CreateSessionResponse> {
+        const input$: models.CreateSessionRequest = {
             xLog10Organization: xLog10Organization,
         };
         const headers$ = new Headers();
@@ -53,7 +53,7 @@ export class Sessions extends ClientSDK {
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => operations.CreateSessionRequest$.outboundSchema.parse(value$),
+            (value$) => models.CreateSessionRequest$.outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = null;
@@ -106,8 +106,8 @@ export class Sessions extends ClientSDK {
             HttpMeta: { Response: response, Request: request$ },
         };
 
-        const [result$] = await this.matcher<operations.CreateSessionResponse>()
-            .json(201, operations.CreateSessionResponse$, { key: "object" })
+        const [result$] = await this.matcher<models.CreateSessionResponse>()
+            .json(201, models.CreateSessionResponse$, { key: "object" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 

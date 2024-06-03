@@ -8,8 +8,7 @@ import * as enc$ from "../lib/encodings";
 import { HTTPClient } from "../lib/http";
 import * as schemas$ from "../lib/schemas";
 import { ClientSDK, RequestOptions } from "../lib/sdks";
-import * as components from "../models/components";
-import * as operations from "../models/operations";
+import * as models from "../models";
 
 export class FeedbackTasks extends ClientSDK {
     private readonly options$: SDKOptions & { hooks?: SDKHooks };
@@ -41,7 +40,7 @@ export class FeedbackTasks extends ClientSDK {
     /**
      * List feedback tasks.
      */
-    async list(options?: RequestOptions): Promise<operations.ListFeedbackTasksResponse> {
+    async list(options?: RequestOptions): Promise<models.ListFeedbackTasksResponse> {
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
@@ -84,8 +83,8 @@ export class FeedbackTasks extends ClientSDK {
             HttpMeta: { Response: response, Request: request$ },
         };
 
-        const [result$] = await this.matcher<operations.ListFeedbackTasksResponse>()
-            .json(200, operations.ListFeedbackTasksResponse$, { key: "Tasks" })
+        const [result$] = await this.matcher<models.ListFeedbackTasksResponse>()
+            .json(200, models.ListFeedbackTasksResponse$, { key: "Tasks" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 
@@ -96,9 +95,9 @@ export class FeedbackTasks extends ClientSDK {
      * Create a new task.
      */
     async create(
-        request?: components.Task | undefined,
+        request?: models.Task | undefined,
         options?: RequestOptions
-    ): Promise<operations.CreateFeedbackTaskResponse> {
+    ): Promise<models.CreateFeedbackTaskResponse> {
         const input$ = request;
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
@@ -107,7 +106,7 @@ export class FeedbackTasks extends ClientSDK {
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => components.Task$.outboundSchema.optional().parse(value$),
+            (value$) => models.Task$.outboundSchema.optional().parse(value$),
             "Input validation failed"
         );
         const body$ =
@@ -152,8 +151,8 @@ export class FeedbackTasks extends ClientSDK {
             HttpMeta: { Response: response, Request: request$ },
         };
 
-        const [result$] = await this.matcher<operations.CreateFeedbackTaskResponse>()
-            .json(200, operations.CreateFeedbackTaskResponse$, { key: "Task" })
+        const [result$] = await this.matcher<models.CreateFeedbackTaskResponse>()
+            .json(200, models.CreateFeedbackTaskResponse$, { key: "Task" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 
@@ -163,11 +162,8 @@ export class FeedbackTasks extends ClientSDK {
     /**
      * Retrieves feedback task `taskId`.
      */
-    async get(
-        taskId: string,
-        options?: RequestOptions
-    ): Promise<operations.GetFeedbackTaskResponse> {
-        const input$: operations.GetFeedbackTaskRequest = {
+    async get(taskId: string, options?: RequestOptions): Promise<models.GetFeedbackTaskResponse> {
+        const input$: models.GetFeedbackTaskRequest = {
             taskId: taskId,
         };
         const headers$ = new Headers();
@@ -176,7 +172,7 @@ export class FeedbackTasks extends ClientSDK {
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => operations.GetFeedbackTaskRequest$.outboundSchema.parse(value$),
+            (value$) => models.GetFeedbackTaskRequest$.outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = null;
@@ -226,8 +222,8 @@ export class FeedbackTasks extends ClientSDK {
             HttpMeta: { Response: response, Request: request$ },
         };
 
-        const [result$] = await this.matcher<operations.GetFeedbackTaskResponse>()
-            .json(200, operations.GetFeedbackTaskResponse$, { key: "Task" })
+        const [result$] = await this.matcher<models.GetFeedbackTaskResponse>()
+            .json(200, models.GetFeedbackTaskResponse$, { key: "Task" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 

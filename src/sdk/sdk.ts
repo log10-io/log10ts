@@ -7,7 +7,7 @@ import { SDKOptions, serverURLFromOptions } from "../lib/config";
 import { HTTPClient } from "../lib/http";
 import { ClientSDK } from "../lib/sdks";
 import { Completions } from "./completions";
-import { Feedback } from "./feedback";
+import { FeedbackSDK } from "./feedbacksdk";
 import { FeedbackTasks } from "./feedbacktasks";
 import { Sessions } from "./sessions";
 
@@ -48,9 +48,9 @@ export class Log10 extends ClientSDK {
         return (this._sessions ??= new Sessions(this.options$));
     }
 
-    private _feedback?: Feedback;
-    get feedback(): Feedback {
-        return (this._feedback ??= new Feedback(this.options$));
+    private _feedbackSDK?: FeedbackSDK;
+    get feedbackSDK(): FeedbackSDK {
+        return (this._feedbackSDK ??= new FeedbackSDK(this.options$));
     }
 
     private _feedbackTasks?: FeedbackTasks;
