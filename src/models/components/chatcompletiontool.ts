@@ -28,32 +28,18 @@ export namespace ChatCompletionToolType$ {
 
 /** @internal */
 export namespace ChatCompletionTool$ {
-    export const inboundSchema: z.ZodType<ChatCompletionTool, z.ZodTypeDef, unknown> = z
-        .object({
-            type: ChatCompletionToolType$.inboundSchema,
-            function: FunctionObject$.inboundSchema,
-        })
-        .transform((v) => {
-            return {
-                type: v.type,
-                function: v.function,
-            };
-        });
+    export const inboundSchema: z.ZodType<ChatCompletionTool, z.ZodTypeDef, unknown> = z.object({
+        type: ChatCompletionToolType$.inboundSchema,
+        function: FunctionObject$.inboundSchema,
+    });
 
     export type Outbound = {
         type: string;
         function: FunctionObject$.Outbound;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ChatCompletionTool> = z
-        .object({
-            type: ChatCompletionToolType$.outboundSchema,
-            function: FunctionObject$.outboundSchema,
-        })
-        .transform((v) => {
-            return {
-                type: v.type,
-                function: v.function,
-            };
-        });
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ChatCompletionTool> = z.object({
+        type: ChatCompletionToolType$.outboundSchema,
+        function: FunctionObject$.outboundSchema,
+    });
 }

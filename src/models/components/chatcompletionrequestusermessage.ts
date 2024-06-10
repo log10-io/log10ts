@@ -64,22 +64,14 @@ export namespace ChatCompletionRequestUserMessageRole$ {
 /** @internal */
 export namespace ChatCompletionRequestUserMessage$ {
     export const inboundSchema: z.ZodType<ChatCompletionRequestUserMessage, z.ZodTypeDef, unknown> =
-        z
-            .object({
-                content: z.union([
-                    z.string(),
-                    z.array(ChatCompletionRequestMessageContentPart$.inboundSchema),
-                ]),
-                role: ChatCompletionRequestUserMessageRole$.inboundSchema,
-                name: z.string().optional(),
-            })
-            .transform((v) => {
-                return {
-                    content: v.content,
-                    role: v.role,
-                    ...(v.name === undefined ? null : { name: v.name }),
-                };
-            });
+        z.object({
+            content: z.union([
+                z.string(),
+                z.array(ChatCompletionRequestMessageContentPart$.inboundSchema),
+            ]),
+            role: ChatCompletionRequestUserMessageRole$.inboundSchema,
+            name: z.string().optional(),
+        });
 
     export type Outbound = {
         content: string | Array<ChatCompletionRequestMessageContentPart$.Outbound>;
@@ -91,20 +83,12 @@ export namespace ChatCompletionRequestUserMessage$ {
         Outbound,
         z.ZodTypeDef,
         ChatCompletionRequestUserMessage
-    > = z
-        .object({
-            content: z.union([
-                z.string(),
-                z.array(ChatCompletionRequestMessageContentPart$.outboundSchema),
-            ]),
-            role: ChatCompletionRequestUserMessageRole$.outboundSchema,
-            name: z.string().optional(),
-        })
-        .transform((v) => {
-            return {
-                content: v.content,
-                role: v.role,
-                ...(v.name === undefined ? null : { name: v.name }),
-            };
-        });
+    > = z.object({
+        content: z.union([
+            z.string(),
+            z.array(ChatCompletionRequestMessageContentPart$.outboundSchema),
+        ]),
+        role: ChatCompletionRequestUserMessageRole$.outboundSchema,
+        name: z.string().optional(),
+    });
 }

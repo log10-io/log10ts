@@ -34,17 +34,10 @@ export namespace ChatCompletionRequestMessageContentPartText$ {
         ChatCompletionRequestMessageContentPartText,
         z.ZodTypeDef,
         unknown
-    > = z
-        .object({
-            type: Type$.inboundSchema,
-            text: z.string(),
-        })
-        .transform((v) => {
-            return {
-                type: v.type,
-                text: v.text,
-            };
-        });
+    > = z.object({
+        type: Type$.inboundSchema,
+        text: z.string(),
+    });
 
     export type Outbound = {
         type: string;
@@ -55,15 +48,8 @@ export namespace ChatCompletionRequestMessageContentPartText$ {
         Outbound,
         z.ZodTypeDef,
         ChatCompletionRequestMessageContentPartText
-    > = z
-        .object({
-            type: Type$.outboundSchema,
-            text: z.string(),
-        })
-        .transform((v) => {
-            return {
-                type: v.type,
-                text: v.text,
-            };
-        });
+    > = z.object({
+        type: Type$.outboundSchema,
+        text: z.string(),
+    });
 }

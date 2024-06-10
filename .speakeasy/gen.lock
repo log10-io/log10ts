@@ -3,10 +3,10 @@ id: ca95c839-5377-4981-9bcb-4cedc7e35f2b
 management:
   docChecksum: 5e7cc152f137f5919734cc70b836a4d6
   docVersion: 1.0.0
-  speakeasyVersion: 1.296.1
-  generationVersion: 2.338.1
-  releaseVersion: 0.0.7
-  configChecksum: e79e427bbcd6abf50f8d3c20add01b2d
+  speakeasyVersion: 1.300.1
+  generationVersion: 2.339.1
+  releaseVersion: 0.0.8
+  configChecksum: 52123a16f7be3994f77bce7e76ce7d96
   repoURL: https://github.com/log10-io/log10ts.git
   installationURL: https://github.com/log10-io/log10ts
   published: true
@@ -14,7 +14,7 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.5
-    core: 3.9.9
+    core: 3.9.12
     deprecations: 2.81.1
     examples: 2.81.4
     flattening: 2.81.1
@@ -46,6 +46,7 @@ generatedFiles:
   - src/lib/encodings.ts
   - src/lib/http.ts
   - src/lib/is-plain-object.ts
+  - src/lib/primitives.ts
   - src/lib/retries.ts
   - src/lib/schemas.ts
   - src/lib/sdks.ts
