@@ -4,7 +4,7 @@
 
 import { SDKHooks } from "../hooks";
 import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config";
-import * as enc$ from "../lib/encodings";
+import { encodeSimple as encodeSimple$ } from "../lib/encodings";
 import { HTTPClient } from "../lib/http";
 import * as schemas$ from "../lib/schemas";
 import { ClientSDK, RequestOptions } from "../lib/sdks";
@@ -64,7 +64,7 @@ export class Sessions extends ClientSDK {
 
         headers$.set(
             "X-Log10-Organization",
-            enc$.encodeSimple(
+            encodeSimple$(
                 "X-Log10-Organization",
                 payload$["X-Log10-Organization"] ?? this.options$.xLog10Organization,
                 { explode: false, charEncoding: "none" }

@@ -4,7 +4,7 @@
 
 import { SDKHooks } from "../hooks";
 import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config";
-import * as enc$ from "../lib/encodings";
+import { encodeJSON as encodeJSON$, encodeSimple as encodeSimple$ } from "../lib/encodings";
 import { HTTPClient } from "../lib/http";
 import * as schemas$ from "../lib/schemas";
 import { ClientSDK, RequestOptions } from "../lib/sdks";
@@ -60,7 +60,7 @@ export class Completions extends ClientSDK {
             (value$) => operations.CreateRequest$.outboundSchema.parse(value$),
             "Input validation failed"
         );
-        const body$ = enc$.encodeJSON("body", payload$.Completion, { explode: true });
+        const body$ = encodeJSON$("body", payload$.Completion, { explode: true });
 
         const path$ = this.templateURLComponent("/api/v1/completions")();
 
@@ -68,7 +68,7 @@ export class Completions extends ClientSDK {
 
         headers$.set(
             "X-Log10-Organization",
-            enc$.encodeSimple(
+            encodeSimple$(
                 "X-Log10-Organization",
                 payload$["X-Log10-Organization"] ?? this.options$.xLog10Organization,
                 { explode: false, charEncoding: "none" }
@@ -143,10 +143,10 @@ export class Completions extends ClientSDK {
             (value$) => operations.UpdateRequest$.outboundSchema.parse(value$),
             "Input validation failed"
         );
-        const body$ = enc$.encodeJSON("body", payload$.Completion, { explode: true });
+        const body$ = encodeJSON$("body", payload$.Completion, { explode: true });
 
         const pathParams$ = {
-            completionId: enc$.encodeSimple("completionId", payload$.completionId, {
+            completionId: encodeSimple$("completionId", payload$.completionId, {
                 explode: false,
                 charEncoding: "percent",
             }),
@@ -157,7 +157,7 @@ export class Completions extends ClientSDK {
 
         headers$.set(
             "X-Log10-Organization",
-            enc$.encodeSimple(
+            encodeSimple$(
                 "X-Log10-Organization",
                 payload$["X-Log10-Organization"] ?? this.options$.xLog10Organization,
                 { explode: false, charEncoding: "none" }
@@ -234,7 +234,7 @@ export class Completions extends ClientSDK {
 
         headers$.set(
             "X-Log10-Organization",
-            enc$.encodeSimple(
+            encodeSimple$(
                 "X-Log10-Organization",
                 payload$["X-Log10-Organization"] ?? this.options$.xLog10Organization,
                 { explode: false, charEncoding: "none" }

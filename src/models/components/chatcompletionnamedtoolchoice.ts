@@ -41,15 +41,9 @@ export namespace ChatCompletionNamedToolChoiceFunction$ {
         ChatCompletionNamedToolChoiceFunction,
         z.ZodTypeDef,
         unknown
-    > = z
-        .object({
-            name: z.string(),
-        })
-        .transform((v) => {
-            return {
-                name: v.name,
-            };
-        });
+    > = z.object({
+        name: z.string(),
+    });
 
     export type Outbound = {
         name: string;
@@ -59,29 +53,17 @@ export namespace ChatCompletionNamedToolChoiceFunction$ {
         Outbound,
         z.ZodTypeDef,
         ChatCompletionNamedToolChoiceFunction
-    > = z
-        .object({
-            name: z.string(),
-        })
-        .transform((v) => {
-            return {
-                name: v.name,
-            };
-        });
+    > = z.object({
+        name: z.string(),
+    });
 }
 
 /** @internal */
 export namespace ChatCompletionNamedToolChoice$ {
-    export const inboundSchema: z.ZodType<ChatCompletionNamedToolChoice, z.ZodTypeDef, unknown> = z
-        .object({
+    export const inboundSchema: z.ZodType<ChatCompletionNamedToolChoice, z.ZodTypeDef, unknown> =
+        z.object({
             type: ChatCompletionNamedToolChoiceType$.inboundSchema,
             function: z.lazy(() => ChatCompletionNamedToolChoiceFunction$.inboundSchema),
-        })
-        .transform((v) => {
-            return {
-                type: v.type,
-                function: v.function,
-            };
         });
 
     export type Outbound = {
@@ -90,15 +72,8 @@ export namespace ChatCompletionNamedToolChoice$ {
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ChatCompletionNamedToolChoice> =
-        z
-            .object({
-                type: ChatCompletionNamedToolChoiceType$.outboundSchema,
-                function: z.lazy(() => ChatCompletionNamedToolChoiceFunction$.outboundSchema),
-            })
-            .transform((v) => {
-                return {
-                    type: v.type,
-                    function: v.function,
-                };
-            });
+        z.object({
+            type: ChatCompletionNamedToolChoiceType$.outboundSchema,
+            function: z.lazy(() => ChatCompletionNamedToolChoiceFunction$.outboundSchema),
+        });
 }

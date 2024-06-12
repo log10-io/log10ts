@@ -25,19 +25,11 @@ export type FunctionObject = {
 
 /** @internal */
 export namespace FunctionObject$ {
-    export const inboundSchema: z.ZodType<FunctionObject, z.ZodTypeDef, unknown> = z
-        .object({
-            description: z.string().optional(),
-            name: z.string(),
-            parameters: z.record(z.any()).optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.description === undefined ? null : { description: v.description }),
-                name: v.name,
-                ...(v.parameters === undefined ? null : { parameters: v.parameters }),
-            };
-        });
+    export const inboundSchema: z.ZodType<FunctionObject, z.ZodTypeDef, unknown> = z.object({
+        description: z.string().optional(),
+        name: z.string(),
+        parameters: z.record(z.any()).optional(),
+    });
 
     export type Outbound = {
         description?: string | undefined;
@@ -45,17 +37,9 @@ export namespace FunctionObject$ {
         parameters?: { [k: string]: any } | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, FunctionObject> = z
-        .object({
-            description: z.string().optional(),
-            name: z.string(),
-            parameters: z.record(z.any()).optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.description === undefined ? null : { description: v.description }),
-                name: v.name,
-                ...(v.parameters === undefined ? null : { parameters: v.parameters }),
-            };
-        });
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, FunctionObject> = z.object({
+        description: z.string().optional(),
+        name: z.string(),
+        parameters: z.record(z.any()).optional(),
+    });
 }

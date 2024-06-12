@@ -38,19 +38,11 @@ export namespace ChatCompletionRequestSystemMessage$ {
         ChatCompletionRequestSystemMessage,
         z.ZodTypeDef,
         unknown
-    > = z
-        .object({
-            content: z.string(),
-            role: Role$.inboundSchema,
-            name: z.string().optional(),
-        })
-        .transform((v) => {
-            return {
-                content: v.content,
-                role: v.role,
-                ...(v.name === undefined ? null : { name: v.name }),
-            };
-        });
+    > = z.object({
+        content: z.string(),
+        role: Role$.inboundSchema,
+        name: z.string().optional(),
+    });
 
     export type Outbound = {
         content: string;
@@ -62,17 +54,9 @@ export namespace ChatCompletionRequestSystemMessage$ {
         Outbound,
         z.ZodTypeDef,
         ChatCompletionRequestSystemMessage
-    > = z
-        .object({
-            content: z.string(),
-            role: Role$.outboundSchema,
-            name: z.string().optional(),
-        })
-        .transform((v) => {
-            return {
-                content: v.content,
-                role: v.role,
-                ...(v.name === undefined ? null : { name: v.name }),
-            };
-        });
+    > = z.object({
+        content: z.string(),
+        role: Role$.outboundSchema,
+        name: z.string().optional(),
+    });
 }

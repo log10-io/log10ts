@@ -20,15 +20,9 @@ export type ChatCompletionFunctionCallOption = {
 /** @internal */
 export namespace ChatCompletionFunctionCallOption$ {
     export const inboundSchema: z.ZodType<ChatCompletionFunctionCallOption, z.ZodTypeDef, unknown> =
-        z
-            .object({
-                name: z.string(),
-            })
-            .transform((v) => {
-                return {
-                    name: v.name,
-                };
-            });
+        z.object({
+            name: z.string(),
+        });
 
     export type Outbound = {
         name: string;
@@ -38,13 +32,7 @@ export namespace ChatCompletionFunctionCallOption$ {
         Outbound,
         z.ZodTypeDef,
         ChatCompletionFunctionCallOption
-    > = z
-        .object({
-            name: z.string(),
-        })
-        .transform((v) => {
-            return {
-                name: v.name,
-            };
-        });
+    > = z.object({
+        name: z.string(),
+    });
 }

@@ -4,7 +4,7 @@
 
 import { SDKHooks } from "../hooks";
 import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config";
-import * as enc$ from "../lib/encodings";
+import { encodeJSON as encodeJSON$, encodeSimple as encodeSimple$ } from "../lib/encodings";
 import { HTTPClient } from "../lib/http";
 import * as schemas$ from "../lib/schemas";
 import { ClientSDK, RequestOptions } from "../lib/sdks";
@@ -111,7 +111,7 @@ export class FeedbackTasks extends ClientSDK {
             "Input validation failed"
         );
         const body$ =
-            payload$ === undefined ? null : enc$.encodeJSON("body", payload$, { explode: true });
+            payload$ === undefined ? null : encodeJSON$("body", payload$, { explode: true });
 
         const path$ = this.templateURLComponent("/api/v1/feedback_task")();
 
@@ -182,7 +182,7 @@ export class FeedbackTasks extends ClientSDK {
         const body$ = null;
 
         const pathParams$ = {
-            taskId: enc$.encodeSimple("taskId", payload$.taskId, {
+            taskId: encodeSimple$("taskId", payload$.taskId, {
                 explode: false,
                 charEncoding: "percent",
             }),

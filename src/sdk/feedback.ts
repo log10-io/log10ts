@@ -4,7 +4,7 @@
 
 import { SDKHooks } from "../hooks";
 import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config";
-import * as enc$ from "../lib/encodings";
+import { encodeJSON as encodeJSON$, encodeSimple as encodeSimple$ } from "../lib/encodings";
 import { HTTPClient } from "../lib/http";
 import * as schemas$ from "../lib/schemas";
 import { ClientSDK, RequestOptions } from "../lib/sdks";
@@ -61,7 +61,7 @@ export class Feedback extends ClientSDK {
         const body$ = null;
 
         const pathParams$ = {
-            feedbackId: enc$.encodeSimple("feedbackId", payload$.feedbackId, {
+            feedbackId: encodeSimple$("feedbackId", payload$.feedbackId, {
                 explode: false,
                 charEncoding: "percent",
             }),
@@ -72,7 +72,7 @@ export class Feedback extends ClientSDK {
 
         headers$.set(
             "X-Log10-Organization",
-            enc$.encodeSimple(
+            encodeSimple$(
                 "X-Log10-Organization",
                 payload$["X-Log10-Organization"] ?? this.options$.xLog10Organization,
                 { explode: false, charEncoding: "none" }
@@ -144,7 +144,7 @@ export class Feedback extends ClientSDK {
             (value$) => operations.UploadRequest$.outboundSchema.parse(value$),
             "Input validation failed"
         );
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+        const body$ = encodeJSON$("body", payload$.RequestBody, { explode: true });
 
         const path$ = this.templateURLComponent("/api/v1/feedback")();
 
@@ -152,7 +152,7 @@ export class Feedback extends ClientSDK {
 
         headers$.set(
             "X-Log10-Organization",
-            enc$.encodeSimple(
+            encodeSimple$(
                 "X-Log10-Organization",
                 payload$["X-Log10-Organization"] ?? this.options$.xLog10Organization,
                 { explode: false, charEncoding: "none" }
