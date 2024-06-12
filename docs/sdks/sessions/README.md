@@ -44,9 +44,9 @@ run();
 
 ### Response
 
-**Promise\<[operations.CreateSessionResponse](../../models/operations/createsessionresponse.md)\>**
+**Promise\<[models.CreateSessionResponse](../../models/createsessionresponse.md)\>**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
+| models.SDKError | 4xx-5xx         | */*             |

@@ -8,3 +8,5 @@
 /cjs
 /node_modules
 /.tsbuildinfo
+.env
+!index.test.ts

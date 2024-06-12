@@ -90,6 +90,7 @@ components:
       type: object
       required:
         - organization_id
+        - kind
       properties:
         id:
           type: string
@@ -117,10 +118,10 @@ components:
             type: string
         request:
           type: object
-          $ref: "openai.yaml#/components/schemas/CreateChatCompletionRequest"
+          $ref: "./openai.yaml#/components/schemas/CreateChatCompletionRequest"
         response:
           type: object
-          $ref: "openai.yaml#/components/schemas/CreateChatCompletionResponse"
+          $ref: "./openai.yaml#/components/schemas/CreateChatCompletionResponse"
         stacktrace:
           type: array
           description: The stacktrace for this completion.
@@ -186,12 +187,12 @@ paths:
               $ref: "#/components/schemas/Completion"
       responses:
         "200":
-            description: Created
-            content:
-              application/json:
-                schema:
-                  type: object
-                  x-speakeasy-type-override: any
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                x-speakeasy-type-override: any
         "201":
           description: Created
           content:

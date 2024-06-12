@@ -1,0 +1,10 @@
+# ChatCompletionRequestToolMessage
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `role`                                                                                           | [models.ChatCompletionRequestToolMessageRole](../models/chatcompletionrequesttoolmessagerole.md) | :heavy_check_mark:                                                                               | The role of the messages author, in this case `tool`.                                            |
+| `content`                                                                                        | *string*                                                                                         | :heavy_check_mark:                                                                               | The contents of the tool message.                                                                |
+| `toolCallId`                                                                                     | *string*                                                                                         | :heavy_check_mark:                                                                               | Tool call that this message is responding to.                                                    |

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: ca95c839-5377-4981-9bcb-4cedc7e35f2b
 management:
-  docChecksum: 5e7cc152f137f5919734cc70b836a4d6
+  docChecksum: bb5d11b0f52b49a8616f3f6b73ff6713
   docVersion: 1.0.0
-  speakeasyVersion: 1.296.1
-  generationVersion: 2.338.1
-  releaseVersion: 0.0.7
-  configChecksum: e79e427bbcd6abf50f8d3c20add01b2d
+  speakeasyVersion: 1.299.6
+  generationVersion: 2.338.12
+  releaseVersion: 0.0.10
+  configChecksum: 69bb849ccb34d91231c7c36dd5f9ec2a
   repoURL: https://github.com/log10-io/log10ts.git
   installationURL: https://github.com/log10-io/log10ts
   published: true
@@ -14,7 +14,7 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.5
-    core: 3.9.9
+    core: 3.9.11
     deprecations: 2.81.1
     examples: 2.81.4
     flattening: 2.81.1
@@ -32,7 +32,7 @@ features:
 generatedFiles:
   - src/sdk/completions.ts
   - src/sdk/sessions.ts
-  - src/sdk/feedback.ts
+  - src/sdk/feedbacksdk.ts
   - src/sdk/feedbacktasks.ts
   - src/sdk/sdk.ts
   - .eslintrc.js
@@ -52,152 +52,150 @@ generatedFiles:
   - src/lib/security.ts
   - src/lib/url.ts
   - src/sdk/index.ts
-  - src/models/errors/sdkerror.ts
-  - src/models/errors/sdkvalidationerror.ts
+  - src/models/sdkerror.ts
+  - src/models/sdkvalidationerror.ts
   - src/types/blobs.ts
   - src/types/enums.ts
   - src/types/index.ts
   - src/types/operations.ts
   - src/types/rfcdate.ts
   - tsconfig.json
-  - src/models/operations/create.ts
-  - src/models/operations/update.ts
-  - src/models/operations/listungraded.ts
-  - src/models/operations/createsession.ts
-  - src/models/operations/get.ts
-  - src/models/operations/upload.ts
-  - src/models/operations/listfeedbacktasks.ts
-  - src/models/operations/createfeedbacktask.ts
-  - src/models/operations/getfeedbacktask.ts
-  - src/models/components/completion.ts
-  - src/models/components/createchatcompletionresponse.ts
-  - src/models/components/completionusage.ts
-  - src/models/components/chatcompletiontokenlogprob.ts
-  - src/models/components/chatcompletionresponsemessage.ts
-  - src/models/components/chatcompletionmessagetoolcall.ts
-  - src/models/components/createchatcompletionrequest.ts
-  - src/models/components/chatcompletionfunctions.ts
-  - src/models/components/chatcompletionfunctioncalloption.ts
-  - src/models/components/chatcompletiontoolchoiceoption.ts
-  - src/models/components/chatcompletionnamedtoolchoice.ts
-  - src/models/components/chatcompletiontool.ts
-  - src/models/components/functionobject.ts
-  - src/models/components/chatcompletionstreamoptions.ts
-  - src/models/components/chatcompletionrequestmessage.ts
-  - src/models/components/chatcompletionrequestsystemmessage.ts
-  - src/models/components/chatcompletionrequestusermessage.ts
-  - src/models/components/chatcompletionrequestmessagecontentpart.ts
-  - src/models/components/chatcompletionrequestmessagecontentparttext.ts
-  - src/models/components/chatcompletionrequestmessagecontentpartimage.ts
-  - src/models/components/chatcompletionrequestassistantmessage.ts
-  - src/models/components/chatcompletionrequesttoolmessage.ts
-  - src/models/components/chatcompletionrequestfunctionmessage.ts
-  - src/models/components/httpmetadata.ts
-  - src/models/components/session.ts
-  - src/models/components/feedback.ts
-  - src/models/components/task.ts
-  - src/models/components/security.ts
-  - src/models/errors/index.ts
-  - src/models/operations/index.ts
-  - src/models/components/index.ts
-  - docs/models/operations/createglobals.md
-  - docs/models/operations/createrequest.md
-  - docs/models/operations/createresponse.md
-  - docs/models/operations/updateglobals.md
-  - docs/models/operations/updaterequest.md
-  - docs/models/operations/updateresponse.md
-  - docs/models/operations/listungradedglobals.md
-  - docs/models/operations/listungradedrequest.md
-  - docs/models/operations/listungradedresponsebody.md
-  - docs/models/operations/listungradedresponse.md
-  - docs/models/operations/createsessionglobals.md
-  - docs/models/operations/createsessionrequest.md
-  - docs/models/operations/createsessionresponsebody.md
-  - docs/models/operations/createsessionresponse.md
-  - docs/models/operations/getglobals.md
-  - docs/models/operations/getrequest.md
-  - docs/models/operations/getresponse.md
-  - docs/models/operations/uploadglobals.md
-  - docs/models/operations/requestbodyjsonvalues.md
-  - docs/models/operations/two.md
-  - docs/models/operations/jsonvalues.md
-  - docs/models/operations/one.md
-  - docs/models/operations/uploadrequestbody.md
-  - docs/models/operations/uploadrequest.md
-  - docs/models/operations/uploadresponse.md
-  - docs/models/operations/listfeedbacktasksresponse.md
-  - docs/models/operations/createfeedbacktaskresponse.md
-  - docs/models/operations/getfeedbacktaskrequest.md
-  - docs/models/operations/getfeedbacktaskresponse.md
-  - docs/models/components/kind.md
-  - docs/models/components/status.md
-  - docs/models/components/stacktrace.md
-  - docs/models/components/completion.md
-  - docs/models/components/finishreason.md
-  - docs/models/components/logprobs.md
-  - docs/models/components/choices.md
-  - docs/models/components/objectt.md
-  - docs/models/components/createchatcompletionresponse.md
-  - docs/models/components/completionusage.md
-  - docs/models/components/toplogprobs.md
-  - docs/models/components/chatcompletiontokenlogprob.md
-  - docs/models/components/chatcompletionresponsemessagerole.md
-  - docs/models/components/chatcompletionresponsemessagefunctioncall.md
-  - docs/models/components/chatcompletionresponsemessage.md
-  - docs/models/components/chatcompletionmessagetoolcalltype.md
-  - docs/models/components/functiont.md
-  - docs/models/components/chatcompletionmessagetoolcall.md
-  - docs/models/components/two.md
-  - docs/models/components/model.md
-  - docs/models/components/createchatcompletionrequesttype.md
-  - docs/models/components/responseformat.md
-  - docs/models/components/stop.md
-  - docs/models/components/one.md
-  - docs/models/components/createchatcompletionrequestfunctioncall.md
-  - docs/models/components/createchatcompletionrequest.md
-  - docs/models/components/chatcompletionfunctions.md
-  - docs/models/components/chatcompletionfunctioncalloption.md
-  - docs/models/components/chatcompletiontoolchoiceoption1.md
-  - docs/models/components/chatcompletiontoolchoiceoption.md
-  - docs/models/components/chatcompletionnamedtoolchoicetype.md
-  - docs/models/components/chatcompletionnamedtoolchoicefunction.md
-  - docs/models/components/chatcompletionnamedtoolchoice.md
-  - docs/models/components/chatcompletiontooltype.md
-  - docs/models/components/chatcompletiontool.md
-  - docs/models/components/functionobject.md
-  - docs/models/components/chatcompletionstreamoptions.md
-  - docs/models/components/chatcompletionrequestmessage.md
-  - docs/models/components/role.md
-  - docs/models/components/chatcompletionrequestsystemmessage.md
-  - docs/models/components/content.md
-  - docs/models/components/chatcompletionrequestusermessagerole.md
-  - docs/models/components/chatcompletionrequestusermessage.md
-  - docs/models/components/chatcompletionrequestmessagecontentpart.md
-  - docs/models/components/type.md
-  - docs/models/components/chatcompletionrequestmessagecontentparttext.md
-  - docs/models/components/chatcompletionrequestmessagecontentpartimagetype.md
-  - docs/models/components/detail.md
-  - docs/models/components/imageurl.md
-  - docs/models/components/chatcompletionrequestmessagecontentpartimage.md
-  - docs/models/components/chatcompletionrequestassistantmessagerole.md
-  - docs/models/components/functioncall.md
-  - docs/models/components/chatcompletionrequestassistantmessage.md
-  - docs/models/components/chatcompletionrequesttoolmessagerole.md
-  - docs/models/components/chatcompletionrequesttoolmessage.md
-  - docs/models/components/chatcompletionrequestfunctionmessagerole.md
-  - docs/models/components/chatcompletionrequestfunctionmessage.md
-  - docs/models/components/httpmetadata.md
-  - docs/models/components/session.md
-  - docs/models/components/jsonvalues.md
-  - docs/models/components/feedback.md
-  - docs/models/components/jsonschema.md
-  - docs/models/components/completiontagsselector.md
-  - docs/models/components/task.md
-  - docs/models/components/security.md
+  - src/models/createop.ts
+  - src/models/completion.ts
+  - src/models/createchatcompletionresponse.ts
+  - src/models/completionusage.ts
+  - src/models/chatcompletiontokenlogprob.ts
+  - src/models/chatcompletionresponsemessage.ts
+  - src/models/chatcompletionmessagetoolcall.ts
+  - src/models/createchatcompletionrequest.ts
+  - src/models/chatcompletionfunctions.ts
+  - src/models/chatcompletionfunctioncalloption.ts
+  - src/models/chatcompletiontoolchoiceoption.ts
+  - src/models/chatcompletionnamedtoolchoice.ts
+  - src/models/chatcompletiontool.ts
+  - src/models/functionobject.ts
+  - src/models/chatcompletionstreamoptions.ts
+  - src/models/chatcompletionrequestmessage.ts
+  - src/models/chatcompletionrequestsystemmessage.ts
+  - src/models/chatcompletionrequestusermessage.ts
+  - src/models/chatcompletionrequestmessagecontentpart.ts
+  - src/models/chatcompletionrequestmessagecontentparttext.ts
+  - src/models/chatcompletionrequestmessagecontentpartimage.ts
+  - src/models/chatcompletionrequestassistantmessage.ts
+  - src/models/chatcompletionrequesttoolmessage.ts
+  - src/models/chatcompletionrequestfunctionmessage.ts
+  - src/models/httpmetadata.ts
+  - src/models/updateop.ts
+  - src/models/listungradedop.ts
+  - src/models/createsessionop.ts
+  - src/models/session.ts
+  - src/models/getop.ts
+  - src/models/feedback.ts
+  - src/models/uploadop.ts
+  - src/models/listfeedbacktasksop.ts
+  - src/models/task.ts
+  - src/models/createfeedbacktaskop.ts
+  - src/models/getfeedbacktaskop.ts
+  - src/models/security.ts
+  - src/models/index.ts
+  - docs/models/createglobals.md
+  - docs/models/createrequest.md
+  - docs/models/createresponse.md
+  - docs/models/kind.md
+  - docs/models/status.md
+  - docs/models/stacktrace.md
+  - docs/models/completion.md
+  - docs/models/finishreason.md
+  - docs/models/logprobs.md
+  - docs/models/choices.md
+  - docs/models/objectt.md
+  - docs/models/createchatcompletionresponse.md
+  - docs/models/completionusage.md
+  - docs/models/toplogprobs.md
+  - docs/models/chatcompletiontokenlogprob.md
+  - docs/models/chatcompletionresponsemessagerole.md
+  - docs/models/chatcompletionresponsemessagefunctioncall.md
+  - docs/models/chatcompletionresponsemessage.md
+  - docs/models/chatcompletionmessagetoolcalltype.md
+  - docs/models/functiont.md
+  - docs/models/chatcompletionmessagetoolcall.md
+  - docs/models/two.md
+  - docs/models/model.md
+  - docs/models/createchatcompletionrequesttype.md
+  - docs/models/responseformat.md
+  - docs/models/stop.md
+  - docs/models/one.md
+  - docs/models/createchatcompletionrequestfunctioncall.md
+  - docs/models/createchatcompletionrequest.md
+  - docs/models/chatcompletionfunctions.md
+  - docs/models/chatcompletionfunctioncalloption.md
+  - docs/models/chatcompletiontoolchoiceoption1.md
+  - docs/models/chatcompletiontoolchoiceoption.md
+  - docs/models/chatcompletionnamedtoolchoicetype.md
+  - docs/models/chatcompletionnamedtoolchoicefunction.md
+  - docs/models/chatcompletionnamedtoolchoice.md
+  - docs/models/chatcompletiontooltype.md
+  - docs/models/chatcompletiontool.md
+  - docs/models/functionobject.md
+  - docs/models/chatcompletionstreamoptions.md
+  - docs/models/chatcompletionrequestmessage.md
+  - docs/models/role.md
+  - docs/models/chatcompletionrequestsystemmessage.md
+  - docs/models/content.md
+  - docs/models/chatcompletionrequestusermessagerole.md
+  - docs/models/chatcompletionrequestusermessage.md
+  - docs/models/chatcompletionrequestmessagecontentpart.md
+  - docs/models/type.md
+  - docs/models/chatcompletionrequestmessagecontentparttext.md
+  - docs/models/chatcompletionrequestmessagecontentpartimagetype.md
+  - docs/models/detail.md
+  - docs/models/imageurl.md
+  - docs/models/chatcompletionrequestmessagecontentpartimage.md
+  - docs/models/chatcompletionrequestassistantmessagerole.md
+  - docs/models/functioncall.md
+  - docs/models/chatcompletionrequestassistantmessage.md
+  - docs/models/chatcompletionrequesttoolmessagerole.md
+  - docs/models/chatcompletionrequesttoolmessage.md
+  - docs/models/chatcompletionrequestfunctionmessagerole.md
+  - docs/models/chatcompletionrequestfunctionmessage.md
+  - docs/models/httpmetadata.md
+  - docs/models/updateglobals.md
+  - docs/models/updaterequest.md
+  - docs/models/updateresponse.md
+  - docs/models/listungradedglobals.md
+  - docs/models/listungradedrequest.md
+  - docs/models/listungradedresponsebody.md
+  - docs/models/listungradedresponse.md
+  - docs/models/createsessionglobals.md
+  - docs/models/createsessionrequest.md
+  - docs/models/createsessionresponsebody.md
+  - docs/models/createsessionresponse.md
+  - docs/models/session.md
+  - docs/models/getglobals.md
+  - docs/models/getrequest.md
+  - docs/models/getresponse.md
+  - docs/models/jsonvalues.md
+  - docs/models/feedback.md
+  - docs/models/uploadglobals.md
+  - docs/models/uploadrequestbodyjsonvalues.md
+  - docs/models/requestbody2.md
+  - docs/models/requestbodyjsonvalues.md
+  - docs/models/requestbody1.md
+  - docs/models/uploadrequestbody.md
+  - docs/models/uploadrequest.md
+  - docs/models/uploadresponse.md
+  - docs/models/listfeedbacktasksresponse.md
+  - docs/models/jsonschema.md
+  - docs/models/completiontagsselector.md
+  - docs/models/task.md
+  - docs/models/createfeedbacktaskresponse.md
+  - docs/models/getfeedbacktaskrequest.md
+  - docs/models/getfeedbacktaskresponse.md
+  - docs/models/security.md
   - docs/sdks/log10/README.md
   - docs/sdks/completions/README.md
   - docs/sdks/sessions/README.md
-  - docs/sdks/feedback/README.md
+  - docs/sdks/feedbacksdk/README.md
   - docs/sdks/feedbacktasks/README.md
   - USAGE.md
   - .gitattributes

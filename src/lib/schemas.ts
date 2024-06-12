@@ -3,7 +3,7 @@
  */
 
 import { ZodError } from "zod";
-import * as errors from "../models/errors";
+import * as models from "../models";
 
 /**
  * Utility function that executes some code which may throw a ZodError. It
@@ -15,7 +15,7 @@ export function parse<Inp, Out>(rawValue: Inp, fn: (value: Inp) => Out, errorMes
         return fn(rawValue);
     } catch (err) {
         if (err instanceof ZodError) {
-            throw new errors.SDKValidationError(errorMessage, err, rawValue);
+            throw new models.SDKValidationError(errorMessage, err, rawValue);
         }
         throw err;
     }
