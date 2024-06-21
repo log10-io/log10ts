@@ -3887,7 +3887,7 @@ paths:
                   "thread_abc123",
                   "msg_abc123"
                 );
-              
+
                 console.log(deletedMessage);
               }
           response: |
@@ -3896,7 +3896,6 @@ paths:
               "object": "thread.message.deleted",
               "deleted": true
             }
-      
 
   /threads/runs:
     post:
@@ -7310,8 +7309,7 @@ components:
           type: integer
           description: The Unix timestamp (in seconds) of when the completion was created.
         model:
-          type: string
-          description: The model used for completion.
+          $ref: "#/components/schemas/ChatModel"
         system_fingerprint:
           type: string
           description: |
@@ -7418,9 +7416,7 @@ components:
           description: The contents of the system message.
           type: string
         role:
-          type: string
-          enum: ["system"]
-          description: The role of the messages author, in this case `system`.
+          $ref: "#/components/schemas/ChatCompletionRole"
         name:
           type: string
           description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
@@ -7447,9 +7443,7 @@ components:
               minItems: 1
           x-oaiExpandable: true
         role:
-          type: string
-          enum: ["user"]
-          description: The role of the messages author, in this case `user`.
+          $ref: "#/components/schemas/ChatCompletionRole"
         name:
           type: string
           description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
@@ -7467,9 +7461,7 @@ components:
           description: |
             The contents of the assistant message. Required unless `tool_calls` or `function_call` is specified.
         role:
-          type: string
-          enum: ["assistant"]
-          description: The role of the messages author, in this case `assistant`.
+          $ref: "#/components/schemas/ChatCompletionRole"
         name:
           type: string
           description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
@@ -7497,9 +7489,7 @@ components:
       title: Tool message
       properties:
         role:
-          type: string
-          enum: ["tool"]
-          description: The role of the messages author, in this case `tool`.
+          $ref: "#/components/schemas/ChatCompletionRole"
         content:
           type: string
           description: The contents of the tool message.
@@ -7517,9 +7507,7 @@ components:
       deprecated: true
       properties:
         role:
-          type: string
-          enum: ["function"]
-          description: The role of the messages author, in this case `function`.
+          $ref: "#/components/schemas/ChatCompletionRole"
         content:
           nullable: true
           type: string
@@ -7722,9 +7710,7 @@ components:
         tool_calls:
           $ref: "#/components/schemas/ChatCompletionMessageToolCalls"
         role:
-          type: string
-          enum: ["assistant"]
-          description: The role of the author of this message.
+          $ref: "#/components/schemas/ChatCompletionRole"
         function_call:
           type: object
           deprecated: true
@@ -7767,9 +7753,7 @@ components:
           items:
             $ref: "#/components/schemas/ChatCompletionMessageToolCallChunk"
         role:
-          type: string
-          enum: ["system", "user", "assistant", "tool"]
-          description: The role of the author of this message.
+          $ref: "#/components/schemas/ChatCompletionRole"
 
     CreateChatCompletionRequest:
       type: object
@@ -7781,34 +7765,7 @@ components:
           items:
             $ref: "#/components/schemas/ChatCompletionRequestMessage"
         model:
-          description: ID of the model to use. See the [model endpoint compatibility](/docs/models/model-endpoint-compatibility) table for details on which models work with the Chat API.
-          example: "gpt-4-turbo"
-          anyOf:
-            - type: string
-            - type: string
-              enum:
-                [
-                  "gpt-4-turbo",
-                  "gpt-4-turbo-2024-04-09",
-                  "gpt-4-0125-preview",
-                  "gpt-4-turbo-preview",
-                  "gpt-4-1106-preview",
-                  "gpt-4-vision-preview",
-                  "gpt-4",
-                  "gpt-4-0314",
-                  "gpt-4-0613",
-                  "gpt-4-32k",
-                  "gpt-4-32k-0314",
-                  "gpt-4-32k-0613",
-                  "gpt-3.5-turbo",
-                  "gpt-3.5-turbo-16k",
-                  "gpt-3.5-turbo-0301",
-                  "gpt-3.5-turbo-0613",
-                  "gpt-3.5-turbo-1106",
-                  "gpt-3.5-turbo-0125",
-                  "gpt-3.5-turbo-16k-0613",
-                ]
-          x-oaiTypeLabel: string
+          $ref: "#/components/schemas/ChatModel"
         frequency_penalty:
           type: number
           default: 0
@@ -8023,8 +7980,7 @@ components:
           type: integer
           description: The Unix timestamp (in seconds) of when the chat completion was created.
         model:
-          type: string
-          description: The model used for the chat completion.
+          $ref: "#/components/schemas/ChatModel"
         system_fingerprint:
           type: string
           description: |
@@ -8081,8 +8037,7 @@ components:
           type: integer
           description: The Unix timestamp (in seconds) of when the chat completion was created.
         model:
-          type: string
-          description: The model used for the chat completion.
+          $ref: "#/components/schemas/ChatModel"
         system_fingerprint:
           type: string
           description: |
@@ -8198,8 +8153,7 @@ components:
           type: integer
           description: The Unix timestamp (in seconds) of when the chat completion was created. Each chunk has the same timestamp.
         model:
-          type: string
-          description: The model to generate the completion.
+          $ref: "#/components/schemas/ChatModel"
         system_fingerprint:
           type: string
           description: |
@@ -9355,8 +9309,7 @@ components:
           required:
             - n_epochs
         model:
-          type: string
-          description: The base model that is being fine-tuned.
+          $ref: "#/components/schemas/ChatModel"
         object:
           type: string
           description: The object type, which is always "fine_tuning.job".
@@ -9786,33 +9739,7 @@ components:
       additionalProperties: false
       properties:
         model:
-          description: *model_description
-          example: "gpt-4-turbo"
-          anyOf:
-            - type: string
-            - type: string
-              enum:
-                [
-                  "gpt-4-turbo",
-                  "gpt-4-turbo-2024-04-09",
-                  "gpt-4-0125-preview",
-                  "gpt-4-turbo-preview",
-                  "gpt-4-1106-preview",
-                  "gpt-4-vision-preview",
-                  "gpt-4",
-                  "gpt-4-0314",
-                  "gpt-4-0613",
-                  "gpt-4-32k",
-                  "gpt-4-32k-0314",
-                  "gpt-4-32k-0613",
-                  "gpt-3.5-turbo",
-                  "gpt-3.5-turbo-16k",
-                  "gpt-3.5-turbo-0613",
-                  "gpt-3.5-turbo-1106",
-                  "gpt-3.5-turbo-0125",
-                  "gpt-3.5-turbo-16k-0613",
-                ]
-          x-oaiTypeLabel: string
+          $ref: "#/components/schemas/ChatModel"
         name:
           description: *assistant_name_param_description
           type: string
@@ -10370,34 +10297,7 @@ components:
           description: The ID of the [assistant](/docs/api-reference/assistants) to use to execute this run.
           type: string
         model:
-          description: The ID of the [Model](/docs/api-reference/models) to be used to execute this run. If a value is provided here, it will override the model associated with the assistant. If not, the model associated with the assistant will be used.
-          example: "gpt-4-turbo"
-          anyOf:
-            - type: string
-            - type: string
-              enum:
-                [
-                  "gpt-4-turbo",
-                  "gpt-4-turbo-2024-04-09",
-                  "gpt-4-0125-preview",
-                  "gpt-4-turbo-preview",
-                  "gpt-4-1106-preview",
-                  "gpt-4-vision-preview",
-                  "gpt-4",
-                  "gpt-4-0314",
-                  "gpt-4-0613",
-                  "gpt-4-32k",
-                  "gpt-4-32k-0314",
-                  "gpt-4-32k-0613",
-                  "gpt-3.5-turbo",
-                  "gpt-3.5-turbo-16k",
-                  "gpt-3.5-turbo-0613",
-                  "gpt-3.5-turbo-1106",
-                  "gpt-3.5-turbo-0125",
-                  "gpt-3.5-turbo-16k-0613",
-                ]
-          x-oaiTypeLabel: string
-          nullable: true
+          $ref: "#/components/schemas/ChatModel"
         instructions:
           description: Overrides the [instructions](/docs/api-reference/assistants/createAssistant) of the assistant. This is useful for modifying the behavior on a per-run basis.
           type: string
@@ -10562,7 +10462,35 @@ components:
         - id
         - type
         - function
-
+    ChatModel:
+      description: The ID of the [Model](/docs/api-reference/models) to be used to execute this run. If a value is provided here, it will override the model associated with the assistant. If not, the model associated with the assistant will be used.
+      example: "gpt-4-turbo"
+      x-speakeasy-unknown-values: allow
+      schema:
+        type: string
+        enum:
+          [
+            "gpt-4-turbo",
+            "gpt-4-turbo-2024-04-09",
+            "gpt-4-0125-preview",
+            "gpt-4-turbo-preview",
+            "gpt-4-1106-preview",
+            "gpt-4-vision-preview",
+            "gpt-4",
+            "gpt-4-0314",
+            "gpt-4-0613",
+            "gpt-4-32k",
+            "gpt-4-32k-0314",
+            "gpt-4-32k-0613",
+            "gpt-3.5-turbo",
+            "gpt-3.5-turbo-16k",
+            "gpt-3.5-turbo-0613",
+            "gpt-3.5-turbo-1106",
+            "gpt-3.5-turbo-0125",
+            "gpt-3.5-turbo-16k-0613",
+          ]
+      x-oaiTypeLabel: string
+      nullable: true
     CreateThreadAndRunRequest:
       type: object
       additionalProperties: false
@@ -10574,34 +10502,7 @@ components:
           $ref: "#/components/schemas/CreateThreadRequest"
           description: If no thread is provided, an empty thread will be created.
         model:
-          description: The ID of the [Model](/docs/api-reference/models) to be used to execute this run. If a value is provided here, it will override the model associated with the assistant. If not, the model associated with the assistant will be used.
-          example: "gpt-4-turbo"
-          anyOf:
-            - type: string
-            - type: string
-              enum:
-                [
-                  "gpt-4-turbo",
-                  "gpt-4-turbo-2024-04-09",
-                  "gpt-4-0125-preview",
-                  "gpt-4-turbo-preview",
-                  "gpt-4-1106-preview",
-                  "gpt-4-vision-preview",
-                  "gpt-4",
-                  "gpt-4-0314",
-                  "gpt-4-0613",
-                  "gpt-4-32k",
-                  "gpt-4-32k-0314",
-                  "gpt-4-32k-0613",
-                  "gpt-3.5-turbo",
-                  "gpt-3.5-turbo-16k",
-                  "gpt-3.5-turbo-0613",
-                  "gpt-3.5-turbo-1106",
-                  "gpt-3.5-turbo-0125",
-                  "gpt-3.5-turbo-16k-0613",
-                ]
-          x-oaiTypeLabel: string
-          nullable: true
+          $ref: "#/components/schemas/ChatModel"
         instructions:
           description: Override the default system message of the assistant. This is useful for modifying the behavior on a per-run basis.
           type: string
@@ -10949,9 +10850,7 @@ components:
           type: integer
           nullable: true
         role:
-          description: The entity that produced the message. One of `user` or `assistant`.
-          type: string
-          enum: ["user", "assistant"]
+          $ref: "#/components/schemas/ChatCompletionRole"
         content:
           description: The content of the message in array of text and/or images.
           type: array
@@ -11049,9 +10948,7 @@ components:
           type: object
           properties:
             role:
-              description: The entity that produced the message. One of `user` or `assistant`.
-              type: string
-              enum: ["user", "assistant"]
+              $ref: "#/components/schemas/ChatCompletionRole"
             content:
               description: The content of the message in array of text and/or images.
               type: array
@@ -11090,12 +10987,7 @@ components:
         - content
       properties:
         role:
-          type: string
-          enum: ["user", "assistant"]
-          description: |
-            The role of the entity that is creating the message. Allowed values include:
-            - `user`: Indicates the message is sent by an actual user and should be used in most cases to represent user-generated messages.
-            - `assistant`: Indicates the message is generated by the assistant. Use this value to insert messages from the assistant into the conversation.
+          $ref: "#/components/schemas/ChatCompletionRole"
         content:
           type: string
           minLength: 1
