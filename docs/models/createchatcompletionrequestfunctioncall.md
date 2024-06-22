@@ -12,3 +12,18 @@ Specifying a particular function via `{"name": "my_function"}` forces the model 
 
 > :warning: **DEPRECATED**: This will be removed in a future release, please migrate away from it as soon as possible.
 
+
+## Supported Types
+
+### `models.One`
+
+```typescript
+const value: models.One = /* values here */
+```
+
+### `models.ChatCompletionFunctionCallOption`
+
+```typescript
+const value: models.ChatCompletionFunctionCallOption = /* values here */
+```
+

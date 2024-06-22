@@ -42,56 +42,37 @@ export type ChatCompletionMessageToolCall = {
 
 /** @internal */
 export namespace ChatCompletionMessageToolCallType$ {
-    export const inboundSchema = z.nativeEnum(ChatCompletionMessageToolCallType);
-    export const outboundSchema = inboundSchema;
+    export const inboundSchema: z.ZodNativeEnum<typeof ChatCompletionMessageToolCallType> =
+        z.nativeEnum(ChatCompletionMessageToolCallType);
+    export const outboundSchema: z.ZodNativeEnum<typeof ChatCompletionMessageToolCallType> =
+        inboundSchema;
 }
 
 /** @internal */
 export namespace FunctionT$ {
-    export const inboundSchema: z.ZodType<FunctionT, z.ZodTypeDef, unknown> = z
-        .object({
-            name: z.string(),
-            arguments: z.string(),
-        })
-        .transform((v) => {
-            return {
-                name: v.name,
-                arguments: v.arguments,
-            };
-        });
+    export const inboundSchema: z.ZodType<FunctionT, z.ZodTypeDef, unknown> = z.object({
+        name: z.string(),
+        arguments: z.string(),
+    });
 
     export type Outbound = {
         name: string;
         arguments: string;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, FunctionT> = z
-        .object({
-            name: z.string(),
-            arguments: z.string(),
-        })
-        .transform((v) => {
-            return {
-                name: v.name,
-                arguments: v.arguments,
-            };
-        });
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, FunctionT> = z.object({
+        name: z.string(),
+        arguments: z.string(),
+    });
 }
 
 /** @internal */
 export namespace ChatCompletionMessageToolCall$ {
-    export const inboundSchema: z.ZodType<ChatCompletionMessageToolCall, z.ZodTypeDef, unknown> = z
-        .object({
+    export const inboundSchema: z.ZodType<ChatCompletionMessageToolCall, z.ZodTypeDef, unknown> =
+        z.object({
             id: z.string(),
             type: ChatCompletionMessageToolCallType$.inboundSchema,
             function: z.lazy(() => FunctionT$.inboundSchema),
-        })
-        .transform((v) => {
-            return {
-                id: v.id,
-                type: v.type,
-                function: v.function,
-            };
         });
 
     export type Outbound = {
@@ -101,17 +82,9 @@ export namespace ChatCompletionMessageToolCall$ {
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ChatCompletionMessageToolCall> =
-        z
-            .object({
-                id: z.string(),
-                type: ChatCompletionMessageToolCallType$.outboundSchema,
-                function: z.lazy(() => FunctionT$.outboundSchema),
-            })
-            .transform((v) => {
-                return {
-                    id: v.id,
-                    type: v.type,
-                    function: v.function,
-                };
-            });
+        z.object({
+            id: z.string(),
+            type: ChatCompletionMessageToolCallType$.outboundSchema,
+            function: z.lazy(() => FunctionT$.outboundSchema),
+        });
 }

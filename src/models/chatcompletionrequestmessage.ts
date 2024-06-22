@@ -5,23 +5,23 @@
 import {
     ChatCompletionRequestAssistantMessage,
     ChatCompletionRequestAssistantMessage$,
-} from "./chatcompletionrequestassistantmessage";
+} from "./chatcompletionrequestassistantmessage.js";
 import {
     ChatCompletionRequestFunctionMessage,
     ChatCompletionRequestFunctionMessage$,
-} from "./chatcompletionrequestfunctionmessage";
+} from "./chatcompletionrequestfunctionmessage.js";
 import {
     ChatCompletionRequestSystemMessage,
     ChatCompletionRequestSystemMessage$,
-} from "./chatcompletionrequestsystemmessage";
+} from "./chatcompletionrequestsystemmessage.js";
 import {
     ChatCompletionRequestToolMessage,
     ChatCompletionRequestToolMessage$,
-} from "./chatcompletionrequesttoolmessage";
+} from "./chatcompletionrequesttoolmessage.js";
 import {
     ChatCompletionRequestUserMessage,
     ChatCompletionRequestUserMessage$,
-} from "./chatcompletionrequestusermessage";
+} from "./chatcompletionrequestusermessage.js";
 import * as z from "zod";
 
 export type ChatCompletionRequestMessage =

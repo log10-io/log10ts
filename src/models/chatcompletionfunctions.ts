@@ -28,18 +28,11 @@ export type ChatCompletionFunctions = {
 
 /** @internal */
 export namespace ChatCompletionFunctions$ {
-    export const inboundSchema: z.ZodType<ChatCompletionFunctions, z.ZodTypeDef, unknown> = z
-        .object({
+    export const inboundSchema: z.ZodType<ChatCompletionFunctions, z.ZodTypeDef, unknown> =
+        z.object({
             description: z.string().optional(),
             name: z.string(),
             parameters: z.record(z.any()).optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.description === undefined ? null : { description: v.description }),
-                name: v.name,
-                ...(v.parameters === undefined ? null : { parameters: v.parameters }),
-            };
         });
 
     export type Outbound = {
@@ -48,17 +41,10 @@ export namespace ChatCompletionFunctions$ {
         parameters?: { [k: string]: any } | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ChatCompletionFunctions> = z
-        .object({
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ChatCompletionFunctions> =
+        z.object({
             description: z.string().optional(),
             name: z.string(),
             parameters: z.record(z.any()).optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.description === undefined ? null : { description: v.description }),
-                name: v.name,
-                ...(v.parameters === undefined ? null : { parameters: v.parameters }),
-            };
         });
 }

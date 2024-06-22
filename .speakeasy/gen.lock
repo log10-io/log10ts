@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: ca95c839-5377-4981-9bcb-4cedc7e35f2b
 management:
-  docChecksum: bb5d11b0f52b49a8616f3f6b73ff6713
+  docChecksum: afd320be35d7ac594f72868b9cbd0ef4
   docVersion: 1.0.0
-  speakeasyVersion: 1.299.6
-  generationVersion: 2.338.12
-  releaseVersion: 0.0.10
-  configChecksum: 69bb849ccb34d91231c7c36dd5f9ec2a
+  speakeasyVersion: 1.314.2
+  generationVersion: 2.349.6
+  releaseVersion: 0.1.0
+  configChecksum: 04922ef8dd4ee0188bb717df63bb8866
   repoURL: https://github.com/log10-io/log10ts.git
   installationURL: https://github.com/log10-io/log10ts
   published: true
@@ -14,7 +14,7 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.5
-    core: 3.9.11
+    core: 3.10.2
     deprecations: 2.81.1
     examples: 2.81.4
     flattening: 2.81.1
@@ -35,7 +35,7 @@ generatedFiles:
   - src/sdk/feedbacksdk.ts
   - src/sdk/feedbacktasks.ts
   - src/sdk/sdk.ts
-  - .eslintrc.js
+  - .eslintrc.cjs
   - .npmignore
   - RUNTIMES.md
   - jsr.json
@@ -46,6 +46,7 @@ generatedFiles:
   - src/lib/encodings.ts
   - src/lib/http.ts
   - src/lib/is-plain-object.ts
+  - src/lib/primitives.ts
   - src/lib/retries.ts
   - src/lib/schemas.ts
   - src/lib/sdks.ts
@@ -66,6 +67,7 @@ generatedFiles:
   - src/models/completionusage.ts
   - src/models/chatcompletiontokenlogprob.ts
   - src/models/chatcompletionresponsemessage.ts
+  - src/models/chatcompletionrole.ts
   - src/models/chatcompletionmessagetoolcall.ts
   - src/models/createchatcompletionrequest.ts
   - src/models/chatcompletionfunctions.ts
@@ -113,14 +115,12 @@ generatedFiles:
   - docs/models/completionusage.md
   - docs/models/toplogprobs.md
   - docs/models/chatcompletiontokenlogprob.md
-  - docs/models/chatcompletionresponsemessagerole.md
   - docs/models/chatcompletionresponsemessagefunctioncall.md
   - docs/models/chatcompletionresponsemessage.md
+  - docs/models/chatcompletionrole.md
   - docs/models/chatcompletionmessagetoolcalltype.md
   - docs/models/functiont.md
   - docs/models/chatcompletionmessagetoolcall.md
-  - docs/models/two.md
-  - docs/models/model.md
   - docs/models/createchatcompletionrequesttype.md
   - docs/models/responseformat.md
   - docs/models/stop.md
@@ -139,10 +139,8 @@ generatedFiles:
   - docs/models/functionobject.md
   - docs/models/chatcompletionstreamoptions.md
   - docs/models/chatcompletionrequestmessage.md
-  - docs/models/role.md
   - docs/models/chatcompletionrequestsystemmessage.md
   - docs/models/content.md
-  - docs/models/chatcompletionrequestusermessagerole.md
   - docs/models/chatcompletionrequestusermessage.md
   - docs/models/chatcompletionrequestmessagecontentpart.md
   - docs/models/type.md
@@ -151,12 +149,9 @@ generatedFiles:
   - docs/models/detail.md
   - docs/models/imageurl.md
   - docs/models/chatcompletionrequestmessagecontentpartimage.md
-  - docs/models/chatcompletionrequestassistantmessagerole.md
   - docs/models/functioncall.md
   - docs/models/chatcompletionrequestassistantmessage.md
-  - docs/models/chatcompletionrequesttoolmessagerole.md
   - docs/models/chatcompletionrequesttoolmessage.md
-  - docs/models/chatcompletionrequestfunctionmessagerole.md
   - docs/models/chatcompletionrequestfunctionmessage.md
   - docs/models/httpmetadata.md
   - docs/models/updateglobals.md
@@ -178,7 +173,7 @@ generatedFiles:
   - docs/models/feedback.md
   - docs/models/uploadglobals.md
   - docs/models/uploadrequestbodyjsonvalues.md
-  - docs/models/requestbody2.md
+  - docs/models/two.md
   - docs/models/requestbodyjsonvalues.md
   - docs/models/requestbody1.md
   - docs/models/uploadrequestbody.md

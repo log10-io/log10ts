@@ -24,8 +24,8 @@ export type ChatCompletionRequestMessageContentPartText = {
 
 /** @internal */
 export namespace Type$ {
-    export const inboundSchema = z.nativeEnum(Type);
-    export const outboundSchema = inboundSchema;
+    export const inboundSchema: z.ZodNativeEnum<typeof Type> = z.nativeEnum(Type);
+    export const outboundSchema: z.ZodNativeEnum<typeof Type> = inboundSchema;
 }
 
 /** @internal */
@@ -34,17 +34,10 @@ export namespace ChatCompletionRequestMessageContentPartText$ {
         ChatCompletionRequestMessageContentPartText,
         z.ZodTypeDef,
         unknown
-    > = z
-        .object({
-            type: Type$.inboundSchema,
-            text: z.string(),
-        })
-        .transform((v) => {
-            return {
-                type: v.type,
-                text: v.text,
-            };
-        });
+    > = z.object({
+        type: Type$.inboundSchema,
+        text: z.string(),
+    });
 
     export type Outbound = {
         type: string;
@@ -55,15 +48,8 @@ export namespace ChatCompletionRequestMessageContentPartText$ {
         Outbound,
         z.ZodTypeDef,
         ChatCompletionRequestMessageContentPartText
-    > = z
-        .object({
-            type: Type$.outboundSchema,
-            text: z.string(),
-        })
-        .transform((v) => {
-            return {
-                type: v.type,
-                text: v.text,
-            };
-        });
+    > = z.object({
+        type: Type$.outboundSchema,
+        text: z.string(),
+    });
 }

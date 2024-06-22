@@ -19,16 +19,16 @@ Create a completion
 
 ```typescript
 import {
-  ChatCompletionRequestAssistantMessageRole,
+  ChatCompletionRole,
   CreateChatCompletionRequestType,
+  FinishReason,
   Kind,
   Log10,
-  Two,
+  ObjectT,
 } from "log10ts";
 
 const log10 = new Log10({
   log10Token: "<YOUR_API_KEY_HERE>",
-  xLog10Organization: "<value>",
 });
 
 async function run() {
@@ -38,10 +38,10 @@ async function run() {
     request: {
       messages: [
           {
-            role: ChatCompletionRequestAssistantMessageRole.Assistant,
+            role: ChatCompletionRole.Tool,
           },
       ],
-    model: Two.Gpt4Turbo,
+      model: "gpt-4-turbo",
       n: 1,
       responseFormat: {
         type: CreateChatCompletionRequestType.JsonObject,
@@ -49,6 +49,42 @@ async function run() {
       temperature: 1,
       topP: 1,
       user: "user-1234",
+    },
+    response: {
+      id: "<id>",
+      choices: [
+        {
+          finishReason: FinishReason.FunctionCall,
+          index: 417458,
+          message: {
+            content: "<value>",
+            role: ChatCompletionRole.User,
+          },
+          logprobs: {
+            content: [
+              {
+                token: "<value>",
+                logprob: 1343.65,
+                bytes: [
+                  786546,
+                ],
+                topLogprobs: [
+                  {
+                    token: "<value>",
+                    logprob: 690.25,
+                    bytes: [
+                      996706,
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+      created: 796474,
+      model: "gpt-4-turbo",
+      object: ObjectT.ChatCompletion,
     },
   }, "<value>");
 
@@ -85,11 +121,17 @@ Update completion by id.
 ### Example Usage
 
 ```typescript
-import { CreateChatCompletionRequestType, Kind, Log10, Role, Two } from "log10ts";
+import {
+  ChatCompletionRole,
+  CreateChatCompletionRequestType,
+  FinishReason,
+  Kind,
+  Log10,
+  ObjectT,
+} from "log10ts";
 
 const log10 = new Log10({
   log10Token: "<YOUR_API_KEY_HERE>",
-  xLog10Organization: "<value>",
 });
 
 async function run() {
@@ -100,10 +142,10 @@ async function run() {
       messages: [
           {
             content: "<value>",
-            role: Role.System,
+            role: ChatCompletionRole.Assistant,
           },
       ],
-    model: Two.Gpt4Turbo,
+      model: "gpt-4-turbo",
       n: 1,
       responseFormat: {
         type: CreateChatCompletionRequestType.JsonObject,
@@ -111,6 +153,42 @@ async function run() {
       temperature: 1,
       topP: 1,
       user: "user-1234",
+    },
+    response: {
+      id: "<id>",
+      choices: [
+        {
+          finishReason: FinishReason.Stop,
+          index: 344620,
+          message: {
+            content: "<value>",
+            role: ChatCompletionRole.Tool,
+          },
+          logprobs: {
+            content: [
+              {
+                token: "<value>",
+                logprob: 9914.64,
+                bytes: [
+                  270324,
+                ],
+                topLogprobs: [
+                  {
+                    token: "<value>",
+                    logprob: 6276.9,
+                    bytes: [
+                      684199,
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+      created: 488852,
+      model: "gpt-4-turbo",
+      object: ObjectT.ChatCompletion,
     },
   }, "<value>");
 
@@ -152,7 +230,6 @@ import { Log10 } from "log10ts";
 
 const log10 = new Log10({
   log10Token: "<YOUR_API_KEY_HERE>",
-  xLog10Organization: "<value>",
 });
 
 async function run() {
