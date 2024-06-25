@@ -1,18 +1,19 @@
-speakeasyVersion: 1.299.6
+speakeasyVersion: 1.315.2
 sources:
     default:
         sourceNamespace: default
-        sourceRevisionDigest: sha256:cb2b7469920a7a85a7f09a75ae06bb2bb070e157564e490a136bd93295c1dd38
-        sourceBlobDigest: sha256:7e394792e68c83cc2622d5c46189a4ae36657600e6e0f8a31aa60db3803418d5
+        sourceRevisionDigest: sha256:f059b16795e1c294dfce9f7c7f5126ee8827196330d8fcec7c3fe806cb2c72ed
+        sourceBlobDigest: sha256:c24c990731629f06bf26c059c1ee47af8c31772d0dce2a5fdf0bfc02168498bf
         tags:
             - latest
+            - main
 targets:
     my-first-target:
         source: default
         sourceNamespace: default
-        sourceRevisionDigest: sha256:cb2b7469920a7a85a7f09a75ae06bb2bb070e157564e490a136bd93295c1dd38
-        sourceBlobDigest: sha256:7e394792e68c83cc2622d5c46189a4ae36657600e6e0f8a31aa60db3803418d5
-        outLocation: C:\Users\Luke\Documents\GitHub\log10ts
+        sourceRevisionDigest: sha256:f059b16795e1c294dfce9f7c7f5126ee8827196330d8fcec7c3fe806cb2c72ed
+        sourceBlobDigest: sha256:c24c990731629f06bf26c059c1ee47af8c31772d0dce2a5fdf0bfc02168498bf
+        outLocation: /github/workspace/repo
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

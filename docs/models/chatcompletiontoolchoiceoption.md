@@ -9,3 +9,18 @@ Specifying a particular tool via `{"type": "function", "function": {"name": "my_
 `none` is the default when no tools are present. `auto` is the default if tools are present.
 
 
+
+## Supported Types
+
+### `models.ChatCompletionToolChoiceOption1`
+
+```typescript
+const value: models.ChatCompletionToolChoiceOption1 = /* values here */
+```
+
+### `models.ChatCompletionNamedToolChoice`
+
+```typescript
+const value: models.ChatCompletionNamedToolChoice = /* values here */
+```
+

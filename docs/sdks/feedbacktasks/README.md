@@ -22,7 +22,6 @@ import { Log10 } from "log10ts";
 
 const log10 = new Log10({
   log10Token: "<YOUR_API_KEY_HERE>",
-  xLog10Organization: "<value>",
 });
 
 async function run() {
@@ -63,7 +62,6 @@ import { Log10 } from "log10ts";
 
 const log10 = new Log10({
   log10Token: "<YOUR_API_KEY_HERE>",
-  xLog10Organization: "<value>",
 });
 
 async function run() {
@@ -110,7 +108,6 @@ import { Log10 } from "log10ts";
 
 const log10 = new Log10({
   log10Token: "<YOUR_API_KEY_HERE>",
-  xLog10Organization: "<value>",
 });
 
 async function run() {

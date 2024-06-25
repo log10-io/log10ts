@@ -17,10 +17,25 @@
 npm add log10ts
 ```
 
+### PNPM
+
+```bash
+pnpm add log10ts
+```
+
+### Bun
+
+```bash
+bun add log10ts
+```
+
 ### Yarn
 
 ```bash
-yarn add log10ts
+yarn add log10ts zod
+
+# Note that Yarn does not install peer dependencies automatically. You will need
+# to install zod as shown above.
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -40,7 +55,6 @@ import { Log10 } from "log10ts";
 
 const log10 = new Log10({
     log10Token: "<YOUR_API_KEY_HERE>",
-    xLog10Organization: "<value>",
 });
 
 async function run() {
@@ -83,28 +97,34 @@ run();
 <!-- Start Global Parameters [global-parameters] -->
 ## Global Parameters
 
-A parameter is configured globally. This parameter must be set on the SDK client instance itself during initialization. When configured as an option during SDK initialization, This global value will be used as the default on the operations that use it. When such operations are called, there is a place in each to override the global value, if needed.
+A parameter is configured globally. This parameter may be set on the SDK client instance itself during initialization. When configured as an option during SDK initialization, This global value will be used as the default on the operations that use it. When such operations are called, there is a place in each to override the global value, if needed.
 
 For example, you can set `X-Log10-Organization` to `"<value>"` at SDK initialization and then you do not have to pass the same value on calls to operations like `update`. But if you want to do so you may, which will locally override the global setting. See the example code below for a demonstration.
 
 
 ### Available Globals
 
-The following global parameter is available. The required parameter must be set when you initialize the SDK client.
+The following global parameter is available.
 
 | Name | Type | Required | Description |
 | ---- | ---- |:--------:| ----------- |
-| xLog10Organization | string | ✔️ | The xLog10Organization parameter. |
+| xLog10Organization | string |  | The xLog10Organization parameter. |
 
 
 ### Example
 
 ```typescript
-import { CreateChatCompletionRequestType, Kind, Log10, Role, Two } from "log10ts";
+import {
+    ChatCompletionRole,
+    CreateChatCompletionRequestType,
+    FinishReason,
+    Kind,
+    Log10,
+    ObjectT,
+} from "log10ts";
 
 const log10 = new Log10({
     log10Token: "<YOUR_API_KEY_HERE>",
-    xLog10Organization: "<value>",
 });
 
 async function run() {
@@ -117,10 +137,10 @@ async function run() {
                 messages: [
                     {
                         content: "<value>",
-                        role: Role.System,
+                        role: ChatCompletionRole.Assistant,
                     },
                 ],
-                model: Two.Gpt4Turbo,
+                model: "gpt-4-turbo",
                 n: 1,
                 responseFormat: {
                     type: CreateChatCompletionRequestType.JsonObject,
@@ -128,6 +148,38 @@ async function run() {
                 temperature: 1,
                 topP: 1,
                 user: "user-1234",
+            },
+            response: {
+                id: "<id>",
+                choices: [
+                    {
+                        finishReason: FinishReason.Stop,
+                        index: 344620,
+                        message: {
+                            content: "<value>",
+                            role: ChatCompletionRole.Tool,
+                        },
+                        logprobs: {
+                            content: [
+                                {
+                                    token: "<value>",
+                                    logprob: 9914.64,
+                                    bytes: [270324],
+                                    topLogprobs: [
+                                        {
+                                            token: "<value>",
+                                            logprob: 6276.9,
+                                            bytes: [684199],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    },
+                ],
+                created: 488852,
+                model: "gpt-4-turbo",
+                object: ObjectT.ChatCompletion,
             },
         },
         "<value>"
@@ -156,17 +208,17 @@ Validation errors can also occur when either method arguments or data returned f
 
 ```typescript
 import {
-    ChatCompletionRequestAssistantMessageRole,
+    ChatCompletionRole,
     CreateChatCompletionRequestType,
+    FinishReason,
     Kind,
     Log10,
-    Two,
+    ObjectT,
 } from "log10ts";
-import * as errors from "log10ts/models";
+import { SDKValidationError } from "log10ts/models";
 
 const log10 = new Log10({
     log10Token: "<YOUR_API_KEY_HERE>",
-    xLog10Organization: "<value>",
 });
 
 async function run() {
@@ -179,10 +231,10 @@ async function run() {
                 request: {
                     messages: [
                         {
-                            role: ChatCompletionRequestAssistantMessageRole.Assistant,
+                            role: ChatCompletionRole.Tool,
                         },
                     ],
-                    model: Two.Gpt4Turbo,
+                    model: "gpt-4-turbo",
                     n: 1,
                     responseFormat: {
                         type: CreateChatCompletionRequestType.JsonObject,
@@ -191,12 +243,44 @@ async function run() {
                     topP: 1,
                     user: "user-1234",
                 },
+                response: {
+                    id: "<id>",
+                    choices: [
+                        {
+                            finishReason: FinishReason.FunctionCall,
+                            index: 417458,
+                            message: {
+                                content: "<value>",
+                                role: ChatCompletionRole.User,
+                            },
+                            logprobs: {
+                                content: [
+                                    {
+                                        token: "<value>",
+                                        logprob: 1343.65,
+                                        bytes: [786546],
+                                        topLogprobs: [
+                                            {
+                                                token: "<value>",
+                                                logprob: 690.25,
+                                                bytes: [996706],
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                    created: 796474,
+                    model: "gpt-4-turbo",
+                    object: ObjectT.ChatCompletion,
+                },
             },
             "<value>"
         );
     } catch (err) {
         switch (true) {
-            case err instanceof errors.SDKValidationError: {
+            case err instanceof SDKValidationError: {
                 // Validation errors can be pretty-printed
                 console.error(err.pretty());
                 // Raw value may also be inspected
@@ -231,17 +315,17 @@ You can override the default server globally by passing a server index to the `s
 
 ```typescript
 import {
-    ChatCompletionRequestAssistantMessageRole,
+    ChatCompletionRole,
     CreateChatCompletionRequestType,
+    FinishReason,
     Kind,
     Log10,
-    Two,
+    ObjectT,
 } from "log10ts";
 
 const log10 = new Log10({
     serverIdx: 0,
     log10Token: "<YOUR_API_KEY_HERE>",
-    xLog10Organization: "<value>",
 });
 
 async function run() {
@@ -252,10 +336,10 @@ async function run() {
             request: {
                 messages: [
                     {
-                        role: ChatCompletionRequestAssistantMessageRole.Assistant,
+                        role: ChatCompletionRole.Tool,
                     },
                 ],
-                model: Two.Gpt4Turbo,
+                model: "gpt-4-turbo",
                 n: 1,
                 responseFormat: {
                     type: CreateChatCompletionRequestType.JsonObject,
@@ -263,6 +347,38 @@ async function run() {
                 temperature: 1,
                 topP: 1,
                 user: "user-1234",
+            },
+            response: {
+                id: "<id>",
+                choices: [
+                    {
+                        finishReason: FinishReason.FunctionCall,
+                        index: 417458,
+                        message: {
+                            content: "<value>",
+                            role: ChatCompletionRole.User,
+                        },
+                        logprobs: {
+                            content: [
+                                {
+                                    token: "<value>",
+                                    logprob: 1343.65,
+                                    bytes: [786546],
+                                    topLogprobs: [
+                                        {
+                                            token: "<value>",
+                                            logprob: 690.25,
+                                            bytes: [996706],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    },
+                ],
+                created: 796474,
+                model: "gpt-4-turbo",
+                object: ObjectT.ChatCompletion,
             },
         },
         "<value>"
@@ -283,17 +399,17 @@ The default server can also be overridden globally by passing a URL to the `serv
 
 ```typescript
 import {
-    ChatCompletionRequestAssistantMessageRole,
+    ChatCompletionRole,
     CreateChatCompletionRequestType,
+    FinishReason,
     Kind,
     Log10,
-    Two,
+    ObjectT,
 } from "log10ts";
 
 const log10 = new Log10({
     serverURL: "https://log10.io",
     log10Token: "<YOUR_API_KEY_HERE>",
-    xLog10Organization: "<value>",
 });
 
 async function run() {
@@ -304,10 +420,10 @@ async function run() {
             request: {
                 messages: [
                     {
-                        role: ChatCompletionRequestAssistantMessageRole.Assistant,
+                        role: ChatCompletionRole.Tool,
                     },
                 ],
-                model: Two.Gpt4Turbo,
+                model: "gpt-4-turbo",
                 n: 1,
                 responseFormat: {
                     type: CreateChatCompletionRequestType.JsonObject,
@@ -315,6 +431,38 @@ async function run() {
                 temperature: 1,
                 topP: 1,
                 user: "user-1234",
+            },
+            response: {
+                id: "<id>",
+                choices: [
+                    {
+                        finishReason: FinishReason.FunctionCall,
+                        index: 417458,
+                        message: {
+                            content: "<value>",
+                            role: ChatCompletionRole.User,
+                        },
+                        logprobs: {
+                            content: [
+                                {
+                                    token: "<value>",
+                                    logprob: 1343.65,
+                                    bytes: [786546],
+                                    topLogprobs: [
+                                        {
+                                            token: "<value>",
+                                            logprob: 690.25,
+                                            bytes: [996706],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    },
+                ],
+                created: 796474,
+                model: "gpt-4-turbo",
+                object: ObjectT.ChatCompletion,
             },
         },
         "<value>"
@@ -392,16 +540,16 @@ This SDK supports the following security scheme globally:
 To authenticate with the API the `log10Token` parameter must be set when initializing the SDK client instance. For example:
 ```typescript
 import {
-    ChatCompletionRequestAssistantMessageRole,
+    ChatCompletionRole,
     CreateChatCompletionRequestType,
+    FinishReason,
     Kind,
     Log10,
-    Two,
+    ObjectT,
 } from "log10ts";
 
 const log10 = new Log10({
     log10Token: "<YOUR_API_KEY_HERE>",
-    xLog10Organization: "<value>",
 });
 
 async function run() {
@@ -412,10 +560,10 @@ async function run() {
             request: {
                 messages: [
                     {
-                        role: ChatCompletionRequestAssistantMessageRole.Assistant,
+                        role: ChatCompletionRole.Tool,
                     },
                 ],
-                model: Two.Gpt4Turbo,
+                model: "gpt-4-turbo",
                 n: 1,
                 responseFormat: {
                     type: CreateChatCompletionRequestType.JsonObject,
@@ -423,6 +571,38 @@ async function run() {
                 temperature: 1,
                 topP: 1,
                 user: "user-1234",
+            },
+            response: {
+                id: "<id>",
+                choices: [
+                    {
+                        finishReason: FinishReason.FunctionCall,
+                        index: 417458,
+                        message: {
+                            content: "<value>",
+                            role: ChatCompletionRole.User,
+                        },
+                        logprobs: {
+                            content: [
+                                {
+                                    token: "<value>",
+                                    logprob: 1343.65,
+                                    bytes: [786546],
+                                    topLogprobs: [
+                                        {
+                                            token: "<value>",
+                                            logprob: 690.25,
+                                            bytes: [996706],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    },
+                ],
+                created: 796474,
+                model: "gpt-4-turbo",
+                object: ObjectT.ChatCompletion,
             },
         },
         "<value>"
