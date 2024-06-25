@@ -5,7 +5,8 @@
 import {
     ChatCompletionRequestMessageContentPart,
     ChatCompletionRequestMessageContentPart$,
-} from "./chatcompletionrequestmessagecontentpart";
+} from "./chatcompletionrequestmessagecontentpart.js";
+import { ChatCompletionRole, ChatCompletionRole$ } from "./chatcompletionrole.js";
 import * as z from "zod";
 
 /**
@@ -16,13 +17,6 @@ import * as z from "zod";
  */
 export type Content = string | Array<ChatCompletionRequestMessageContentPart>;
 
-/**
- * The role of the messages author, in this case `user`.
- */
-export enum ChatCompletionRequestUserMessageRole {
-    User = "user",
-}
-
 export type ChatCompletionRequestUserMessage = {
     /**
      * The contents of the user message.
@@ -32,9 +26,9 @@ export type ChatCompletionRequestUserMessage = {
      */
     content: string | Array<ChatCompletionRequestMessageContentPart>;
     /**
-     * The role of the messages author, in this case `user`.
+     * The role of the author of a message
      */
-    role: ChatCompletionRequestUserMessageRole;
+    role: ChatCompletionRole;
     /**
      * An optional name for the participant. Provides the model information to differentiate between participants of the same role.
      */
@@ -56,30 +50,16 @@ export namespace Content$ {
 }
 
 /** @internal */
-export namespace ChatCompletionRequestUserMessageRole$ {
-    export const inboundSchema = z.nativeEnum(ChatCompletionRequestUserMessageRole);
-    export const outboundSchema = inboundSchema;
-}
-
-/** @internal */
 export namespace ChatCompletionRequestUserMessage$ {
     export const inboundSchema: z.ZodType<ChatCompletionRequestUserMessage, z.ZodTypeDef, unknown> =
-        z
-            .object({
-                content: z.union([
-                    z.string(),
-                    z.array(ChatCompletionRequestMessageContentPart$.inboundSchema),
-                ]),
-                role: ChatCompletionRequestUserMessageRole$.inboundSchema,
-                name: z.string().optional(),
-            })
-            .transform((v) => {
-                return {
-                    content: v.content,
-                    role: v.role,
-                    ...(v.name === undefined ? null : { name: v.name }),
-                };
-            });
+        z.object({
+            content: z.union([
+                z.string(),
+                z.array(ChatCompletionRequestMessageContentPart$.inboundSchema),
+            ]),
+            role: ChatCompletionRole$.inboundSchema,
+            name: z.string().optional(),
+        });
 
     export type Outbound = {
         content: string | Array<ChatCompletionRequestMessageContentPart$.Outbound>;
@@ -91,20 +71,12 @@ export namespace ChatCompletionRequestUserMessage$ {
         Outbound,
         z.ZodTypeDef,
         ChatCompletionRequestUserMessage
-    > = z
-        .object({
-            content: z.union([
-                z.string(),
-                z.array(ChatCompletionRequestMessageContentPart$.outboundSchema),
-            ]),
-            role: ChatCompletionRequestUserMessageRole$.outboundSchema,
-            name: z.string().optional(),
-        })
-        .transform((v) => {
-            return {
-                content: v.content,
-                role: v.role,
-                ...(v.name === undefined ? null : { name: v.name }),
-            };
-        });
+    > = z.object({
+        content: z.union([
+            z.string(),
+            z.array(ChatCompletionRequestMessageContentPart$.outboundSchema),
+        ]),
+        role: ChatCompletionRole$.outboundSchema,
+        name: z.string().optional(),
+    });
 }

@@ -5,7 +5,7 @@
 import {
     ChatCompletionNamedToolChoice,
     ChatCompletionNamedToolChoice$,
-} from "./chatcompletionnamedtoolchoice";
+} from "./chatcompletionnamedtoolchoice.js";
 import * as z from "zod";
 
 /**
@@ -38,8 +38,10 @@ export type ChatCompletionToolChoiceOption =
 
 /** @internal */
 export namespace ChatCompletionToolChoiceOption1$ {
-    export const inboundSchema = z.nativeEnum(ChatCompletionToolChoiceOption1);
-    export const outboundSchema = inboundSchema;
+    export const inboundSchema: z.ZodNativeEnum<typeof ChatCompletionToolChoiceOption1> =
+        z.nativeEnum(ChatCompletionToolChoiceOption1);
+    export const outboundSchema: z.ZodNativeEnum<typeof ChatCompletionToolChoiceOption1> =
+        inboundSchema;
 }
 
 /** @internal */

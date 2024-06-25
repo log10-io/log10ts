@@ -5,11 +5,11 @@
 import {
     ChatCompletionRequestMessageContentPartImage,
     ChatCompletionRequestMessageContentPartImage$,
-} from "./chatcompletionrequestmessagecontentpartimage";
+} from "./chatcompletionrequestmessagecontentpartimage.js";
 import {
     ChatCompletionRequestMessageContentPartText,
     ChatCompletionRequestMessageContentPartText$,
-} from "./chatcompletionrequestmessagecontentparttext";
+} from "./chatcompletionrequestmessagecontentparttext.js";
 import * as z from "zod";
 
 export type ChatCompletionRequestMessageContentPart =
