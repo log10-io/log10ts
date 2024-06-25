@@ -1,12 +1,15 @@
 # log10ts
 
-<div align="left">
-    <a href="https://speakeasyapi.dev/"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20Speakeasy-212015?style=for-the-badge&logoColor=FBE331&logo=speakeasy&labelColor=545454" /></a>
-    <a href="https://opensource.org/licenses/MIT">
-        <img src="https://img.shields.io/badge/License-MIT-blue.svg" style="width: 100px; height: 28px;" />
-    </a>
+<div align="center">
+        <img src="https://github.com/log10-io/log10ts/assets/68016351/4359a049-ef26-4e44-b3c7-c194b0545fa5" width="250">
+   <p> </p>
+   <a href="https://docs.log10.io/"><img src="https://img.shields.io/static/v1?label=Docs&message=API Ref&color=000000&style=for-the-badge" /></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" /></a>
+<a href="https://speakeasyapi.dev/"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20Speakeasy-212015?style=for-the-badge&logoColor=FBE331&logo=speakeasy&labelColor=545454" /></a>
 </div>
 
+<br></br>
+The Log10 typescript library provides convenient access and type safe models for managing requests and responses from the Log10 REST API powered by [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
 
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
