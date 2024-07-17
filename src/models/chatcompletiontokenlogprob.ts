@@ -40,58 +40,96 @@ export type ChatCompletionTokenLogprob = {
 };
 
 /** @internal */
+export const TopLogprobs$inboundSchema: z.ZodType<TopLogprobs, z.ZodTypeDef, unknown> = z.object({
+    token: z.string(),
+    logprob: z.number(),
+    bytes: z.nullable(z.array(z.number().int())),
+});
+
+/** @internal */
+export type TopLogprobs$Outbound = {
+    token: string;
+    logprob: number;
+    bytes: Array<number> | null;
+};
+
+/** @internal */
+export const TopLogprobs$outboundSchema: z.ZodType<
+    TopLogprobs$Outbound,
+    z.ZodTypeDef,
+    TopLogprobs
+> = z.object({
+    token: z.string(),
+    logprob: z.number(),
+    bytes: z.nullable(z.array(z.number().int())),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace TopLogprobs$ {
-    export const inboundSchema: z.ZodType<TopLogprobs, z.ZodTypeDef, unknown> = z.object({
-        token: z.string(),
-        logprob: z.number(),
-        bytes: z.nullable(z.array(z.number().int())),
-    });
-
-    export type Outbound = {
-        token: string;
-        logprob: number;
-        bytes: Array<number> | null;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, TopLogprobs> = z.object({
-        token: z.string(),
-        logprob: z.number(),
-        bytes: z.nullable(z.array(z.number().int())),
-    });
+    /** @deprecated use `TopLogprobs$inboundSchema` instead. */
+    export const inboundSchema = TopLogprobs$inboundSchema;
+    /** @deprecated use `TopLogprobs$outboundSchema` instead. */
+    export const outboundSchema = TopLogprobs$outboundSchema;
+    /** @deprecated use `TopLogprobs$Outbound` instead. */
+    export type Outbound = TopLogprobs$Outbound;
 }
 
 /** @internal */
+export const ChatCompletionTokenLogprob$inboundSchema: z.ZodType<
+    ChatCompletionTokenLogprob,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        token: z.string(),
+        logprob: z.number(),
+        bytes: z.nullable(z.array(z.number().int())),
+        top_logprobs: z.array(z.lazy(() => TopLogprobs$inboundSchema)),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            top_logprobs: "topLogprobs",
+        });
+    });
+
+/** @internal */
+export type ChatCompletionTokenLogprob$Outbound = {
+    token: string;
+    logprob: number;
+    bytes: Array<number> | null;
+    top_logprobs: Array<TopLogprobs$Outbound>;
+};
+
+/** @internal */
+export const ChatCompletionTokenLogprob$outboundSchema: z.ZodType<
+    ChatCompletionTokenLogprob$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionTokenLogprob
+> = z
+    .object({
+        token: z.string(),
+        logprob: z.number(),
+        bytes: z.nullable(z.array(z.number().int())),
+        topLogprobs: z.array(z.lazy(() => TopLogprobs$outboundSchema)),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            topLogprobs: "top_logprobs",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ChatCompletionTokenLogprob$ {
-    export const inboundSchema: z.ZodType<ChatCompletionTokenLogprob, z.ZodTypeDef, unknown> = z
-        .object({
-            token: z.string(),
-            logprob: z.number(),
-            bytes: z.nullable(z.array(z.number().int())),
-            top_logprobs: z.array(z.lazy(() => TopLogprobs$.inboundSchema)),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                top_logprobs: "topLogprobs",
-            });
-        });
-
-    export type Outbound = {
-        token: string;
-        logprob: number;
-        bytes: Array<number> | null;
-        top_logprobs: Array<TopLogprobs$.Outbound>;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ChatCompletionTokenLogprob> = z
-        .object({
-            token: z.string(),
-            logprob: z.number(),
-            bytes: z.nullable(z.array(z.number().int())),
-            topLogprobs: z.array(z.lazy(() => TopLogprobs$.outboundSchema)),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                topLogprobs: "top_logprobs",
-            });
-        });
+    /** @deprecated use `ChatCompletionTokenLogprob$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionTokenLogprob$inboundSchema;
+    /** @deprecated use `ChatCompletionTokenLogprob$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionTokenLogprob$outboundSchema;
+    /** @deprecated use `ChatCompletionTokenLogprob$Outbound` instead. */
+    export type Outbound = ChatCompletionTokenLogprob$Outbound;
 }

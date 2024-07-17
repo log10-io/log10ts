@@ -4,11 +4,15 @@
 
 import {
     ChatCompletionRequestMessageContentPartImage,
-    ChatCompletionRequestMessageContentPartImage$,
+    ChatCompletionRequestMessageContentPartImage$inboundSchema,
+    ChatCompletionRequestMessageContentPartImage$Outbound,
+    ChatCompletionRequestMessageContentPartImage$outboundSchema,
 } from "./chatcompletionrequestmessagecontentpartimage.js";
 import {
     ChatCompletionRequestMessageContentPartText,
-    ChatCompletionRequestMessageContentPartText$,
+    ChatCompletionRequestMessageContentPartText$inboundSchema,
+    ChatCompletionRequestMessageContentPartText$Outbound,
+    ChatCompletionRequestMessageContentPartText$outboundSchema,
 } from "./chatcompletionrequestmessagecontentparttext.js";
 import * as z from "zod";
 
@@ -17,25 +21,39 @@ export type ChatCompletionRequestMessageContentPart =
     | ChatCompletionRequestMessageContentPartImage;
 
 /** @internal */
-export namespace ChatCompletionRequestMessageContentPart$ {
-    export const inboundSchema: z.ZodType<
-        ChatCompletionRequestMessageContentPart,
-        z.ZodTypeDef,
-        unknown
-    > = z.union([
-        ChatCompletionRequestMessageContentPartText$.inboundSchema,
-        ChatCompletionRequestMessageContentPartImage$.inboundSchema,
-    ]);
+export const ChatCompletionRequestMessageContentPart$inboundSchema: z.ZodType<
+    ChatCompletionRequestMessageContentPart,
+    z.ZodTypeDef,
+    unknown
+> = z.union([
+    ChatCompletionRequestMessageContentPartText$inboundSchema,
+    ChatCompletionRequestMessageContentPartImage$inboundSchema,
+]);
 
-    export type Outbound =
-        | ChatCompletionRequestMessageContentPartText$.Outbound
-        | ChatCompletionRequestMessageContentPartImage$.Outbound;
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        ChatCompletionRequestMessageContentPart
-    > = z.union([
-        ChatCompletionRequestMessageContentPartText$.outboundSchema,
-        ChatCompletionRequestMessageContentPartImage$.outboundSchema,
-    ]);
+/** @internal */
+export type ChatCompletionRequestMessageContentPart$Outbound =
+    | ChatCompletionRequestMessageContentPartText$Outbound
+    | ChatCompletionRequestMessageContentPartImage$Outbound;
+
+/** @internal */
+export const ChatCompletionRequestMessageContentPart$outboundSchema: z.ZodType<
+    ChatCompletionRequestMessageContentPart$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionRequestMessageContentPart
+> = z.union([
+    ChatCompletionRequestMessageContentPartText$outboundSchema,
+    ChatCompletionRequestMessageContentPartImage$outboundSchema,
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ChatCompletionRequestMessageContentPart$ {
+    /** @deprecated use `ChatCompletionRequestMessageContentPart$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionRequestMessageContentPart$inboundSchema;
+    /** @deprecated use `ChatCompletionRequestMessageContentPart$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionRequestMessageContentPart$outboundSchema;
+    /** @deprecated use `ChatCompletionRequestMessageContentPart$Outbound` instead. */
+    export type Outbound = ChatCompletionRequestMessageContentPart$Outbound;
 }

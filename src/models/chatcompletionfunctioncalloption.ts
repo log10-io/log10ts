@@ -18,21 +18,37 @@ export type ChatCompletionFunctionCallOption = {
 };
 
 /** @internal */
+export const ChatCompletionFunctionCallOption$inboundSchema: z.ZodType<
+    ChatCompletionFunctionCallOption,
+    z.ZodTypeDef,
+    unknown
+> = z.object({
+    name: z.string(),
+});
+
+/** @internal */
+export type ChatCompletionFunctionCallOption$Outbound = {
+    name: string;
+};
+
+/** @internal */
+export const ChatCompletionFunctionCallOption$outboundSchema: z.ZodType<
+    ChatCompletionFunctionCallOption$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionFunctionCallOption
+> = z.object({
+    name: z.string(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ChatCompletionFunctionCallOption$ {
-    export const inboundSchema: z.ZodType<ChatCompletionFunctionCallOption, z.ZodTypeDef, unknown> =
-        z.object({
-            name: z.string(),
-        });
-
-    export type Outbound = {
-        name: string;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        ChatCompletionFunctionCallOption
-    > = z.object({
-        name: z.string(),
-    });
+    /** @deprecated use `ChatCompletionFunctionCallOption$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionFunctionCallOption$inboundSchema;
+    /** @deprecated use `ChatCompletionFunctionCallOption$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionFunctionCallOption$outboundSchema;
+    /** @deprecated use `ChatCompletionFunctionCallOption$Outbound` instead. */
+    export type Outbound = ChatCompletionFunctionCallOption$Outbound;
 }

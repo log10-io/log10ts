@@ -3,8 +3,18 @@
  */
 
 import { remap as remap$ } from "../lib/primitives.js";
-import { Feedback, Feedback$ } from "./feedback.js";
-import { HTTPMetadata, HTTPMetadata$ } from "./httpmetadata.js";
+import {
+    Feedback,
+    Feedback$inboundSchema,
+    Feedback$Outbound,
+    Feedback$outboundSchema,
+} from "./feedback.js";
+import {
+    HTTPMetadata,
+    HTTPMetadata$inboundSchema,
+    HTTPMetadata$Outbound,
+    HTTPMetadata$outboundSchema,
+} from "./httpmetadata.js";
 import * as z from "zod";
 
 export type UploadGlobals = {
@@ -109,261 +119,392 @@ export type UploadResponse = {
 };
 
 /** @internal */
+export const UploadGlobals$inboundSchema: z.ZodType<UploadGlobals, z.ZodTypeDef, unknown> = z
+    .object({
+        "X-Log10-Organization": z.string().optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            "X-Log10-Organization": "xLog10Organization",
+        });
+    });
+
+/** @internal */
+export type UploadGlobals$Outbound = {
+    "X-Log10-Organization"?: string | undefined;
+};
+
+/** @internal */
+export const UploadGlobals$outboundSchema: z.ZodType<
+    UploadGlobals$Outbound,
+    z.ZodTypeDef,
+    UploadGlobals
+> = z
+    .object({
+        xLog10Organization: z.string().optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            xLog10Organization: "X-Log10-Organization",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace UploadGlobals$ {
-    export const inboundSchema: z.ZodType<UploadGlobals, z.ZodTypeDef, unknown> = z
-        .object({
-            "X-Log10-Organization": z.string().optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                "X-Log10-Organization": "xLog10Organization",
-            });
-        });
-
-    export type Outbound = {
-        "X-Log10-Organization"?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, UploadGlobals> = z
-        .object({
-            xLog10Organization: z.string().optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                xLog10Organization: "X-Log10-Organization",
-            });
-        });
+    /** @deprecated use `UploadGlobals$inboundSchema` instead. */
+    export const inboundSchema = UploadGlobals$inboundSchema;
+    /** @deprecated use `UploadGlobals$outboundSchema` instead. */
+    export const outboundSchema = UploadGlobals$outboundSchema;
+    /** @deprecated use `UploadGlobals$Outbound` instead. */
+    export type Outbound = UploadGlobals$Outbound;
 }
 
 /** @internal */
+export const UploadRequestBodyJsonValues$inboundSchema: z.ZodType<
+    UploadRequestBodyJsonValues,
+    z.ZodTypeDef,
+    unknown
+> = z.object({});
+
+/** @internal */
+export type UploadRequestBodyJsonValues$Outbound = {};
+
+/** @internal */
+export const UploadRequestBodyJsonValues$outboundSchema: z.ZodType<
+    UploadRequestBodyJsonValues$Outbound,
+    z.ZodTypeDef,
+    UploadRequestBodyJsonValues
+> = z.object({});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace UploadRequestBodyJsonValues$ {
-    export const inboundSchema: z.ZodType<UploadRequestBodyJsonValues, z.ZodTypeDef, unknown> =
-        z.object({});
-
-    export type Outbound = {};
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, UploadRequestBodyJsonValues> =
-        z.object({});
+    /** @deprecated use `UploadRequestBodyJsonValues$inboundSchema` instead. */
+    export const inboundSchema = UploadRequestBodyJsonValues$inboundSchema;
+    /** @deprecated use `UploadRequestBodyJsonValues$outboundSchema` instead. */
+    export const outboundSchema = UploadRequestBodyJsonValues$outboundSchema;
+    /** @deprecated use `UploadRequestBodyJsonValues$Outbound` instead. */
+    export type Outbound = UploadRequestBodyJsonValues$Outbound;
 }
 
 /** @internal */
+export const Two$inboundSchema: z.ZodType<Two, z.ZodTypeDef, unknown> = z
+    .object({
+        id: z.string().optional(),
+        created_at_ms: z.number().optional(),
+        task_id: z.string(),
+        json_values: z.lazy(() => UploadRequestBodyJsonValues$inboundSchema),
+        matched_completion_ids: z.array(z.string()),
+        comment: z.string(),
+        completions_summary: z.string().optional(),
+        completion_ids: z.array(z.string()),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            created_at_ms: "createdAtMs",
+            task_id: "taskId",
+            json_values: "jsonValues",
+            matched_completion_ids: "matchedCompletionIds",
+            completions_summary: "completionsSummary",
+            completion_ids: "completionIds",
+        });
+    });
+
+/** @internal */
+export type Two$Outbound = {
+    id?: string | undefined;
+    created_at_ms?: number | undefined;
+    task_id: string;
+    json_values: UploadRequestBodyJsonValues$Outbound;
+    matched_completion_ids: Array<string>;
+    comment: string;
+    completions_summary?: string | undefined;
+    completion_ids: Array<string>;
+};
+
+/** @internal */
+export const Two$outboundSchema: z.ZodType<Two$Outbound, z.ZodTypeDef, Two> = z
+    .object({
+        id: z.string().optional(),
+        createdAtMs: z.number().optional(),
+        taskId: z.string(),
+        jsonValues: z.lazy(() => UploadRequestBodyJsonValues$outboundSchema),
+        matchedCompletionIds: z.array(z.string()),
+        comment: z.string(),
+        completionsSummary: z.string().optional(),
+        completionIds: z.array(z.string()),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            createdAtMs: "created_at_ms",
+            taskId: "task_id",
+            jsonValues: "json_values",
+            matchedCompletionIds: "matched_completion_ids",
+            completionsSummary: "completions_summary",
+            completionIds: "completion_ids",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace Two$ {
-    export const inboundSchema: z.ZodType<Two, z.ZodTypeDef, unknown> = z
-        .object({
-            id: z.string().optional(),
-            created_at_ms: z.number().optional(),
-            task_id: z.string(),
-            json_values: z.lazy(() => UploadRequestBodyJsonValues$.inboundSchema),
-            matched_completion_ids: z.array(z.string()),
-            comment: z.string(),
-            completions_summary: z.string().optional(),
-            completion_ids: z.array(z.string()),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                created_at_ms: "createdAtMs",
-                task_id: "taskId",
-                json_values: "jsonValues",
-                matched_completion_ids: "matchedCompletionIds",
-                completions_summary: "completionsSummary",
-                completion_ids: "completionIds",
-            });
-        });
-
-    export type Outbound = {
-        id?: string | undefined;
-        created_at_ms?: number | undefined;
-        task_id: string;
-        json_values: UploadRequestBodyJsonValues$.Outbound;
-        matched_completion_ids: Array<string>;
-        comment: string;
-        completions_summary?: string | undefined;
-        completion_ids: Array<string>;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Two> = z
-        .object({
-            id: z.string().optional(),
-            createdAtMs: z.number().optional(),
-            taskId: z.string(),
-            jsonValues: z.lazy(() => UploadRequestBodyJsonValues$.outboundSchema),
-            matchedCompletionIds: z.array(z.string()),
-            comment: z.string(),
-            completionsSummary: z.string().optional(),
-            completionIds: z.array(z.string()),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                createdAtMs: "created_at_ms",
-                taskId: "task_id",
-                jsonValues: "json_values",
-                matchedCompletionIds: "matched_completion_ids",
-                completionsSummary: "completions_summary",
-                completionIds: "completion_ids",
-            });
-        });
+    /** @deprecated use `Two$inboundSchema` instead. */
+    export const inboundSchema = Two$inboundSchema;
+    /** @deprecated use `Two$outboundSchema` instead. */
+    export const outboundSchema = Two$outboundSchema;
+    /** @deprecated use `Two$Outbound` instead. */
+    export type Outbound = Two$Outbound;
 }
 
 /** @internal */
+export const RequestBodyJsonValues$inboundSchema: z.ZodType<
+    RequestBodyJsonValues,
+    z.ZodTypeDef,
+    unknown
+> = z.object({});
+
+/** @internal */
+export type RequestBodyJsonValues$Outbound = {};
+
+/** @internal */
+export const RequestBodyJsonValues$outboundSchema: z.ZodType<
+    RequestBodyJsonValues$Outbound,
+    z.ZodTypeDef,
+    RequestBodyJsonValues
+> = z.object({});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace RequestBodyJsonValues$ {
-    export const inboundSchema: z.ZodType<RequestBodyJsonValues, z.ZodTypeDef, unknown> = z.object(
-        {}
-    );
-
-    export type Outbound = {};
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, RequestBodyJsonValues> =
-        z.object({});
+    /** @deprecated use `RequestBodyJsonValues$inboundSchema` instead. */
+    export const inboundSchema = RequestBodyJsonValues$inboundSchema;
+    /** @deprecated use `RequestBodyJsonValues$outboundSchema` instead. */
+    export const outboundSchema = RequestBodyJsonValues$outboundSchema;
+    /** @deprecated use `RequestBodyJsonValues$Outbound` instead. */
+    export type Outbound = RequestBodyJsonValues$Outbound;
 }
 
 /** @internal */
+export const RequestBody1$inboundSchema: z.ZodType<RequestBody1, z.ZodTypeDef, unknown> = z
+    .object({
+        id: z.string().optional(),
+        created_at_ms: z.number().optional(),
+        task_id: z.string(),
+        json_values: z.lazy(() => RequestBodyJsonValues$inboundSchema),
+        matched_completion_ids: z.array(z.string()),
+        comment: z.string(),
+        completions_summary: z.string().optional(),
+        allow_unmatched_feedback: z.boolean().default(false),
+        max_matched_completions: z.number().int().default(100),
+        completion_tags_selector: z.array(z.string()),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            created_at_ms: "createdAtMs",
+            task_id: "taskId",
+            json_values: "jsonValues",
+            matched_completion_ids: "matchedCompletionIds",
+            completions_summary: "completionsSummary",
+            allow_unmatched_feedback: "allowUnmatchedFeedback",
+            max_matched_completions: "maxMatchedCompletions",
+            completion_tags_selector: "completionTagsSelector",
+        });
+    });
+
+/** @internal */
+export type RequestBody1$Outbound = {
+    id?: string | undefined;
+    created_at_ms?: number | undefined;
+    task_id: string;
+    json_values: RequestBodyJsonValues$Outbound;
+    matched_completion_ids: Array<string>;
+    comment: string;
+    completions_summary?: string | undefined;
+    allow_unmatched_feedback: boolean;
+    max_matched_completions: number;
+    completion_tags_selector: Array<string>;
+};
+
+/** @internal */
+export const RequestBody1$outboundSchema: z.ZodType<
+    RequestBody1$Outbound,
+    z.ZodTypeDef,
+    RequestBody1
+> = z
+    .object({
+        id: z.string().optional(),
+        createdAtMs: z.number().optional(),
+        taskId: z.string(),
+        jsonValues: z.lazy(() => RequestBodyJsonValues$outboundSchema),
+        matchedCompletionIds: z.array(z.string()),
+        comment: z.string(),
+        completionsSummary: z.string().optional(),
+        allowUnmatchedFeedback: z.boolean().default(false),
+        maxMatchedCompletions: z.number().int().default(100),
+        completionTagsSelector: z.array(z.string()),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            createdAtMs: "created_at_ms",
+            taskId: "task_id",
+            jsonValues: "json_values",
+            matchedCompletionIds: "matched_completion_ids",
+            completionsSummary: "completions_summary",
+            allowUnmatchedFeedback: "allow_unmatched_feedback",
+            maxMatchedCompletions: "max_matched_completions",
+            completionTagsSelector: "completion_tags_selector",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace RequestBody1$ {
-    export const inboundSchema: z.ZodType<RequestBody1, z.ZodTypeDef, unknown> = z
-        .object({
-            id: z.string().optional(),
-            created_at_ms: z.number().optional(),
-            task_id: z.string(),
-            json_values: z.lazy(() => RequestBodyJsonValues$.inboundSchema),
-            matched_completion_ids: z.array(z.string()),
-            comment: z.string(),
-            completions_summary: z.string().optional(),
-            allow_unmatched_feedback: z.boolean().default(false),
-            max_matched_completions: z.number().int().default(100),
-            completion_tags_selector: z.array(z.string()),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                created_at_ms: "createdAtMs",
-                task_id: "taskId",
-                json_values: "jsonValues",
-                matched_completion_ids: "matchedCompletionIds",
-                completions_summary: "completionsSummary",
-                allow_unmatched_feedback: "allowUnmatchedFeedback",
-                max_matched_completions: "maxMatchedCompletions",
-                completion_tags_selector: "completionTagsSelector",
-            });
-        });
-
-    export type Outbound = {
-        id?: string | undefined;
-        created_at_ms?: number | undefined;
-        task_id: string;
-        json_values: RequestBodyJsonValues$.Outbound;
-        matched_completion_ids: Array<string>;
-        comment: string;
-        completions_summary?: string | undefined;
-        allow_unmatched_feedback: boolean;
-        max_matched_completions: number;
-        completion_tags_selector: Array<string>;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, RequestBody1> = z
-        .object({
-            id: z.string().optional(),
-            createdAtMs: z.number().optional(),
-            taskId: z.string(),
-            jsonValues: z.lazy(() => RequestBodyJsonValues$.outboundSchema),
-            matchedCompletionIds: z.array(z.string()),
-            comment: z.string(),
-            completionsSummary: z.string().optional(),
-            allowUnmatchedFeedback: z.boolean().default(false),
-            maxMatchedCompletions: z.number().int().default(100),
-            completionTagsSelector: z.array(z.string()),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                createdAtMs: "created_at_ms",
-                taskId: "task_id",
-                jsonValues: "json_values",
-                matchedCompletionIds: "matched_completion_ids",
-                completionsSummary: "completions_summary",
-                allowUnmatchedFeedback: "allow_unmatched_feedback",
-                maxMatchedCompletions: "max_matched_completions",
-                completionTagsSelector: "completion_tags_selector",
-            });
-        });
+    /** @deprecated use `RequestBody1$inboundSchema` instead. */
+    export const inboundSchema = RequestBody1$inboundSchema;
+    /** @deprecated use `RequestBody1$outboundSchema` instead. */
+    export const outboundSchema = RequestBody1$outboundSchema;
+    /** @deprecated use `RequestBody1$Outbound` instead. */
+    export type Outbound = RequestBody1$Outbound;
 }
 
 /** @internal */
+export const UploadRequestBody$inboundSchema: z.ZodType<UploadRequestBody, z.ZodTypeDef, unknown> =
+    z.union([z.lazy(() => Two$inboundSchema), z.lazy(() => RequestBody1$inboundSchema)]);
+
+/** @internal */
+export type UploadRequestBody$Outbound = Two$Outbound | RequestBody1$Outbound;
+
+/** @internal */
+export const UploadRequestBody$outboundSchema: z.ZodType<
+    UploadRequestBody$Outbound,
+    z.ZodTypeDef,
+    UploadRequestBody
+> = z.union([z.lazy(() => Two$outboundSchema), z.lazy(() => RequestBody1$outboundSchema)]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace UploadRequestBody$ {
-    export const inboundSchema: z.ZodType<UploadRequestBody, z.ZodTypeDef, unknown> = z.union([
-        z.lazy(() => Two$.inboundSchema),
-        z.lazy(() => RequestBody1$.inboundSchema),
-    ]);
-
-    export type Outbound = Two$.Outbound | RequestBody1$.Outbound;
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, UploadRequestBody> = z.union([
-        z.lazy(() => Two$.outboundSchema),
-        z.lazy(() => RequestBody1$.outboundSchema),
-    ]);
+    /** @deprecated use `UploadRequestBody$inboundSchema` instead. */
+    export const inboundSchema = UploadRequestBody$inboundSchema;
+    /** @deprecated use `UploadRequestBody$outboundSchema` instead. */
+    export const outboundSchema = UploadRequestBody$outboundSchema;
+    /** @deprecated use `UploadRequestBody$Outbound` instead. */
+    export type Outbound = UploadRequestBody$Outbound;
 }
 
 /** @internal */
+export const UploadRequest$inboundSchema: z.ZodType<UploadRequest, z.ZodTypeDef, unknown> = z
+    .object({
+        "X-Log10-Organization": z.string().optional(),
+        RequestBody: z.union([
+            z.lazy(() => Two$inboundSchema),
+            z.lazy(() => RequestBody1$inboundSchema),
+        ]),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            "X-Log10-Organization": "xLog10Organization",
+            RequestBody: "requestBody",
+        });
+    });
+
+/** @internal */
+export type UploadRequest$Outbound = {
+    "X-Log10-Organization"?: string | undefined;
+    RequestBody: Two$Outbound | RequestBody1$Outbound;
+};
+
+/** @internal */
+export const UploadRequest$outboundSchema: z.ZodType<
+    UploadRequest$Outbound,
+    z.ZodTypeDef,
+    UploadRequest
+> = z
+    .object({
+        xLog10Organization: z.string().optional(),
+        requestBody: z.union([
+            z.lazy(() => Two$outboundSchema),
+            z.lazy(() => RequestBody1$outboundSchema),
+        ]),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            xLog10Organization: "X-Log10-Organization",
+            requestBody: "RequestBody",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace UploadRequest$ {
-    export const inboundSchema: z.ZodType<UploadRequest, z.ZodTypeDef, unknown> = z
-        .object({
-            "X-Log10-Organization": z.string().optional(),
-            RequestBody: z.union([
-                z.lazy(() => Two$.inboundSchema),
-                z.lazy(() => RequestBody1$.inboundSchema),
-            ]),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                "X-Log10-Organization": "xLog10Organization",
-                RequestBody: "requestBody",
-            });
-        });
-
-    export type Outbound = {
-        "X-Log10-Organization"?: string | undefined;
-        RequestBody: Two$.Outbound | RequestBody1$.Outbound;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, UploadRequest> = z
-        .object({
-            xLog10Organization: z.string().optional(),
-            requestBody: z.union([
-                z.lazy(() => Two$.outboundSchema),
-                z.lazy(() => RequestBody1$.outboundSchema),
-            ]),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                xLog10Organization: "X-Log10-Organization",
-                requestBody: "RequestBody",
-            });
-        });
+    /** @deprecated use `UploadRequest$inboundSchema` instead. */
+    export const inboundSchema = UploadRequest$inboundSchema;
+    /** @deprecated use `UploadRequest$outboundSchema` instead. */
+    export const outboundSchema = UploadRequest$outboundSchema;
+    /** @deprecated use `UploadRequest$Outbound` instead. */
+    export type Outbound = UploadRequest$Outbound;
 }
 
 /** @internal */
+export const UploadResponse$inboundSchema: z.ZodType<UploadResponse, z.ZodTypeDef, unknown> = z
+    .object({
+        HttpMeta: HTTPMetadata$inboundSchema,
+        Feedback: Feedback$inboundSchema.optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            HttpMeta: "httpMeta",
+            Feedback: "feedback",
+        });
+    });
+
+/** @internal */
+export type UploadResponse$Outbound = {
+    HttpMeta: HTTPMetadata$Outbound;
+    Feedback?: Feedback$Outbound | undefined;
+};
+
+/** @internal */
+export const UploadResponse$outboundSchema: z.ZodType<
+    UploadResponse$Outbound,
+    z.ZodTypeDef,
+    UploadResponse
+> = z
+    .object({
+        httpMeta: HTTPMetadata$outboundSchema,
+        feedback: Feedback$outboundSchema.optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            httpMeta: "HttpMeta",
+            feedback: "Feedback",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace UploadResponse$ {
-    export const inboundSchema: z.ZodType<UploadResponse, z.ZodTypeDef, unknown> = z
-        .object({
-            HttpMeta: HTTPMetadata$.inboundSchema,
-            Feedback: Feedback$.inboundSchema.optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                HttpMeta: "httpMeta",
-                Feedback: "feedback",
-            });
-        });
-
-    export type Outbound = {
-        HttpMeta: HTTPMetadata$.Outbound;
-        Feedback?: Feedback$.Outbound | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, UploadResponse> = z
-        .object({
-            httpMeta: HTTPMetadata$.outboundSchema,
-            feedback: Feedback$.outboundSchema.optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                httpMeta: "HttpMeta",
-                feedback: "Feedback",
-            });
-        });
+    /** @deprecated use `UploadResponse$inboundSchema` instead. */
+    export const inboundSchema = UploadResponse$inboundSchema;
+    /** @deprecated use `UploadResponse$outboundSchema` instead. */
+    export const outboundSchema = UploadResponse$outboundSchema;
+    /** @deprecated use `UploadResponse$Outbound` instead. */
+    export type Outbound = UploadResponse$Outbound;
 }

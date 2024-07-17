@@ -4,7 +4,9 @@
 
 import {
     ChatCompletionNamedToolChoice,
-    ChatCompletionNamedToolChoice$,
+    ChatCompletionNamedToolChoice$inboundSchema,
+    ChatCompletionNamedToolChoice$Outbound,
+    ChatCompletionNamedToolChoice$outboundSchema,
 } from "./chatcompletionnamedtoolchoice.js";
 import * as z from "zod";
 
@@ -37,25 +39,60 @@ export type ChatCompletionToolChoiceOption =
     | ChatCompletionToolChoiceOption1;
 
 /** @internal */
+export const ChatCompletionToolChoiceOption1$inboundSchema: z.ZodNativeEnum<
+    typeof ChatCompletionToolChoiceOption1
+> = z.nativeEnum(ChatCompletionToolChoiceOption1);
+
+/** @internal */
+export const ChatCompletionToolChoiceOption1$outboundSchema: z.ZodNativeEnum<
+    typeof ChatCompletionToolChoiceOption1
+> = ChatCompletionToolChoiceOption1$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ChatCompletionToolChoiceOption1$ {
-    export const inboundSchema: z.ZodNativeEnum<typeof ChatCompletionToolChoiceOption1> =
-        z.nativeEnum(ChatCompletionToolChoiceOption1);
-    export const outboundSchema: z.ZodNativeEnum<typeof ChatCompletionToolChoiceOption1> =
-        inboundSchema;
+    /** @deprecated use `ChatCompletionToolChoiceOption1$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionToolChoiceOption1$inboundSchema;
+    /** @deprecated use `ChatCompletionToolChoiceOption1$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionToolChoiceOption1$outboundSchema;
 }
 
 /** @internal */
-export namespace ChatCompletionToolChoiceOption$ {
-    export const inboundSchema: z.ZodType<ChatCompletionToolChoiceOption, z.ZodTypeDef, unknown> =
-        z.union([
-            ChatCompletionNamedToolChoice$.inboundSchema,
-            ChatCompletionToolChoiceOption1$.inboundSchema,
-        ]);
+export const ChatCompletionToolChoiceOption$inboundSchema: z.ZodType<
+    ChatCompletionToolChoiceOption,
+    z.ZodTypeDef,
+    unknown
+> = z.union([
+    ChatCompletionNamedToolChoice$inboundSchema,
+    ChatCompletionToolChoiceOption1$inboundSchema,
+]);
 
-    export type Outbound = ChatCompletionNamedToolChoice$.Outbound | string;
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ChatCompletionToolChoiceOption> =
-        z.union([
-            ChatCompletionNamedToolChoice$.outboundSchema,
-            ChatCompletionToolChoiceOption1$.outboundSchema,
-        ]);
+/** @internal */
+export type ChatCompletionToolChoiceOption$Outbound =
+    | ChatCompletionNamedToolChoice$Outbound
+    | string;
+
+/** @internal */
+export const ChatCompletionToolChoiceOption$outboundSchema: z.ZodType<
+    ChatCompletionToolChoiceOption$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionToolChoiceOption
+> = z.union([
+    ChatCompletionNamedToolChoice$outboundSchema,
+    ChatCompletionToolChoiceOption1$outboundSchema,
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ChatCompletionToolChoiceOption$ {
+    /** @deprecated use `ChatCompletionToolChoiceOption$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionToolChoiceOption$inboundSchema;
+    /** @deprecated use `ChatCompletionToolChoiceOption$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionToolChoiceOption$outboundSchema;
+    /** @deprecated use `ChatCompletionToolChoiceOption$Outbound` instead. */
+    export type Outbound = ChatCompletionToolChoiceOption$Outbound;
 }

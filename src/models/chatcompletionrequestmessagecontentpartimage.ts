@@ -41,73 +41,122 @@ export type ChatCompletionRequestMessageContentPartImage = {
 };
 
 /** @internal */
+export const ChatCompletionRequestMessageContentPartImageType$inboundSchema: z.ZodNativeEnum<
+    typeof ChatCompletionRequestMessageContentPartImageType
+> = z.nativeEnum(ChatCompletionRequestMessageContentPartImageType);
+
+/** @internal */
+export const ChatCompletionRequestMessageContentPartImageType$outboundSchema: z.ZodNativeEnum<
+    typeof ChatCompletionRequestMessageContentPartImageType
+> = ChatCompletionRequestMessageContentPartImageType$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ChatCompletionRequestMessageContentPartImageType$ {
-    export const inboundSchema: z.ZodNativeEnum<
-        typeof ChatCompletionRequestMessageContentPartImageType
-    > = z.nativeEnum(ChatCompletionRequestMessageContentPartImageType);
-    export const outboundSchema: z.ZodNativeEnum<
-        typeof ChatCompletionRequestMessageContentPartImageType
-    > = inboundSchema;
+    /** @deprecated use `ChatCompletionRequestMessageContentPartImageType$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionRequestMessageContentPartImageType$inboundSchema;
+    /** @deprecated use `ChatCompletionRequestMessageContentPartImageType$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionRequestMessageContentPartImageType$outboundSchema;
 }
 
 /** @internal */
+export const Detail$inboundSchema: z.ZodNativeEnum<typeof Detail> = z.nativeEnum(Detail);
+
+/** @internal */
+export const Detail$outboundSchema: z.ZodNativeEnum<typeof Detail> = Detail$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace Detail$ {
-    export const inboundSchema: z.ZodNativeEnum<typeof Detail> = z.nativeEnum(Detail);
-    export const outboundSchema: z.ZodNativeEnum<typeof Detail> = inboundSchema;
+    /** @deprecated use `Detail$inboundSchema` instead. */
+    export const inboundSchema = Detail$inboundSchema;
+    /** @deprecated use `Detail$outboundSchema` instead. */
+    export const outboundSchema = Detail$outboundSchema;
 }
 
 /** @internal */
+export const ImageUrl$inboundSchema: z.ZodType<ImageUrl, z.ZodTypeDef, unknown> = z.object({
+    url: z.string(),
+    detail: Detail$inboundSchema.default(Detail.Auto),
+});
+
+/** @internal */
+export type ImageUrl$Outbound = {
+    url: string;
+    detail: string;
+};
+
+/** @internal */
+export const ImageUrl$outboundSchema: z.ZodType<ImageUrl$Outbound, z.ZodTypeDef, ImageUrl> =
+    z.object({
+        url: z.string(),
+        detail: Detail$outboundSchema.default(Detail.Auto),
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ImageUrl$ {
-    export const inboundSchema: z.ZodType<ImageUrl, z.ZodTypeDef, unknown> = z.object({
-        url: z.string(),
-        detail: Detail$.inboundSchema.default(Detail.Auto),
-    });
-
-    export type Outbound = {
-        url: string;
-        detail: string;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ImageUrl> = z.object({
-        url: z.string(),
-        detail: Detail$.outboundSchema.default(Detail.Auto),
-    });
+    /** @deprecated use `ImageUrl$inboundSchema` instead. */
+    export const inboundSchema = ImageUrl$inboundSchema;
+    /** @deprecated use `ImageUrl$outboundSchema` instead. */
+    export const outboundSchema = ImageUrl$outboundSchema;
+    /** @deprecated use `ImageUrl$Outbound` instead. */
+    export type Outbound = ImageUrl$Outbound;
 }
 
 /** @internal */
+export const ChatCompletionRequestMessageContentPartImage$inboundSchema: z.ZodType<
+    ChatCompletionRequestMessageContentPartImage,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        type: ChatCompletionRequestMessageContentPartImageType$inboundSchema,
+        image_url: z.lazy(() => ImageUrl$inboundSchema),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            image_url: "imageUrl",
+        });
+    });
+
+/** @internal */
+export type ChatCompletionRequestMessageContentPartImage$Outbound = {
+    type: string;
+    image_url: ImageUrl$Outbound;
+};
+
+/** @internal */
+export const ChatCompletionRequestMessageContentPartImage$outboundSchema: z.ZodType<
+    ChatCompletionRequestMessageContentPartImage$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionRequestMessageContentPartImage
+> = z
+    .object({
+        type: ChatCompletionRequestMessageContentPartImageType$outboundSchema,
+        imageUrl: z.lazy(() => ImageUrl$outboundSchema),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            imageUrl: "image_url",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ChatCompletionRequestMessageContentPartImage$ {
-    export const inboundSchema: z.ZodType<
-        ChatCompletionRequestMessageContentPartImage,
-        z.ZodTypeDef,
-        unknown
-    > = z
-        .object({
-            type: ChatCompletionRequestMessageContentPartImageType$.inboundSchema,
-            image_url: z.lazy(() => ImageUrl$.inboundSchema),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                image_url: "imageUrl",
-            });
-        });
-
-    export type Outbound = {
-        type: string;
-        image_url: ImageUrl$.Outbound;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        ChatCompletionRequestMessageContentPartImage
-    > = z
-        .object({
-            type: ChatCompletionRequestMessageContentPartImageType$.outboundSchema,
-            imageUrl: z.lazy(() => ImageUrl$.outboundSchema),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                imageUrl: "image_url",
-            });
-        });
+    /** @deprecated use `ChatCompletionRequestMessageContentPartImage$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionRequestMessageContentPartImage$inboundSchema;
+    /** @deprecated use `ChatCompletionRequestMessageContentPartImage$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionRequestMessageContentPartImage$outboundSchema;
+    /** @deprecated use `ChatCompletionRequestMessageContentPartImage$Outbound` instead. */
+    export type Outbound = ChatCompletionRequestMessageContentPartImage$Outbound;
 }

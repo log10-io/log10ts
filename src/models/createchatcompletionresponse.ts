@@ -5,13 +5,22 @@
 import { remap as remap$ } from "../lib/primitives.js";
 import {
     ChatCompletionResponseMessage,
-    ChatCompletionResponseMessage$,
+    ChatCompletionResponseMessage$inboundSchema,
+    ChatCompletionResponseMessage$Outbound,
+    ChatCompletionResponseMessage$outboundSchema,
 } from "./chatcompletionresponsemessage.js";
 import {
     ChatCompletionTokenLogprob,
-    ChatCompletionTokenLogprob$,
+    ChatCompletionTokenLogprob$inboundSchema,
+    ChatCompletionTokenLogprob$Outbound,
+    ChatCompletionTokenLogprob$outboundSchema,
 } from "./chatcompletiontokenlogprob.js";
-import { CompletionUsage, CompletionUsage$ } from "./completionusage.js";
+import {
+    CompletionUsage,
+    CompletionUsage$inboundSchema,
+    CompletionUsage$Outbound,
+    CompletionUsage$outboundSchema,
+} from "./completionusage.js";
 import * as z from "zod";
 
 /**
@@ -113,109 +122,181 @@ export type CreateChatCompletionResponse = {
 };
 
 /** @internal */
+export const FinishReason$inboundSchema: z.ZodNativeEnum<typeof FinishReason> =
+    z.nativeEnum(FinishReason);
+
+/** @internal */
+export const FinishReason$outboundSchema: z.ZodNativeEnum<typeof FinishReason> =
+    FinishReason$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace FinishReason$ {
-    export const inboundSchema: z.ZodNativeEnum<typeof FinishReason> = z.nativeEnum(FinishReason);
-    export const outboundSchema: z.ZodNativeEnum<typeof FinishReason> = inboundSchema;
+    /** @deprecated use `FinishReason$inboundSchema` instead. */
+    export const inboundSchema = FinishReason$inboundSchema;
+    /** @deprecated use `FinishReason$outboundSchema` instead. */
+    export const outboundSchema = FinishReason$outboundSchema;
 }
 
 /** @internal */
+export const Logprobs$inboundSchema: z.ZodType<Logprobs, z.ZodTypeDef, unknown> = z.object({
+    content: z.nullable(z.array(ChatCompletionTokenLogprob$inboundSchema)),
+});
+
+/** @internal */
+export type Logprobs$Outbound = {
+    content: Array<ChatCompletionTokenLogprob$Outbound> | null;
+};
+
+/** @internal */
+export const Logprobs$outboundSchema: z.ZodType<Logprobs$Outbound, z.ZodTypeDef, Logprobs> =
+    z.object({
+        content: z.nullable(z.array(ChatCompletionTokenLogprob$outboundSchema)),
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace Logprobs$ {
-    export const inboundSchema: z.ZodType<Logprobs, z.ZodTypeDef, unknown> = z.object({
-        content: z.nullable(z.array(ChatCompletionTokenLogprob$.inboundSchema)),
-    });
-
-    export type Outbound = {
-        content: Array<ChatCompletionTokenLogprob$.Outbound> | null;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Logprobs> = z.object({
-        content: z.nullable(z.array(ChatCompletionTokenLogprob$.outboundSchema)),
-    });
+    /** @deprecated use `Logprobs$inboundSchema` instead. */
+    export const inboundSchema = Logprobs$inboundSchema;
+    /** @deprecated use `Logprobs$outboundSchema` instead. */
+    export const outboundSchema = Logprobs$outboundSchema;
+    /** @deprecated use `Logprobs$Outbound` instead. */
+    export type Outbound = Logprobs$Outbound;
 }
 
 /** @internal */
+export const Choices$inboundSchema: z.ZodType<Choices, z.ZodTypeDef, unknown> = z
+    .object({
+        finish_reason: FinishReason$inboundSchema,
+        index: z.number().int(),
+        message: ChatCompletionResponseMessage$inboundSchema,
+        logprobs: z.nullable(z.lazy(() => Logprobs$inboundSchema)),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            finish_reason: "finishReason",
+        });
+    });
+
+/** @internal */
+export type Choices$Outbound = {
+    finish_reason: string;
+    index: number;
+    message: ChatCompletionResponseMessage$Outbound;
+    logprobs: Logprobs$Outbound | null;
+};
+
+/** @internal */
+export const Choices$outboundSchema: z.ZodType<Choices$Outbound, z.ZodTypeDef, Choices> = z
+    .object({
+        finishReason: FinishReason$outboundSchema,
+        index: z.number().int(),
+        message: ChatCompletionResponseMessage$outboundSchema,
+        logprobs: z.nullable(z.lazy(() => Logprobs$outboundSchema)),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            finishReason: "finish_reason",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace Choices$ {
-    export const inboundSchema: z.ZodType<Choices, z.ZodTypeDef, unknown> = z
-        .object({
-            finish_reason: FinishReason$.inboundSchema,
-            index: z.number().int(),
-            message: ChatCompletionResponseMessage$.inboundSchema,
-            logprobs: z.nullable(z.lazy(() => Logprobs$.inboundSchema)),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                finish_reason: "finishReason",
-            });
-        });
-
-    export type Outbound = {
-        finish_reason: string;
-        index: number;
-        message: ChatCompletionResponseMessage$.Outbound;
-        logprobs: Logprobs$.Outbound | null;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Choices> = z
-        .object({
-            finishReason: FinishReason$.outboundSchema,
-            index: z.number().int(),
-            message: ChatCompletionResponseMessage$.outboundSchema,
-            logprobs: z.nullable(z.lazy(() => Logprobs$.outboundSchema)),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                finishReason: "finish_reason",
-            });
-        });
+    /** @deprecated use `Choices$inboundSchema` instead. */
+    export const inboundSchema = Choices$inboundSchema;
+    /** @deprecated use `Choices$outboundSchema` instead. */
+    export const outboundSchema = Choices$outboundSchema;
+    /** @deprecated use `Choices$Outbound` instead. */
+    export type Outbound = Choices$Outbound;
 }
 
 /** @internal */
+export const ObjectT$inboundSchema: z.ZodNativeEnum<typeof ObjectT> = z.nativeEnum(ObjectT);
+
+/** @internal */
+export const ObjectT$outboundSchema: z.ZodNativeEnum<typeof ObjectT> = ObjectT$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ObjectT$ {
-    export const inboundSchema: z.ZodNativeEnum<typeof ObjectT> = z.nativeEnum(ObjectT);
-    export const outboundSchema: z.ZodNativeEnum<typeof ObjectT> = inboundSchema;
+    /** @deprecated use `ObjectT$inboundSchema` instead. */
+    export const inboundSchema = ObjectT$inboundSchema;
+    /** @deprecated use `ObjectT$outboundSchema` instead. */
+    export const outboundSchema = ObjectT$outboundSchema;
 }
 
 /** @internal */
+export const CreateChatCompletionResponse$inboundSchema: z.ZodType<
+    CreateChatCompletionResponse,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        id: z.string(),
+        choices: z.array(z.lazy(() => Choices$inboundSchema)),
+        created: z.number().int(),
+        model: z.nullable(z.any()).optional(),
+        system_fingerprint: z.string().optional(),
+        object: ObjectT$inboundSchema,
+        usage: CompletionUsage$inboundSchema.optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            system_fingerprint: "systemFingerprint",
+        });
+    });
+
+/** @internal */
+export type CreateChatCompletionResponse$Outbound = {
+    id: string;
+    choices: Array<Choices$Outbound>;
+    created: number;
+    model?: any | null | undefined;
+    system_fingerprint?: string | undefined;
+    object: string;
+    usage?: CompletionUsage$Outbound | undefined;
+};
+
+/** @internal */
+export const CreateChatCompletionResponse$outboundSchema: z.ZodType<
+    CreateChatCompletionResponse$Outbound,
+    z.ZodTypeDef,
+    CreateChatCompletionResponse
+> = z
+    .object({
+        id: z.string(),
+        choices: z.array(z.lazy(() => Choices$outboundSchema)),
+        created: z.number().int(),
+        model: z.nullable(z.any()).optional(),
+        systemFingerprint: z.string().optional(),
+        object: ObjectT$outboundSchema,
+        usage: CompletionUsage$outboundSchema.optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            systemFingerprint: "system_fingerprint",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace CreateChatCompletionResponse$ {
-    export const inboundSchema: z.ZodType<CreateChatCompletionResponse, z.ZodTypeDef, unknown> = z
-        .object({
-            id: z.string(),
-            choices: z.array(z.lazy(() => Choices$.inboundSchema)),
-            created: z.number().int(),
-            model: z.nullable(z.any()).optional(),
-            system_fingerprint: z.string().optional(),
-            object: ObjectT$.inboundSchema,
-            usage: CompletionUsage$.inboundSchema.optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                system_fingerprint: "systemFingerprint",
-            });
-        });
-
-    export type Outbound = {
-        id: string;
-        choices: Array<Choices$.Outbound>;
-        created: number;
-        model?: any | null | undefined;
-        system_fingerprint?: string | undefined;
-        object: string;
-        usage?: CompletionUsage$.Outbound | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreateChatCompletionResponse> = z
-        .object({
-            id: z.string(),
-            choices: z.array(z.lazy(() => Choices$.outboundSchema)),
-            created: z.number().int(),
-            model: z.nullable(z.any()).optional(),
-            systemFingerprint: z.string().optional(),
-            object: ObjectT$.outboundSchema,
-            usage: CompletionUsage$.outboundSchema.optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                systemFingerprint: "system_fingerprint",
-            });
-        });
+    /** @deprecated use `CreateChatCompletionResponse$inboundSchema` instead. */
+    export const inboundSchema = CreateChatCompletionResponse$inboundSchema;
+    /** @deprecated use `CreateChatCompletionResponse$outboundSchema` instead. */
+    export const outboundSchema = CreateChatCompletionResponse$outboundSchema;
+    /** @deprecated use `CreateChatCompletionResponse$Outbound` instead. */
+    export type Outbound = CreateChatCompletionResponse$Outbound;
 }

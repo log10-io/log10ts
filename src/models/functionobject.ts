@@ -24,22 +24,40 @@ export type FunctionObject = {
 };
 
 /** @internal */
+export const FunctionObject$inboundSchema: z.ZodType<FunctionObject, z.ZodTypeDef, unknown> =
+    z.object({
+        description: z.string().optional(),
+        name: z.string(),
+        parameters: z.record(z.any()).optional(),
+    });
+
+/** @internal */
+export type FunctionObject$Outbound = {
+    description?: string | undefined;
+    name: string;
+    parameters?: { [k: string]: any } | undefined;
+};
+
+/** @internal */
+export const FunctionObject$outboundSchema: z.ZodType<
+    FunctionObject$Outbound,
+    z.ZodTypeDef,
+    FunctionObject
+> = z.object({
+    description: z.string().optional(),
+    name: z.string(),
+    parameters: z.record(z.any()).optional(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace FunctionObject$ {
-    export const inboundSchema: z.ZodType<FunctionObject, z.ZodTypeDef, unknown> = z.object({
-        description: z.string().optional(),
-        name: z.string(),
-        parameters: z.record(z.any()).optional(),
-    });
-
-    export type Outbound = {
-        description?: string | undefined;
-        name: string;
-        parameters?: { [k: string]: any } | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, FunctionObject> = z.object({
-        description: z.string().optional(),
-        name: z.string(),
-        parameters: z.record(z.any()).optional(),
-    });
+    /** @deprecated use `FunctionObject$inboundSchema` instead. */
+    export const inboundSchema = FunctionObject$inboundSchema;
+    /** @deprecated use `FunctionObject$outboundSchema` instead. */
+    export const outboundSchema = FunctionObject$outboundSchema;
+    /** @deprecated use `FunctionObject$Outbound` instead. */
+    export type Outbound = FunctionObject$Outbound;
 }

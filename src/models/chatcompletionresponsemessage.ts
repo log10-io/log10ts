@@ -5,9 +5,15 @@
 import { remap as remap$ } from "../lib/primitives.js";
 import {
     ChatCompletionMessageToolCall,
-    ChatCompletionMessageToolCall$,
+    ChatCompletionMessageToolCall$inboundSchema,
+    ChatCompletionMessageToolCall$Outbound,
+    ChatCompletionMessageToolCall$outboundSchema,
 } from "./chatcompletionmessagetoolcall.js";
-import { ChatCompletionRole, ChatCompletionRole$ } from "./chatcompletionrole.js";
+import {
+    ChatCompletionRole,
+    ChatCompletionRole$inboundSchema,
+    ChatCompletionRole$outboundSchema,
+} from "./chatcompletionrole.js";
 import * as z from "zod";
 
 /**
@@ -51,70 +57,103 @@ export type ChatCompletionResponseMessage = {
 };
 
 /** @internal */
+export const ChatCompletionResponseMessageFunctionCall$inboundSchema: z.ZodType<
+    ChatCompletionResponseMessageFunctionCall,
+    z.ZodTypeDef,
+    unknown
+> = z.object({
+    arguments: z.string(),
+    name: z.string(),
+});
+
+/** @internal */
+export type ChatCompletionResponseMessageFunctionCall$Outbound = {
+    arguments: string;
+    name: string;
+};
+
+/** @internal */
+export const ChatCompletionResponseMessageFunctionCall$outboundSchema: z.ZodType<
+    ChatCompletionResponseMessageFunctionCall$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionResponseMessageFunctionCall
+> = z.object({
+    arguments: z.string(),
+    name: z.string(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ChatCompletionResponseMessageFunctionCall$ {
-    export const inboundSchema: z.ZodType<
-        ChatCompletionResponseMessageFunctionCall,
-        z.ZodTypeDef,
-        unknown
-    > = z.object({
-        arguments: z.string(),
-        name: z.string(),
-    });
-
-    export type Outbound = {
-        arguments: string;
-        name: string;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        ChatCompletionResponseMessageFunctionCall
-    > = z.object({
-        arguments: z.string(),
-        name: z.string(),
-    });
+    /** @deprecated use `ChatCompletionResponseMessageFunctionCall$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionResponseMessageFunctionCall$inboundSchema;
+    /** @deprecated use `ChatCompletionResponseMessageFunctionCall$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionResponseMessageFunctionCall$outboundSchema;
+    /** @deprecated use `ChatCompletionResponseMessageFunctionCall$Outbound` instead. */
+    export type Outbound = ChatCompletionResponseMessageFunctionCall$Outbound;
 }
 
 /** @internal */
-export namespace ChatCompletionResponseMessage$ {
-    export const inboundSchema: z.ZodType<ChatCompletionResponseMessage, z.ZodTypeDef, unknown> = z
-        .object({
-            content: z.nullable(z.string()),
-            tool_calls: z.array(ChatCompletionMessageToolCall$.inboundSchema).optional(),
-            role: ChatCompletionRole$.inboundSchema,
-            function_call: z
-                .lazy(() => ChatCompletionResponseMessageFunctionCall$.inboundSchema)
-                .optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                tool_calls: "toolCalls",
-                function_call: "functionCall",
-            });
+export const ChatCompletionResponseMessage$inboundSchema: z.ZodType<
+    ChatCompletionResponseMessage,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        content: z.nullable(z.string()),
+        tool_calls: z.array(ChatCompletionMessageToolCall$inboundSchema).optional(),
+        role: ChatCompletionRole$inboundSchema,
+        function_call: z
+            .lazy(() => ChatCompletionResponseMessageFunctionCall$inboundSchema)
+            .optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            tool_calls: "toolCalls",
+            function_call: "functionCall",
         });
+    });
 
-    export type Outbound = {
-        content: string | null;
-        tool_calls?: Array<ChatCompletionMessageToolCall$.Outbound> | undefined;
-        role: string;
-        function_call?: ChatCompletionResponseMessageFunctionCall$.Outbound | undefined;
-    };
+/** @internal */
+export type ChatCompletionResponseMessage$Outbound = {
+    content: string | null;
+    tool_calls?: Array<ChatCompletionMessageToolCall$Outbound> | undefined;
+    role: string;
+    function_call?: ChatCompletionResponseMessageFunctionCall$Outbound | undefined;
+};
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ChatCompletionResponseMessage> =
-        z
-            .object({
-                content: z.nullable(z.string()),
-                toolCalls: z.array(ChatCompletionMessageToolCall$.outboundSchema).optional(),
-                role: ChatCompletionRole$.outboundSchema,
-                functionCall: z
-                    .lazy(() => ChatCompletionResponseMessageFunctionCall$.outboundSchema)
-                    .optional(),
-            })
-            .transform((v) => {
-                return remap$(v, {
-                    toolCalls: "tool_calls",
-                    functionCall: "function_call",
-                });
-            });
+/** @internal */
+export const ChatCompletionResponseMessage$outboundSchema: z.ZodType<
+    ChatCompletionResponseMessage$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionResponseMessage
+> = z
+    .object({
+        content: z.nullable(z.string()),
+        toolCalls: z.array(ChatCompletionMessageToolCall$outboundSchema).optional(),
+        role: ChatCompletionRole$outboundSchema,
+        functionCall: z
+            .lazy(() => ChatCompletionResponseMessageFunctionCall$outboundSchema)
+            .optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            toolCalls: "tool_calls",
+            functionCall: "function_call",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ChatCompletionResponseMessage$ {
+    /** @deprecated use `ChatCompletionResponseMessage$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionResponseMessage$inboundSchema;
+    /** @deprecated use `ChatCompletionResponseMessage$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionResponseMessage$outboundSchema;
+    /** @deprecated use `ChatCompletionResponseMessage$Outbound` instead. */
+    export type Outbound = ChatCompletionResponseMessage$Outbound;
 }

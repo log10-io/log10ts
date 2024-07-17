@@ -41,50 +41,96 @@ export type ChatCompletionMessageToolCall = {
 };
 
 /** @internal */
+export const ChatCompletionMessageToolCallType$inboundSchema: z.ZodNativeEnum<
+    typeof ChatCompletionMessageToolCallType
+> = z.nativeEnum(ChatCompletionMessageToolCallType);
+
+/** @internal */
+export const ChatCompletionMessageToolCallType$outboundSchema: z.ZodNativeEnum<
+    typeof ChatCompletionMessageToolCallType
+> = ChatCompletionMessageToolCallType$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ChatCompletionMessageToolCallType$ {
-    export const inboundSchema: z.ZodNativeEnum<typeof ChatCompletionMessageToolCallType> =
-        z.nativeEnum(ChatCompletionMessageToolCallType);
-    export const outboundSchema: z.ZodNativeEnum<typeof ChatCompletionMessageToolCallType> =
-        inboundSchema;
+    /** @deprecated use `ChatCompletionMessageToolCallType$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionMessageToolCallType$inboundSchema;
+    /** @deprecated use `ChatCompletionMessageToolCallType$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionMessageToolCallType$outboundSchema;
 }
 
 /** @internal */
+export const FunctionT$inboundSchema: z.ZodType<FunctionT, z.ZodTypeDef, unknown> = z.object({
+    name: z.string(),
+    arguments: z.string(),
+});
+
+/** @internal */
+export type FunctionT$Outbound = {
+    name: string;
+    arguments: string;
+};
+
+/** @internal */
+export const FunctionT$outboundSchema: z.ZodType<FunctionT$Outbound, z.ZodTypeDef, FunctionT> =
+    z.object({
+        name: z.string(),
+        arguments: z.string(),
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace FunctionT$ {
-    export const inboundSchema: z.ZodType<FunctionT, z.ZodTypeDef, unknown> = z.object({
-        name: z.string(),
-        arguments: z.string(),
-    });
-
-    export type Outbound = {
-        name: string;
-        arguments: string;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, FunctionT> = z.object({
-        name: z.string(),
-        arguments: z.string(),
-    });
+    /** @deprecated use `FunctionT$inboundSchema` instead. */
+    export const inboundSchema = FunctionT$inboundSchema;
+    /** @deprecated use `FunctionT$outboundSchema` instead. */
+    export const outboundSchema = FunctionT$outboundSchema;
+    /** @deprecated use `FunctionT$Outbound` instead. */
+    export type Outbound = FunctionT$Outbound;
 }
 
 /** @internal */
+export const ChatCompletionMessageToolCall$inboundSchema: z.ZodType<
+    ChatCompletionMessageToolCall,
+    z.ZodTypeDef,
+    unknown
+> = z.object({
+    id: z.string(),
+    type: ChatCompletionMessageToolCallType$inboundSchema,
+    function: z.lazy(() => FunctionT$inboundSchema),
+});
+
+/** @internal */
+export type ChatCompletionMessageToolCall$Outbound = {
+    id: string;
+    type: string;
+    function: FunctionT$Outbound;
+};
+
+/** @internal */
+export const ChatCompletionMessageToolCall$outboundSchema: z.ZodType<
+    ChatCompletionMessageToolCall$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionMessageToolCall
+> = z.object({
+    id: z.string(),
+    type: ChatCompletionMessageToolCallType$outboundSchema,
+    function: z.lazy(() => FunctionT$outboundSchema),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ChatCompletionMessageToolCall$ {
-    export const inboundSchema: z.ZodType<ChatCompletionMessageToolCall, z.ZodTypeDef, unknown> =
-        z.object({
-            id: z.string(),
-            type: ChatCompletionMessageToolCallType$.inboundSchema,
-            function: z.lazy(() => FunctionT$.inboundSchema),
-        });
-
-    export type Outbound = {
-        id: string;
-        type: string;
-        function: FunctionT$.Outbound;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ChatCompletionMessageToolCall> =
-        z.object({
-            id: z.string(),
-            type: ChatCompletionMessageToolCallType$.outboundSchema,
-            function: z.lazy(() => FunctionT$.outboundSchema),
-        });
+    /** @deprecated use `ChatCompletionMessageToolCall$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionMessageToolCall$inboundSchema;
+    /** @deprecated use `ChatCompletionMessageToolCall$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionMessageToolCall$outboundSchema;
+    /** @deprecated use `ChatCompletionMessageToolCall$Outbound` instead. */
+    export type Outbound = ChatCompletionMessageToolCall$Outbound;
 }

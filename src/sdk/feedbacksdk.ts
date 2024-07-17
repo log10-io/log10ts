@@ -3,7 +3,7 @@
  */
 
 import { SDKHooks } from "../hooks/hooks.js";
-import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config.js";
+import { SDKOptions, serverURLFromOptions } from "../lib/config.js";
 import { encodeJSON as encodeJSON$, encodeSimple as encodeSimple$ } from "../lib/encodings.js";
 import { HTTPClient } from "../lib/http.js";
 import * as schemas$ from "../lib/schemas.js";
@@ -49,13 +49,10 @@ export class FeedbackSDK extends ClientSDK {
             feedbackId: feedbackId,
             xLog10Organization: xLog10Organization,
         };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => models.GetRequest$.outboundSchema.parse(value$),
+            (value$) => models.GetRequest$outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = null;
@@ -70,14 +67,14 @@ export class FeedbackSDK extends ClientSDK {
 
         const query$ = "";
 
-        headers$.set(
-            "X-Log10-Organization",
-            encodeSimple$(
+        const headers$ = new Headers({
+            Accept: "application/json",
+            "X-Log10-Organization": encodeSimple$(
                 "X-Log10-Organization",
                 payload$["X-Log10-Organization"] ?? this.options$.xLog10Organization,
                 { explode: false, charEncoding: "none" }
-            )
-        );
+            ),
+        });
 
         let security$;
         if (typeof this.options$.log10Token === "function") {
@@ -94,7 +91,6 @@ export class FeedbackSDK extends ClientSDK {
         };
         const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
         const request$ = this.createRequest$(
             context,
             {
@@ -104,18 +100,24 @@ export class FeedbackSDK extends ClientSDK {
                 headers: headers$,
                 query: query$,
                 body: body$,
+                timeoutMs: options?.timeoutMs || this.options$.timeoutMs || -1,
             },
             options
         );
 
-        const response = await this.do$(request$, doOptions);
+        const response = await this.do$(request$, {
+            context,
+            errorCodes: ["4XX", "5XX"],
+            retryConfig: options?.retries || this.options$.retryConfig,
+            retryCodes: options?.retryCodes || ["429", "500", "502", "503", "504"],
+        });
 
         const responseFields$ = {
             HttpMeta: { Response: response, Request: request$ },
         };
 
         const [result$] = await this.matcher<models.GetResponse>()
-            .json(200, models.GetResponse$, { key: "Feedback" })
+            .json(200, models.GetResponse$inboundSchema, { key: "Feedback" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 
@@ -134,14 +136,10 @@ export class FeedbackSDK extends ClientSDK {
             xLog10Organization: xLog10Organization,
             requestBody: requestBody,
         };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-        headers$.set("Accept", "application/json");
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => models.UploadRequest$.outboundSchema.parse(value$),
+            (value$) => models.UploadRequest$outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = encodeJSON$("body", payload$.RequestBody, { explode: true });
@@ -150,14 +148,15 @@ export class FeedbackSDK extends ClientSDK {
 
         const query$ = "";
 
-        headers$.set(
-            "X-Log10-Organization",
-            encodeSimple$(
+        const headers$ = new Headers({
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-Log10-Organization": encodeSimple$(
                 "X-Log10-Organization",
                 payload$["X-Log10-Organization"] ?? this.options$.xLog10Organization,
                 { explode: false, charEncoding: "none" }
-            )
-        );
+            ),
+        });
 
         let security$;
         if (typeof this.options$.log10Token === "function") {
@@ -174,7 +173,6 @@ export class FeedbackSDK extends ClientSDK {
         };
         const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
         const request$ = this.createRequest$(
             context,
             {
@@ -184,18 +182,24 @@ export class FeedbackSDK extends ClientSDK {
                 headers: headers$,
                 query: query$,
                 body: body$,
+                timeoutMs: options?.timeoutMs || this.options$.timeoutMs || -1,
             },
             options
         );
 
-        const response = await this.do$(request$, doOptions);
+        const response = await this.do$(request$, {
+            context,
+            errorCodes: ["4XX", "5XX"],
+            retryConfig: options?.retries || this.options$.retryConfig,
+            retryCodes: options?.retryCodes || ["429", "500", "502", "503", "504"],
+        });
 
         const responseFields$ = {
             HttpMeta: { Response: response, Request: request$ },
         };
 
         const [result$] = await this.matcher<models.UploadResponse>()
-            .json(200, models.UploadResponse$, { key: "Feedback" })
+            .json(200, models.UploadResponse$inboundSchema, { key: "Feedback" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 
