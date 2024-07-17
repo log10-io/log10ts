@@ -3,7 +3,7 @@
  */
 
 import { SDKHooks } from "../hooks/hooks.js";
-import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config.js";
+import { SDKOptions, serverURLFromOptions } from "../lib/config.js";
 import { encodeSimple as encodeSimple$ } from "../lib/encodings.js";
 import { HTTPClient } from "../lib/http.js";
 import * as schemas$ from "../lib/schemas.js";
@@ -47,13 +47,10 @@ export class Sessions extends ClientSDK {
         const input$: models.CreateSessionRequest = {
             xLog10Organization: xLog10Organization,
         };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => models.CreateSessionRequest$.outboundSchema.parse(value$),
+            (value$) => models.CreateSessionRequest$outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = null;
@@ -62,14 +59,14 @@ export class Sessions extends ClientSDK {
 
         const query$ = "";
 
-        headers$.set(
-            "X-Log10-Organization",
-            encodeSimple$(
+        const headers$ = new Headers({
+            Accept: "application/json",
+            "X-Log10-Organization": encodeSimple$(
                 "X-Log10-Organization",
                 payload$["X-Log10-Organization"] ?? this.options$.xLog10Organization,
                 { explode: false, charEncoding: "none" }
-            )
-        );
+            ),
+        });
 
         let security$;
         if (typeof this.options$.log10Token === "function") {
@@ -86,7 +83,6 @@ export class Sessions extends ClientSDK {
         };
         const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
         const request$ = this.createRequest$(
             context,
             {
@@ -96,18 +92,24 @@ export class Sessions extends ClientSDK {
                 headers: headers$,
                 query: query$,
                 body: body$,
+                timeoutMs: options?.timeoutMs || this.options$.timeoutMs || -1,
             },
             options
         );
 
-        const response = await this.do$(request$, doOptions);
+        const response = await this.do$(request$, {
+            context,
+            errorCodes: ["4XX", "5XX"],
+            retryConfig: options?.retries || this.options$.retryConfig,
+            retryCodes: options?.retryCodes || ["429", "500", "502", "503", "504"],
+        });
 
         const responseFields$ = {
             HttpMeta: { Response: response, Request: request$ },
         };
 
         const [result$] = await this.matcher<models.CreateSessionResponse>()
-            .json(201, models.CreateSessionResponse$, { key: "object" })
+            .json(201, models.CreateSessionResponse$inboundSchema, { key: "object" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 

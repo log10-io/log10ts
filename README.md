@@ -620,6 +620,192 @@ run();
 ```
 <!-- End Authentication [security] -->
 
+<!-- Start Retries [retries] -->
+## Retries
+
+Some of the endpoints in this SDK support retries.  If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API.  However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
+
+To change the default retry strategy for a single API call, simply provide a retryConfig object to the call:
+```typescript
+import {
+    ChatCompletionRole,
+    CreateChatCompletionRequestType,
+    FinishReason,
+    Kind,
+    Log10,
+    ObjectT,
+} from "log10ts";
+
+const log10 = new Log10({
+    log10Token: "<YOUR_API_KEY_HERE>",
+});
+
+async function run() {
+    const result = await log10.completions.create(
+        {
+            organizationId: "<value>",
+            kind: Kind.Chat,
+            request: {
+                messages: [
+                    {
+                        role: ChatCompletionRole.Tool,
+                    },
+                ],
+                model: "gpt-4-turbo",
+                n: 1,
+                responseFormat: {
+                    type: CreateChatCompletionRequestType.JsonObject,
+                },
+                temperature: 1,
+                topP: 1,
+                user: "user-1234",
+            },
+            response: {
+                id: "<id>",
+                choices: [
+                    {
+                        finishReason: FinishReason.FunctionCall,
+                        index: 417458,
+                        message: {
+                            content: "<value>",
+                            role: ChatCompletionRole.User,
+                        },
+                        logprobs: {
+                            content: [
+                                {
+                                    token: "<value>",
+                                    logprob: 1343.65,
+                                    bytes: [786546],
+                                    topLogprobs: [
+                                        {
+                                            token: "<value>",
+                                            logprob: 690.25,
+                                            bytes: [996706],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    },
+                ],
+                created: 796474,
+                model: "gpt-4-turbo",
+                object: ObjectT.ChatCompletion,
+            },
+        },
+        "<value>",
+        {
+            retries: {
+                strategy: "backoff",
+                backoff: {
+                    initialInterval: 1,
+                    maxInterval: 50,
+                    exponent: 1.1,
+                    maxElapsedTime: 100,
+                },
+                retryConnectionErrors: false,
+            },
+        }
+    );
+
+    // Handle the result
+    console.log(result);
+}
+
+run();
+
+```
+
+If you'd like to override the default retry strategy for all operations that support retries, you can provide a retryConfig at SDK initialization:
+```typescript
+import {
+    ChatCompletionRole,
+    CreateChatCompletionRequestType,
+    FinishReason,
+    Kind,
+    Log10,
+    ObjectT,
+} from "log10ts";
+
+const log10 = new Log10({
+    retryConfig: {
+        strategy: "backoff",
+        backoff: {
+            initialInterval: 1,
+            maxInterval: 50,
+            exponent: 1.1,
+            maxElapsedTime: 100,
+        },
+        retryConnectionErrors: false,
+    },
+    log10Token: "<YOUR_API_KEY_HERE>",
+});
+
+async function run() {
+    const result = await log10.completions.create(
+        {
+            organizationId: "<value>",
+            kind: Kind.Chat,
+            request: {
+                messages: [
+                    {
+                        role: ChatCompletionRole.Tool,
+                    },
+                ],
+                model: "gpt-4-turbo",
+                n: 1,
+                responseFormat: {
+                    type: CreateChatCompletionRequestType.JsonObject,
+                },
+                temperature: 1,
+                topP: 1,
+                user: "user-1234",
+            },
+            response: {
+                id: "<id>",
+                choices: [
+                    {
+                        finishReason: FinishReason.FunctionCall,
+                        index: 417458,
+                        message: {
+                            content: "<value>",
+                            role: ChatCompletionRole.User,
+                        },
+                        logprobs: {
+                            content: [
+                                {
+                                    token: "<value>",
+                                    logprob: 1343.65,
+                                    bytes: [786546],
+                                    topLogprobs: [
+                                        {
+                                            token: "<value>",
+                                            logprob: 690.25,
+                                            bytes: [996706],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    },
+                ],
+                created: 796474,
+                model: "gpt-4-turbo",
+                object: ObjectT.ChatCompletion,
+            },
+        },
+        "<value>"
+    );
+
+    // Handle the result
+    console.log(result);
+}
+
+run();
+
+```
+<!-- End Retries [retries] -->
+
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 
 # Development

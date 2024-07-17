@@ -3,7 +3,7 @@
  */
 
 import { SDKHooks } from "../hooks/hooks.js";
-import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config.js";
+import { SDKOptions, serverURLFromOptions } from "../lib/config.js";
 import { encodeJSON as encodeJSON$, encodeSimple as encodeSimple$ } from "../lib/encodings.js";
 import { HTTPClient } from "../lib/http.js";
 import * as schemas$ from "../lib/schemas.js";
@@ -49,14 +49,10 @@ export class Completions extends ClientSDK {
             xLog10Organization: xLog10Organization,
             completion: completion,
         };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-        headers$.set("Accept", "application/json");
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => models.CreateRequest$.outboundSchema.parse(value$),
+            (value$) => models.CreateRequest$outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = encodeJSON$("body", payload$.Completion, { explode: true });
@@ -65,14 +61,15 @@ export class Completions extends ClientSDK {
 
         const query$ = "";
 
-        headers$.set(
-            "X-Log10-Organization",
-            encodeSimple$(
+        const headers$ = new Headers({
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-Log10-Organization": encodeSimple$(
                 "X-Log10-Organization",
                 payload$["X-Log10-Organization"] ?? this.options$.xLog10Organization,
                 { explode: false, charEncoding: "none" }
-            )
-        );
+            ),
+        });
 
         let security$;
         if (typeof this.options$.log10Token === "function") {
@@ -89,7 +86,6 @@ export class Completions extends ClientSDK {
         };
         const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
         const request$ = this.createRequest$(
             context,
             {
@@ -99,19 +95,25 @@ export class Completions extends ClientSDK {
                 headers: headers$,
                 query: query$,
                 body: body$,
+                timeoutMs: options?.timeoutMs || this.options$.timeoutMs || -1,
             },
             options
         );
 
-        const response = await this.do$(request$, doOptions);
+        const response = await this.do$(request$, {
+            context,
+            errorCodes: ["4XX", "5XX"],
+            retryConfig: options?.retries || this.options$.retryConfig,
+            retryCodes: options?.retryCodes || ["429", "500", "502", "503", "504"],
+        });
 
         const responseFields$ = {
             HttpMeta: { Response: response, Request: request$ },
         };
 
         const [result$] = await this.matcher<models.CreateResponse>()
-            .json(200, models.CreateResponse$, { key: "any" })
-            .json(201, models.CreateResponse$, { key: "Completion" })
+            .json(200, models.CreateResponse$inboundSchema, { key: "any" })
+            .json(201, models.CreateResponse$inboundSchema, { key: "Completion" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 
@@ -132,14 +134,10 @@ export class Completions extends ClientSDK {
             xLog10Organization: xLog10Organization,
             completion: completion,
         };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-        headers$.set("Accept", "application/json");
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => models.UpdateRequest$.outboundSchema.parse(value$),
+            (value$) => models.UpdateRequest$outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = encodeJSON$("body", payload$.Completion, { explode: true });
@@ -154,14 +152,15 @@ export class Completions extends ClientSDK {
 
         const query$ = "";
 
-        headers$.set(
-            "X-Log10-Organization",
-            encodeSimple$(
+        const headers$ = new Headers({
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-Log10-Organization": encodeSimple$(
                 "X-Log10-Organization",
                 payload$["X-Log10-Organization"] ?? this.options$.xLog10Organization,
                 { explode: false, charEncoding: "none" }
-            )
-        );
+            ),
+        });
 
         let security$;
         if (typeof this.options$.log10Token === "function") {
@@ -178,7 +177,6 @@ export class Completions extends ClientSDK {
         };
         const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
         const request$ = this.createRequest$(
             context,
             {
@@ -188,18 +186,24 @@ export class Completions extends ClientSDK {
                 headers: headers$,
                 query: query$,
                 body: body$,
+                timeoutMs: options?.timeoutMs || this.options$.timeoutMs || -1,
             },
             options
         );
 
-        const response = await this.do$(request$, doOptions);
+        const response = await this.do$(request$, {
+            context,
+            errorCodes: ["4XX", "5XX"],
+            retryConfig: options?.retries || this.options$.retryConfig,
+            retryCodes: options?.retryCodes || ["429", "500", "502", "503", "504"],
+        });
 
         const responseFields$ = {
             HttpMeta: { Response: response, Request: request$ },
         };
 
         const [result$] = await this.matcher<models.UpdateResponse>()
-            .json(200, models.UpdateResponse$, { key: "Completion" })
+            .json(200, models.UpdateResponse$inboundSchema, { key: "Completion" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 
@@ -216,13 +220,10 @@ export class Completions extends ClientSDK {
         const input$: models.ListUngradedRequest = {
             xLog10Organization: xLog10Organization,
         };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => models.ListUngradedRequest$.outboundSchema.parse(value$),
+            (value$) => models.ListUngradedRequest$outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = null;
@@ -231,14 +232,14 @@ export class Completions extends ClientSDK {
 
         const query$ = "";
 
-        headers$.set(
-            "X-Log10-Organization",
-            encodeSimple$(
+        const headers$ = new Headers({
+            Accept: "application/json",
+            "X-Log10-Organization": encodeSimple$(
                 "X-Log10-Organization",
                 payload$["X-Log10-Organization"] ?? this.options$.xLog10Organization,
                 { explode: false, charEncoding: "none" }
-            )
-        );
+            ),
+        });
 
         let security$;
         if (typeof this.options$.log10Token === "function") {
@@ -255,7 +256,6 @@ export class Completions extends ClientSDK {
         };
         const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
         const request$ = this.createRequest$(
             context,
             {
@@ -265,18 +265,24 @@ export class Completions extends ClientSDK {
                 headers: headers$,
                 query: query$,
                 body: body$,
+                timeoutMs: options?.timeoutMs || this.options$.timeoutMs || -1,
             },
             options
         );
 
-        const response = await this.do$(request$, doOptions);
+        const response = await this.do$(request$, {
+            context,
+            errorCodes: ["4XX", "5XX"],
+            retryConfig: options?.retries || this.options$.retryConfig,
+            retryCodes: options?.retryCodes || ["429", "500", "502", "503", "504"],
+        });
 
         const responseFields$ = {
             HttpMeta: { Response: response, Request: request$ },
         };
 
         const [result$] = await this.matcher<models.ListUngradedResponse>()
-            .json(200, models.ListUngradedResponse$, { key: "object" })
+            .json(200, models.ListUngradedResponse$inboundSchema, { key: "object" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 

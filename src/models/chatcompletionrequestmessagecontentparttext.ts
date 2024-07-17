@@ -23,33 +23,57 @@ export type ChatCompletionRequestMessageContentPartText = {
 };
 
 /** @internal */
+export const Type$inboundSchema: z.ZodNativeEnum<typeof Type> = z.nativeEnum(Type);
+
+/** @internal */
+export const Type$outboundSchema: z.ZodNativeEnum<typeof Type> = Type$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace Type$ {
-    export const inboundSchema: z.ZodNativeEnum<typeof Type> = z.nativeEnum(Type);
-    export const outboundSchema: z.ZodNativeEnum<typeof Type> = inboundSchema;
+    /** @deprecated use `Type$inboundSchema` instead. */
+    export const inboundSchema = Type$inboundSchema;
+    /** @deprecated use `Type$outboundSchema` instead. */
+    export const outboundSchema = Type$outboundSchema;
 }
 
 /** @internal */
+export const ChatCompletionRequestMessageContentPartText$inboundSchema: z.ZodType<
+    ChatCompletionRequestMessageContentPartText,
+    z.ZodTypeDef,
+    unknown
+> = z.object({
+    type: Type$inboundSchema,
+    text: z.string(),
+});
+
+/** @internal */
+export type ChatCompletionRequestMessageContentPartText$Outbound = {
+    type: string;
+    text: string;
+};
+
+/** @internal */
+export const ChatCompletionRequestMessageContentPartText$outboundSchema: z.ZodType<
+    ChatCompletionRequestMessageContentPartText$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionRequestMessageContentPartText
+> = z.object({
+    type: Type$outboundSchema,
+    text: z.string(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ChatCompletionRequestMessageContentPartText$ {
-    export const inboundSchema: z.ZodType<
-        ChatCompletionRequestMessageContentPartText,
-        z.ZodTypeDef,
-        unknown
-    > = z.object({
-        type: Type$.inboundSchema,
-        text: z.string(),
-    });
-
-    export type Outbound = {
-        type: string;
-        text: string;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        ChatCompletionRequestMessageContentPartText
-    > = z.object({
-        type: Type$.outboundSchema,
-        text: z.string(),
-    });
+    /** @deprecated use `ChatCompletionRequestMessageContentPartText$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionRequestMessageContentPartText$inboundSchema;
+    /** @deprecated use `ChatCompletionRequestMessageContentPartText$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionRequestMessageContentPartText$outboundSchema;
+    /** @deprecated use `ChatCompletionRequestMessageContentPartText$Outbound` instead. */
+    export type Outbound = ChatCompletionRequestMessageContentPartText$Outbound;
 }

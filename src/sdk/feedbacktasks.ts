@@ -3,7 +3,7 @@
  */
 
 import { SDKHooks } from "../hooks/hooks.js";
-import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config.js";
+import { SDKOptions, serverURLFromOptions } from "../lib/config.js";
 import { encodeJSON as encodeJSON$, encodeSimple as encodeSimple$ } from "../lib/encodings.js";
 import { HTTPClient } from "../lib/http.js";
 import * as schemas$ from "../lib/schemas.js";
@@ -41,13 +41,13 @@ export class FeedbackTasks extends ClientSDK {
      * List feedback tasks.
      */
     async list(options?: RequestOptions): Promise<models.ListFeedbackTasksResponse> {
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
-
         const path$ = this.templateURLComponent("/api/v1/feedback_task")();
 
         const query$ = "";
+
+        const headers$ = new Headers({
+            Accept: "application/json",
+        });
 
         let security$;
         if (typeof this.options$.log10Token === "function") {
@@ -64,7 +64,6 @@ export class FeedbackTasks extends ClientSDK {
         };
         const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
         const request$ = this.createRequest$(
             context,
             {
@@ -73,18 +72,24 @@ export class FeedbackTasks extends ClientSDK {
                 path: path$,
                 headers: headers$,
                 query: query$,
+                timeoutMs: options?.timeoutMs || this.options$.timeoutMs || -1,
             },
             options
         );
 
-        const response = await this.do$(request$, doOptions);
+        const response = await this.do$(request$, {
+            context,
+            errorCodes: ["4XX", "5XX"],
+            retryConfig: options?.retries || this.options$.retryConfig,
+            retryCodes: options?.retryCodes || ["429", "500", "502", "503", "504"],
+        });
 
         const responseFields$ = {
             HttpMeta: { Response: response, Request: request$ },
         };
 
         const [result$] = await this.matcher<models.ListFeedbackTasksResponse>()
-            .json(200, models.ListFeedbackTasksResponse$, { key: "Tasks" })
+            .json(200, models.ListFeedbackTasksResponse$inboundSchema, { key: "Tasks" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 
@@ -99,14 +104,10 @@ export class FeedbackTasks extends ClientSDK {
         options?: RequestOptions
     ): Promise<models.CreateFeedbackTaskResponse> {
         const input$ = request;
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-        headers$.set("Accept", "application/json");
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => models.Task$.outboundSchema.optional().parse(value$),
+            (value$) => models.Task$outboundSchema.optional().parse(value$),
             "Input validation failed"
         );
         const body$ =
@@ -115,6 +116,11 @@ export class FeedbackTasks extends ClientSDK {
         const path$ = this.templateURLComponent("/api/v1/feedback_task")();
 
         const query$ = "";
+
+        const headers$ = new Headers({
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        });
 
         let security$;
         if (typeof this.options$.log10Token === "function") {
@@ -131,7 +137,6 @@ export class FeedbackTasks extends ClientSDK {
         };
         const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
         const request$ = this.createRequest$(
             context,
             {
@@ -141,18 +146,24 @@ export class FeedbackTasks extends ClientSDK {
                 headers: headers$,
                 query: query$,
                 body: body$,
+                timeoutMs: options?.timeoutMs || this.options$.timeoutMs || -1,
             },
             options
         );
 
-        const response = await this.do$(request$, doOptions);
+        const response = await this.do$(request$, {
+            context,
+            errorCodes: ["4XX", "5XX"],
+            retryConfig: options?.retries || this.options$.retryConfig,
+            retryCodes: options?.retryCodes || ["429", "500", "502", "503", "504"],
+        });
 
         const responseFields$ = {
             HttpMeta: { Response: response, Request: request$ },
         };
 
         const [result$] = await this.matcher<models.CreateFeedbackTaskResponse>()
-            .json(200, models.CreateFeedbackTaskResponse$, { key: "Task" })
+            .json(200, models.CreateFeedbackTaskResponse$inboundSchema, { key: "Task" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 
@@ -166,13 +177,10 @@ export class FeedbackTasks extends ClientSDK {
         const input$: models.GetFeedbackTaskRequest = {
             taskId: taskId,
         };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => models.GetFeedbackTaskRequest$.outboundSchema.parse(value$),
+            (value$) => models.GetFeedbackTaskRequest$outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = null;
@@ -186,6 +194,10 @@ export class FeedbackTasks extends ClientSDK {
         const path$ = this.templateURLComponent("/api/v1/feedback_task/{taskId}")(pathParams$);
 
         const query$ = "";
+
+        const headers$ = new Headers({
+            Accept: "application/json",
+        });
 
         let security$;
         if (typeof this.options$.log10Token === "function") {
@@ -202,7 +214,6 @@ export class FeedbackTasks extends ClientSDK {
         };
         const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
         const request$ = this.createRequest$(
             context,
             {
@@ -212,18 +223,24 @@ export class FeedbackTasks extends ClientSDK {
                 headers: headers$,
                 query: query$,
                 body: body$,
+                timeoutMs: options?.timeoutMs || this.options$.timeoutMs || -1,
             },
             options
         );
 
-        const response = await this.do$(request$, doOptions);
+        const response = await this.do$(request$, {
+            context,
+            errorCodes: ["4XX", "5XX"],
+            retryConfig: options?.retries || this.options$.retryConfig,
+            retryCodes: options?.retryCodes || ["429", "500", "502", "503", "504"],
+        });
 
         const responseFields$ = {
             HttpMeta: { Response: response, Request: request$ },
         };
 
         const [result$] = await this.matcher<models.GetFeedbackTaskResponse>()
-            .json(200, models.GetFeedbackTaskResponse$, { key: "Task" })
+            .json(200, models.GetFeedbackTaskResponse$inboundSchema, { key: "Task" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 

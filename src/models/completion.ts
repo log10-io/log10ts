@@ -5,11 +5,15 @@
 import { remap as remap$ } from "../lib/primitives.js";
 import {
     CreateChatCompletionRequest,
-    CreateChatCompletionRequest$,
+    CreateChatCompletionRequest$inboundSchema,
+    CreateChatCompletionRequest$Outbound,
+    CreateChatCompletionRequest$outboundSchema,
 } from "./createchatcompletionrequest.js";
 import {
     CreateChatCompletionResponse,
-    CreateChatCompletionResponse$,
+    CreateChatCompletionResponse$inboundSchema,
+    CreateChatCompletionResponse$Outbound,
+    CreateChatCompletionResponse$outboundSchema,
 } from "./createchatcompletionresponse.js";
 import * as z from "zod";
 
@@ -98,103 +102,152 @@ export type Completion = {
 };
 
 /** @internal */
+export const Kind$inboundSchema: z.ZodNativeEnum<typeof Kind> = z.nativeEnum(Kind);
+
+/** @internal */
+export const Kind$outboundSchema: z.ZodNativeEnum<typeof Kind> = Kind$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace Kind$ {
-    export const inboundSchema: z.ZodNativeEnum<typeof Kind> = z.nativeEnum(Kind);
-    export const outboundSchema: z.ZodNativeEnum<typeof Kind> = inboundSchema;
+    /** @deprecated use `Kind$inboundSchema` instead. */
+    export const inboundSchema = Kind$inboundSchema;
+    /** @deprecated use `Kind$outboundSchema` instead. */
+    export const outboundSchema = Kind$outboundSchema;
 }
 
 /** @internal */
+export const Status$inboundSchema: z.ZodNativeEnum<typeof Status> = z.nativeEnum(Status);
+
+/** @internal */
+export const Status$outboundSchema: z.ZodNativeEnum<typeof Status> = Status$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace Status$ {
-    export const inboundSchema: z.ZodNativeEnum<typeof Status> = z.nativeEnum(Status);
-    export const outboundSchema: z.ZodNativeEnum<typeof Status> = inboundSchema;
+    /** @deprecated use `Status$inboundSchema` instead. */
+    export const inboundSchema = Status$inboundSchema;
+    /** @deprecated use `Status$outboundSchema` instead. */
+    export const outboundSchema = Status$outboundSchema;
 }
 
 /** @internal */
+export const Stacktrace$inboundSchema: z.ZodType<Stacktrace, z.ZodTypeDef, unknown> = z.object({
+    file: z.string(),
+    line: z.string(),
+    lineno: z.number(),
+    name: z.string(),
+});
+
+/** @internal */
+export type Stacktrace$Outbound = {
+    file: string;
+    line: string;
+    lineno: number;
+    name: string;
+};
+
+/** @internal */
+export const Stacktrace$outboundSchema: z.ZodType<Stacktrace$Outbound, z.ZodTypeDef, Stacktrace> =
+    z.object({
+        file: z.string(),
+        line: z.string(),
+        lineno: z.number(),
+        name: z.string(),
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace Stacktrace$ {
-    export const inboundSchema: z.ZodType<Stacktrace, z.ZodTypeDef, unknown> = z.object({
-        file: z.string(),
-        line: z.string(),
-        lineno: z.number(),
-        name: z.string(),
-    });
-
-    export type Outbound = {
-        file: string;
-        line: string;
-        lineno: number;
-        name: string;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Stacktrace> = z.object({
-        file: z.string(),
-        line: z.string(),
-        lineno: z.number(),
-        name: z.string(),
-    });
+    /** @deprecated use `Stacktrace$inboundSchema` instead. */
+    export const inboundSchema = Stacktrace$inboundSchema;
+    /** @deprecated use `Stacktrace$outboundSchema` instead. */
+    export const outboundSchema = Stacktrace$outboundSchema;
+    /** @deprecated use `Stacktrace$Outbound` instead. */
+    export type Outbound = Stacktrace$Outbound;
 }
 
 /** @internal */
+export const Completion$inboundSchema: z.ZodType<Completion, z.ZodTypeDef, unknown> = z
+    .object({
+        id: z.string().optional(),
+        organization_id: z.string(),
+        kind: Kind$inboundSchema,
+        status: Status$inboundSchema.optional(),
+        tags: z.array(z.string()).optional(),
+        request: CreateChatCompletionRequest$inboundSchema.optional(),
+        response: CreateChatCompletionResponse$inboundSchema.optional(),
+        stacktrace: z.array(z.lazy(() => Stacktrace$inboundSchema)).optional(),
+        session_id: z.string().optional(),
+        duration: z.number().optional(),
+        failure_kind: z.string().optional(),
+        failure_reason: z.string().optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            organization_id: "organizationId",
+            session_id: "sessionId",
+            failure_kind: "failureKind",
+            failure_reason: "failureReason",
+        });
+    });
+
+/** @internal */
+export type Completion$Outbound = {
+    id?: string | undefined;
+    organization_id: string;
+    kind: string;
+    status?: string | undefined;
+    tags?: Array<string> | undefined;
+    request?: CreateChatCompletionRequest$Outbound | undefined;
+    response?: CreateChatCompletionResponse$Outbound | undefined;
+    stacktrace?: Array<Stacktrace$Outbound> | undefined;
+    session_id?: string | undefined;
+    duration?: number | undefined;
+    failure_kind?: string | undefined;
+    failure_reason?: string | undefined;
+};
+
+/** @internal */
+export const Completion$outboundSchema: z.ZodType<Completion$Outbound, z.ZodTypeDef, Completion> = z
+    .object({
+        id: z.string().optional(),
+        organizationId: z.string(),
+        kind: Kind$outboundSchema,
+        status: Status$outboundSchema.optional(),
+        tags: z.array(z.string()).optional(),
+        request: CreateChatCompletionRequest$outboundSchema.optional(),
+        response: CreateChatCompletionResponse$outboundSchema.optional(),
+        stacktrace: z.array(z.lazy(() => Stacktrace$outboundSchema)).optional(),
+        sessionId: z.string().optional(),
+        duration: z.number().optional(),
+        failureKind: z.string().optional(),
+        failureReason: z.string().optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            organizationId: "organization_id",
+            sessionId: "session_id",
+            failureKind: "failure_kind",
+            failureReason: "failure_reason",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace Completion$ {
-    export const inboundSchema: z.ZodType<Completion, z.ZodTypeDef, unknown> = z
-        .object({
-            id: z.string().optional(),
-            organization_id: z.string(),
-            kind: Kind$.inboundSchema,
-            status: Status$.inboundSchema.optional(),
-            tags: z.array(z.string()).optional(),
-            request: CreateChatCompletionRequest$.inboundSchema.optional(),
-            response: CreateChatCompletionResponse$.inboundSchema.optional(),
-            stacktrace: z.array(z.lazy(() => Stacktrace$.inboundSchema)).optional(),
-            session_id: z.string().optional(),
-            duration: z.number().optional(),
-            failure_kind: z.string().optional(),
-            failure_reason: z.string().optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                organization_id: "organizationId",
-                session_id: "sessionId",
-                failure_kind: "failureKind",
-                failure_reason: "failureReason",
-            });
-        });
-
-    export type Outbound = {
-        id?: string | undefined;
-        organization_id: string;
-        kind: string;
-        status?: string | undefined;
-        tags?: Array<string> | undefined;
-        request?: CreateChatCompletionRequest$.Outbound | undefined;
-        response?: CreateChatCompletionResponse$.Outbound | undefined;
-        stacktrace?: Array<Stacktrace$.Outbound> | undefined;
-        session_id?: string | undefined;
-        duration?: number | undefined;
-        failure_kind?: string | undefined;
-        failure_reason?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Completion> = z
-        .object({
-            id: z.string().optional(),
-            organizationId: z.string(),
-            kind: Kind$.outboundSchema,
-            status: Status$.outboundSchema.optional(),
-            tags: z.array(z.string()).optional(),
-            request: CreateChatCompletionRequest$.outboundSchema.optional(),
-            response: CreateChatCompletionResponse$.outboundSchema.optional(),
-            stacktrace: z.array(z.lazy(() => Stacktrace$.outboundSchema)).optional(),
-            sessionId: z.string().optional(),
-            duration: z.number().optional(),
-            failureKind: z.string().optional(),
-            failureReason: z.string().optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                organizationId: "organization_id",
-                sessionId: "session_id",
-                failureKind: "failure_kind",
-                failureReason: "failure_reason",
-            });
-        });
+    /** @deprecated use `Completion$inboundSchema` instead. */
+    export const inboundSchema = Completion$inboundSchema;
+    /** @deprecated use `Completion$outboundSchema` instead. */
+    export const outboundSchema = Completion$outboundSchema;
+    /** @deprecated use `Completion$Outbound` instead. */
+    export type Outbound = Completion$Outbound;
 }
