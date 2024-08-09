@@ -3,23 +3,24 @@ id: ca95c839-5377-4981-9bcb-4cedc7e35f2b
 management:
   docChecksum: afd320be35d7ac594f72868b9cbd0ef4
   docVersion: 1.0.0
-  speakeasyVersion: 1.337.1
-  generationVersion: 2.373.2
-  releaseVersion: 0.2.0
-  configChecksum: b17dbcaa0019f79c5794545774f39af6
+  speakeasyVersion: 1.358.0
+  generationVersion: 2.390.6
+  releaseVersion: 0.3.0
+  configChecksum: 72c0145d87d59a7550f31aac73df54b3
   repoURL: https://github.com/log10-io/log10ts.git
   installationURL: https://github.com/log10-io/log10ts
   published: true
 features:
   typescript:
     additionalDependencies: 0.1.0
-    constsAndDefaults: 0.1.5
-    core: 3.11.7
+    constsAndDefaults: 0.1.6
+    core: 3.12.3
     defaultEnabledRetries: 0.1.0
     deprecations: 2.81.1
+    envVarSecurityUsage: 0.1.1
     examples: 2.81.4
     flattening: 2.81.1
-    globalSecurity: 2.82.9
+    globalSecurity: 2.82.11
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.4
@@ -30,8 +31,17 @@ features:
     retries: 2.83.0
     sdkHooks: 0.1.0
     typeOverrides: 2.81.1
-    unions: 2.85.5
+    unions: 2.85.6
 generatedFiles:
+  - src/funcs/completionsCreate.ts
+  - src/funcs/completionsUpdate.ts
+  - src/funcs/completionsListUngraded.ts
+  - src/funcs/sessionsCreate.ts
+  - src/funcs/feedbackGet.ts
+  - src/funcs/feedbackUpload.ts
+  - src/funcs/feedbackTasksList.ts
+  - src/funcs/feedbackTasksCreate.ts
+  - src/funcs/feedbackTasksGet.ts
   - src/sdk/completions.ts
   - src/sdk/sessions.ts
   - src/sdk/feedbacksdk.ts
@@ -42,12 +52,15 @@ generatedFiles:
   - RUNTIMES.md
   - jsr.json
   - package.json
+  - src/core.ts
   - src/index.ts
   - src/lib/base64.ts
   - src/lib/config.ts
+  - src/lib/dlv.ts
   - src/lib/encodings.ts
   - src/lib/http.ts
   - src/lib/is-plain-object.ts
+  - src/lib/matchers.ts
   - src/lib/primitives.ts
   - src/lib/retries.ts
   - src/lib/schemas.ts
@@ -55,10 +68,12 @@ generatedFiles:
   - src/lib/security.ts
   - src/lib/url.ts
   - src/sdk/index.ts
+  - src/models/httpclienterrors.ts
   - src/models/sdkerror.ts
   - src/models/sdkvalidationerror.ts
   - src/types/blobs.ts
   - src/types/enums.ts
+  - src/types/fp.ts
   - src/types/index.ts
   - src/types/operations.ts
   - src/types/rfcdate.ts

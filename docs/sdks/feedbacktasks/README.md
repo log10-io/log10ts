@@ -66,12 +66,7 @@ const log10 = new Log10({
 });
 
 async function run() {
-  const result = await log10.feedbackTasks.create({
-    jsonSchema: {},
-    name: "<value>",
-    instruction: "<value>",
-    completionTagsSelector: {},
-  });
+  const result = await log10.feedbackTasks.create();
 
   // Handle the result
   console.log(result)

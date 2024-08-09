@@ -61,7 +61,7 @@ const log10 = new Log10({
 });
 
 async function run() {
-    const result = await log10.sessions.create("<value>");
+    const result = await log10.sessions.create();
 
     // Handle the result
     console.log(result);
@@ -97,106 +97,6 @@ run();
 * [get](docs/sdks/feedbacktasks/README.md#get) - Retrieves feedback task `taskId`.
 <!-- End Available Resources and Operations [operations] -->
 
-<!-- Start Global Parameters [global-parameters] -->
-## Global Parameters
-
-A parameter is configured globally. This parameter may be set on the SDK client instance itself during initialization. When configured as an option during SDK initialization, This global value will be used as the default on the operations that use it. When such operations are called, there is a place in each to override the global value, if needed.
-
-For example, you can set `X-Log10-Organization` to `"<value>"` at SDK initialization and then you do not have to pass the same value on calls to operations like `update`. But if you want to do so you may, which will locally override the global setting. See the example code below for a demonstration.
-
-
-### Available Globals
-
-The following global parameter is available.
-
-| Name | Type | Required | Description |
-| ---- | ---- |:--------:| ----------- |
-| xLog10Organization | string |  | The xLog10Organization parameter. |
-
-
-### Example
-
-```typescript
-import {
-    ChatCompletionRole,
-    CreateChatCompletionRequestType,
-    FinishReason,
-    Kind,
-    Log10,
-    ObjectT,
-} from "log10ts";
-
-const log10 = new Log10({
-    log10Token: "<YOUR_API_KEY_HERE>",
-});
-
-async function run() {
-    const result = await log10.completions.update(
-        "<value>",
-        {
-            organizationId: "<value>",
-            kind: Kind.Prompt,
-            request: {
-                messages: [
-                    {
-                        content: "<value>",
-                        role: ChatCompletionRole.Assistant,
-                    },
-                ],
-                model: "gpt-4-turbo",
-                n: 1,
-                responseFormat: {
-                    type: CreateChatCompletionRequestType.JsonObject,
-                },
-                temperature: 1,
-                topP: 1,
-                user: "user-1234",
-            },
-            response: {
-                id: "<id>",
-                choices: [
-                    {
-                        finishReason: FinishReason.Stop,
-                        index: 344620,
-                        message: {
-                            content: "<value>",
-                            role: ChatCompletionRole.Tool,
-                        },
-                        logprobs: {
-                            content: [
-                                {
-                                    token: "<value>",
-                                    logprob: 9914.64,
-                                    bytes: [270324],
-                                    topLogprobs: [
-                                        {
-                                            token: "<value>",
-                                            logprob: 6276.9,
-                                            bytes: [684199],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                    },
-                ],
-                created: 488852,
-                model: "gpt-4-turbo",
-                object: ObjectT.ChatCompletion,
-            },
-        },
-        "<value>"
-    );
-
-    // Handle the result
-    console.log(result);
-}
-
-run();
-
-```
-<!-- End Global Parameters [global-parameters] -->
-
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
@@ -227,60 +127,53 @@ const log10 = new Log10({
 async function run() {
     let result;
     try {
-        result = await log10.completions.create(
-            {
-                organizationId: "<value>",
-                kind: Kind.Chat,
-                request: {
-                    messages: [
-                        {
-                            role: ChatCompletionRole.Tool,
-                        },
-                    ],
-                    model: "gpt-4-turbo",
-                    n: 1,
-                    responseFormat: {
-                        type: CreateChatCompletionRequestType.JsonObject,
-                    },
-                    temperature: 1,
-                    topP: 1,
-                    user: "user-1234",
+        result = await log10.completions.create({
+            organizationId: "<value>",
+            kind: Kind.Chat,
+            request: {
+                messages: [],
+                model: "gpt-4-turbo",
+                n: 1,
+                responseFormat: {
+                    type: CreateChatCompletionRequestType.JsonObject,
                 },
-                response: {
-                    id: "<id>",
-                    choices: [
-                        {
-                            finishReason: FinishReason.FunctionCall,
-                            index: 417458,
-                            message: {
-                                content: "<value>",
-                                role: ChatCompletionRole.User,
-                            },
-                            logprobs: {
-                                content: [
-                                    {
-                                        token: "<value>",
-                                        logprob: 1343.65,
-                                        bytes: [786546],
-                                        topLogprobs: [
-                                            {
-                                                token: "<value>",
-                                                logprob: 690.25,
-                                                bytes: [996706],
-                                            },
-                                        ],
-                                    },
-                                ],
-                            },
-                        },
-                    ],
-                    created: 796474,
-                    model: "gpt-4-turbo",
-                    object: ObjectT.ChatCompletion,
-                },
+                temperature: 1,
+                topP: 1,
+                user: "user-1234",
             },
-            "<value>"
-        );
+            response: {
+                id: "<id>",
+                choices: [
+                    {
+                        finishReason: FinishReason.ToolCalls,
+                        index: 638424,
+                        message: {
+                            content: "<value>",
+                            role: ChatCompletionRole.Function,
+                        },
+                        logprobs: {
+                            content: [
+                                {
+                                    token: "<value>",
+                                    logprob: 4174.58,
+                                    bytes: [288408],
+                                    topLogprobs: [
+                                        {
+                                            token: "<value>",
+                                            logprob: 1343.65,
+                                            bytes: [786546],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    },
+                ],
+                created: 69025,
+                model: "gpt-4-turbo",
+                object: ObjectT.ChatCompletion,
+            },
+        });
     } catch (err) {
         switch (true) {
             case err instanceof SDKValidationError: {
@@ -332,60 +225,53 @@ const log10 = new Log10({
 });
 
 async function run() {
-    const result = await log10.completions.create(
-        {
-            organizationId: "<value>",
-            kind: Kind.Chat,
-            request: {
-                messages: [
-                    {
-                        role: ChatCompletionRole.Tool,
-                    },
-                ],
-                model: "gpt-4-turbo",
-                n: 1,
-                responseFormat: {
-                    type: CreateChatCompletionRequestType.JsonObject,
-                },
-                temperature: 1,
-                topP: 1,
-                user: "user-1234",
+    const result = await log10.completions.create({
+        organizationId: "<value>",
+        kind: Kind.Chat,
+        request: {
+            messages: [],
+            model: "gpt-4-turbo",
+            n: 1,
+            responseFormat: {
+                type: CreateChatCompletionRequestType.JsonObject,
             },
-            response: {
-                id: "<id>",
-                choices: [
-                    {
-                        finishReason: FinishReason.FunctionCall,
-                        index: 417458,
-                        message: {
-                            content: "<value>",
-                            role: ChatCompletionRole.User,
-                        },
-                        logprobs: {
-                            content: [
-                                {
-                                    token: "<value>",
-                                    logprob: 1343.65,
-                                    bytes: [786546],
-                                    topLogprobs: [
-                                        {
-                                            token: "<value>",
-                                            logprob: 690.25,
-                                            bytes: [996706],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                    },
-                ],
-                created: 796474,
-                model: "gpt-4-turbo",
-                object: ObjectT.ChatCompletion,
-            },
+            temperature: 1,
+            topP: 1,
+            user: "user-1234",
         },
-        "<value>"
-    );
+        response: {
+            id: "<id>",
+            choices: [
+                {
+                    finishReason: FinishReason.ToolCalls,
+                    index: 638424,
+                    message: {
+                        content: "<value>",
+                        role: ChatCompletionRole.Function,
+                    },
+                    logprobs: {
+                        content: [
+                            {
+                                token: "<value>",
+                                logprob: 4174.58,
+                                bytes: [288408],
+                                topLogprobs: [
+                                    {
+                                        token: "<value>",
+                                        logprob: 1343.65,
+                                        bytes: [786546],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                },
+            ],
+            created: 69025,
+            model: "gpt-4-turbo",
+            object: ObjectT.ChatCompletion,
+        },
+    });
 
     // Handle the result
     console.log(result);
@@ -416,60 +302,53 @@ const log10 = new Log10({
 });
 
 async function run() {
-    const result = await log10.completions.create(
-        {
-            organizationId: "<value>",
-            kind: Kind.Chat,
-            request: {
-                messages: [
-                    {
-                        role: ChatCompletionRole.Tool,
-                    },
-                ],
-                model: "gpt-4-turbo",
-                n: 1,
-                responseFormat: {
-                    type: CreateChatCompletionRequestType.JsonObject,
-                },
-                temperature: 1,
-                topP: 1,
-                user: "user-1234",
+    const result = await log10.completions.create({
+        organizationId: "<value>",
+        kind: Kind.Chat,
+        request: {
+            messages: [],
+            model: "gpt-4-turbo",
+            n: 1,
+            responseFormat: {
+                type: CreateChatCompletionRequestType.JsonObject,
             },
-            response: {
-                id: "<id>",
-                choices: [
-                    {
-                        finishReason: FinishReason.FunctionCall,
-                        index: 417458,
-                        message: {
-                            content: "<value>",
-                            role: ChatCompletionRole.User,
-                        },
-                        logprobs: {
-                            content: [
-                                {
-                                    token: "<value>",
-                                    logprob: 1343.65,
-                                    bytes: [786546],
-                                    topLogprobs: [
-                                        {
-                                            token: "<value>",
-                                            logprob: 690.25,
-                                            bytes: [996706],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                    },
-                ],
-                created: 796474,
-                model: "gpt-4-turbo",
-                object: ObjectT.ChatCompletion,
-            },
+            temperature: 1,
+            topP: 1,
+            user: "user-1234",
         },
-        "<value>"
-    );
+        response: {
+            id: "<id>",
+            choices: [
+                {
+                    finishReason: FinishReason.ToolCalls,
+                    index: 638424,
+                    message: {
+                        content: "<value>",
+                        role: ChatCompletionRole.Function,
+                    },
+                    logprobs: {
+                        content: [
+                            {
+                                token: "<value>",
+                                logprob: 4174.58,
+                                bytes: [288408],
+                                topLogprobs: [
+                                    {
+                                        token: "<value>",
+                                        logprob: 1343.65,
+                                        bytes: [786546],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                },
+            ],
+            created: 69025,
+            model: "gpt-4-turbo",
+            object: ObjectT.ChatCompletion,
+        },
+    });
 
     // Handle the result
     console.log(result);
@@ -556,60 +435,53 @@ const log10 = new Log10({
 });
 
 async function run() {
-    const result = await log10.completions.create(
-        {
-            organizationId: "<value>",
-            kind: Kind.Chat,
-            request: {
-                messages: [
-                    {
-                        role: ChatCompletionRole.Tool,
-                    },
-                ],
-                model: "gpt-4-turbo",
-                n: 1,
-                responseFormat: {
-                    type: CreateChatCompletionRequestType.JsonObject,
-                },
-                temperature: 1,
-                topP: 1,
-                user: "user-1234",
+    const result = await log10.completions.create({
+        organizationId: "<value>",
+        kind: Kind.Chat,
+        request: {
+            messages: [],
+            model: "gpt-4-turbo",
+            n: 1,
+            responseFormat: {
+                type: CreateChatCompletionRequestType.JsonObject,
             },
-            response: {
-                id: "<id>",
-                choices: [
-                    {
-                        finishReason: FinishReason.FunctionCall,
-                        index: 417458,
-                        message: {
-                            content: "<value>",
-                            role: ChatCompletionRole.User,
-                        },
-                        logprobs: {
-                            content: [
-                                {
-                                    token: "<value>",
-                                    logprob: 1343.65,
-                                    bytes: [786546],
-                                    topLogprobs: [
-                                        {
-                                            token: "<value>",
-                                            logprob: 690.25,
-                                            bytes: [996706],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                    },
-                ],
-                created: 796474,
-                model: "gpt-4-turbo",
-                object: ObjectT.ChatCompletion,
-            },
+            temperature: 1,
+            topP: 1,
+            user: "user-1234",
         },
-        "<value>"
-    );
+        response: {
+            id: "<id>",
+            choices: [
+                {
+                    finishReason: FinishReason.ToolCalls,
+                    index: 638424,
+                    message: {
+                        content: "<value>",
+                        role: ChatCompletionRole.Function,
+                    },
+                    logprobs: {
+                        content: [
+                            {
+                                token: "<value>",
+                                logprob: 4174.58,
+                                bytes: [288408],
+                                topLogprobs: [
+                                    {
+                                        token: "<value>",
+                                        logprob: 1343.65,
+                                        bytes: [786546],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                },
+            ],
+            created: 69025,
+            model: "gpt-4-turbo",
+            object: ObjectT.ChatCompletion,
+        },
+    });
 
     // Handle the result
     console.log(result);
@@ -646,11 +518,7 @@ async function run() {
             organizationId: "<value>",
             kind: Kind.Chat,
             request: {
-                messages: [
-                    {
-                        role: ChatCompletionRole.Tool,
-                    },
-                ],
+                messages: [],
                 model: "gpt-4-turbo",
                 n: 1,
                 responseFormat: {
@@ -664,23 +532,23 @@ async function run() {
                 id: "<id>",
                 choices: [
                     {
-                        finishReason: FinishReason.FunctionCall,
-                        index: 417458,
+                        finishReason: FinishReason.ToolCalls,
+                        index: 638424,
                         message: {
                             content: "<value>",
-                            role: ChatCompletionRole.User,
+                            role: ChatCompletionRole.Function,
                         },
                         logprobs: {
                             content: [
                                 {
                                     token: "<value>",
-                                    logprob: 1343.65,
-                                    bytes: [786546],
+                                    logprob: 4174.58,
+                                    bytes: [288408],
                                     topLogprobs: [
                                         {
                                             token: "<value>",
-                                            logprob: 690.25,
-                                            bytes: [996706],
+                                            logprob: 1343.65,
+                                            bytes: [786546],
                                         },
                                     ],
                                 },
@@ -688,12 +556,11 @@ async function run() {
                         },
                     },
                 ],
-                created: 796474,
+                created: 69025,
                 model: "gpt-4-turbo",
                 object: ObjectT.ChatCompletion,
             },
         },
-        "<value>",
         {
             retries: {
                 strategy: "backoff",
@@ -742,60 +609,53 @@ const log10 = new Log10({
 });
 
 async function run() {
-    const result = await log10.completions.create(
-        {
-            organizationId: "<value>",
-            kind: Kind.Chat,
-            request: {
-                messages: [
-                    {
-                        role: ChatCompletionRole.Tool,
-                    },
-                ],
-                model: "gpt-4-turbo",
-                n: 1,
-                responseFormat: {
-                    type: CreateChatCompletionRequestType.JsonObject,
-                },
-                temperature: 1,
-                topP: 1,
-                user: "user-1234",
+    const result = await log10.completions.create({
+        organizationId: "<value>",
+        kind: Kind.Chat,
+        request: {
+            messages: [],
+            model: "gpt-4-turbo",
+            n: 1,
+            responseFormat: {
+                type: CreateChatCompletionRequestType.JsonObject,
             },
-            response: {
-                id: "<id>",
-                choices: [
-                    {
-                        finishReason: FinishReason.FunctionCall,
-                        index: 417458,
-                        message: {
-                            content: "<value>",
-                            role: ChatCompletionRole.User,
-                        },
-                        logprobs: {
-                            content: [
-                                {
-                                    token: "<value>",
-                                    logprob: 1343.65,
-                                    bytes: [786546],
-                                    topLogprobs: [
-                                        {
-                                            token: "<value>",
-                                            logprob: 690.25,
-                                            bytes: [996706],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                    },
-                ],
-                created: 796474,
-                model: "gpt-4-turbo",
-                object: ObjectT.ChatCompletion,
-            },
+            temperature: 1,
+            topP: 1,
+            user: "user-1234",
         },
-        "<value>"
-    );
+        response: {
+            id: "<id>",
+            choices: [
+                {
+                    finishReason: FinishReason.ToolCalls,
+                    index: 638424,
+                    message: {
+                        content: "<value>",
+                        role: ChatCompletionRole.Function,
+                    },
+                    logprobs: {
+                        content: [
+                            {
+                                token: "<value>",
+                                logprob: 4174.58,
+                                bytes: [288408],
+                                topLogprobs: [
+                                    {
+                                        token: "<value>",
+                                        logprob: 1343.65,
+                                        bytes: [786546],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                },
+            ],
+            created: 69025,
+            model: "gpt-4-turbo",
+            object: ObjectT.ChatCompletion,
+        },
+    });
 
     // Handle the result
     console.log(result);

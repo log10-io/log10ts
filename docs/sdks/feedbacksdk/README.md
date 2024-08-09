@@ -24,7 +24,7 @@ const log10 = new Log10({
 });
 
 async function run() {
-  const result = await log10.feedback.get("<value>", "<value>");
+  const result = await log10.feedback.get("<value>");
 
   // Handle the result
   console.log(result)
@@ -77,7 +77,7 @@ async function run() {
       completionTagsSelector: [
         "<value>",
       ],
-    }, "<value>");
+    });
 
   // Handle the result
   console.log(result)

@@ -37,9 +37,7 @@ async function run() {
     kind: Kind.Chat,
     request: {
       messages: [
-          {
-            role: ChatCompletionRole.Tool,
-          },
+  
       ],
       model: "gpt-4-turbo",
       n: 1,
@@ -54,26 +52,26 @@ async function run() {
       id: "<id>",
       choices: [
         {
-          finishReason: FinishReason.FunctionCall,
-          index: 417458,
+          finishReason: FinishReason.ToolCalls,
+          index: 638424,
           message: {
             content: "<value>",
-            role: ChatCompletionRole.User,
+            role: ChatCompletionRole.Function,
           },
           logprobs: {
             content: [
               {
                 token: "<value>",
-                logprob: 1343.65,
+                logprob: 4174.58,
                 bytes: [
-                  786546,
+                  288408,
                 ],
                 topLogprobs: [
                   {
                     token: "<value>",
-                    logprob: 690.25,
+                    logprob: 1343.65,
                     bytes: [
-                      996706,
+                      786546,
                     ],
                   },
                 ],
@@ -82,11 +80,11 @@ async function run() {
           },
         },
       ],
-      created: 796474,
+      created: 69025,
       model: "gpt-4-turbo",
       object: ObjectT.ChatCompletion,
     },
-  }, "<value>");
+  });
 
   // Handle the result
   console.log(result)
@@ -141,10 +139,7 @@ async function run() {
     kind: Kind.Prompt,
     request: {
       messages: [
-          {
-            content: "<value>",
-            role: ChatCompletionRole.Assistant,
-          },
+  
       ],
       model: "gpt-4-turbo",
       n: 1,
@@ -160,25 +155,25 @@ async function run() {
       choices: [
         {
           finishReason: FinishReason.Stop,
-          index: 344620,
+          index: 597129,
           message: {
             content: "<value>",
-            role: ChatCompletionRole.Tool,
+            role: ChatCompletionRole.System,
           },
           logprobs: {
             content: [
               {
                 token: "<value>",
-                logprob: 9914.64,
+                logprob: 3446.2,
                 bytes: [
-                  270324,
+                  708455,
                 ],
                 topLogprobs: [
                   {
                     token: "<value>",
-                    logprob: 6276.9,
+                    logprob: 9914.64,
                     bytes: [
-                      684199,
+                      270324,
                     ],
                   },
                 ],
@@ -187,11 +182,11 @@ async function run() {
           },
         },
       ],
-      created: 488852,
+      created: 627690,
       model: "gpt-4-turbo",
       object: ObjectT.ChatCompletion,
     },
-  }, "<value>");
+  });
 
   // Handle the result
   console.log(result)
@@ -235,7 +230,7 @@ const log10 = new Log10({
 });
 
 async function run() {
-  const result = await log10.completions.listUngraded("<value>");
+  const result = await log10.completions.listUngraded();
 
   // Handle the result
   console.log(result)
