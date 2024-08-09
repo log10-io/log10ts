@@ -5,4 +5,4 @@
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `log10Token`       | *string*           | :heavy_minus_sign: | N/A                |
+| `log10Token`       | *string*           | :heavy_check_mark: | N/A                |
