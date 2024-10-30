@@ -66,18 +66,11 @@ yarn add log10ts zod
 ```
 <!-- End SDK Installation [installation] -->
 
+## Example
+
 <!-- Start Requirements [requirements] -->
 ## Requirements
-
-For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
-<!-- End Requirements [requirements] -->
-
-<!-- Start SDK Example Usage [usage] -->
-## SDK Example Usage
-
-### Example
-
-```typescript
+=======
 import { Log10 } from "log10ts";
 
 const log10 = new Log10({
@@ -1370,5 +1363,5 @@ looking for the latest version.
 While we value open-source contributions to this SDK, this library is generated programmatically.
 Feel free to open a PR or a Github issue as a proof of concept and we'll do our best to include it in a future release!
 
-### SDK Created by [Speakeasy](https://docs.speakeasyapi.dev/docs/using-speakeasy/client-sdks)
-# log10ts
+For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
+<!-- End Requirements [requirements] -->
