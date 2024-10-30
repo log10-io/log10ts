@@ -1,5 +1,22 @@
 # Two
 
+## Example Usage
+
+```typescript
+import { Two } from "log10ts";
+
+let value: Two = {
+  taskId: "<id>",
+  jsonValues: {},
+  matchedCompletionIds: [
+    "<value>",
+  ],
+  comment: "The Football Is Good For Training And Recreational Purposes",
+  completionIds: [
+    "<value>",
+  ],
+};
+```
 
 ## Fields
 

@@ -13,3 +13,7 @@ targets:
         publish:
             npm:
                 token: $npm_token
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/log10/log10/default-code-samples
+            blocking: false

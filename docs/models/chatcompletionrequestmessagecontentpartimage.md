@@ -1,5 +1,20 @@
 # ChatCompletionRequestMessageContentPartImage
 
+## Example Usage
+
+```typescript
+import {
+  ChatCompletionRequestMessageContentPartImage,
+  ChatCompletionRequestMessageContentPartImageType,
+} from "log10ts";
+
+let value: ChatCompletionRequestMessageContentPartImage = {
+  type: ChatCompletionRequestMessageContentPartImageType.ImageUrl,
+  imageUrl: {
+    url: "https://forsaken-contractor.name",
+  },
+};
+```
 
 ## Fields
 

@@ -1,5 +1,12 @@
 # ListUngradedRequest
 
+## Example Usage
+
+```typescript
+import { ListUngradedRequest } from "log10ts";
+
+let value: ListUngradedRequest = {};
+```
 
 ## Fields
 

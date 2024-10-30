@@ -1,5 +1,14 @@
 # GetFeedbackTaskRequest
 
+## Example Usage
+
+```typescript
+import { GetFeedbackTaskRequest } from "log10ts";
+
+let value: GetFeedbackTaskRequest = {
+  taskId: "<id>",
+};
+```
 
 ## Fields
 

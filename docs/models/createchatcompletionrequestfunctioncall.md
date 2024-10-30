@@ -18,12 +18,14 @@ Specifying a particular function via `{"name": "my_function"}` forces the model 
 ### `models.One`
 
 ```typescript
-const value: models.One = /* values here */
+const value: models.One = One.Auto;
 ```
 
 ### `models.ChatCompletionFunctionCallOption`
 
 ```typescript
-const value: models.ChatCompletionFunctionCallOption = /* values here */
+const value: models.ChatCompletionFunctionCallOption = {
+  name: "<value>",
+};
 ```
 

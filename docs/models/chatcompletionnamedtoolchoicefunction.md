@@ -1,5 +1,14 @@
 # ChatCompletionNamedToolChoiceFunction
 
+## Example Usage
+
+```typescript
+import { ChatCompletionNamedToolChoiceFunction } from "log10ts";
+
+let value: ChatCompletionNamedToolChoiceFunction = {
+  name: "<value>",
+};
+```
 
 ## Fields
 

@@ -2,6 +2,16 @@
 
 The function that the model called.
 
+## Example Usage
+
+```typescript
+import { FunctionT } from "log10ts";
+
+let value: FunctionT = {
+  name: "<value>",
+  arguments: "<value>",
+};
+```
 
 ## Fields
 

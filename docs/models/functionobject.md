@@ -1,5 +1,14 @@
 # FunctionObject
 
+## Example Usage
+
+```typescript
+import { FunctionObject } from "log10ts";
+
+let value: FunctionObject = {
+  name: "<value>",
+};
+```
 
 ## Fields
 

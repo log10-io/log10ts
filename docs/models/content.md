@@ -9,12 +9,17 @@ The contents of the user message.
 ### `string`
 
 ```typescript
-const value: string = /* values here */
+const value: string = "<value>";
 ```
 
 ### `models.ChatCompletionRequestMessageContentPart[]`
 
 ```typescript
-const value: models.ChatCompletionRequestMessageContentPart[] = /* values here */
+const value: models.ChatCompletionRequestMessageContentPart[] = [
+  {
+    type: Type.Text,
+    text: "<value>",
+  },
+];
 ```
 

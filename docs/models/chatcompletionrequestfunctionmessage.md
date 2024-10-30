@@ -2,6 +2,17 @@
 
 > :warning: **DEPRECATED**: This will be removed in a future release, please migrate away from it as soon as possible.
 
+## Example Usage
+
+```typescript
+import { ChatCompletionRequestFunctionMessage, ChatCompletionRole } from "log10ts";
+
+let value: ChatCompletionRequestFunctionMessage = {
+  role: ChatCompletionRole.System,
+  content: "<value>",
+  name: "<value>",
+};
+```
 
 ## Fields
 

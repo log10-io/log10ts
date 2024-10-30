@@ -1,5 +1,12 @@
 # UploadGlobals
 
+## Example Usage
+
+```typescript
+import { UploadGlobals } from "log10ts";
+
+let value: UploadGlobals = {};
+```
 
 ## Fields
 

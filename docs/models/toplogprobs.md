@@ -1,5 +1,18 @@
 # TopLogprobs
 
+## Example Usage
+
+```typescript
+import { TopLogprobs } from "log10ts";
+
+let value: TopLogprobs = {
+  token: "<value>",
+  logprob: 2444.26,
+  bytes: [
+    158969,
+  ],
+};
+```
 
 ## Fields
 
