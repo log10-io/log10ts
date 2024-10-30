@@ -29,7 +29,7 @@
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "checkJs": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
