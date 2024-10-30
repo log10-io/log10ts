@@ -1,7 +1,7 @@
 {
   "name": "log10ts",
   "version": "0.1.0",
-  "author": "Speakeasy",  
+  "author": "Speakeasy",
   "main": "./index.js",
   "sideEffects": false,
   "repository": {
@@ -27,6 +27,8 @@
     "zod": "^3.23.4"
   },
   "dependencies": {
-    
+    "axios": "^1.7.7",
+    "openai": "^4.68.4",
+    "ts-jest": "^29.2.5"
   }
 }
