@@ -66,26 +66,36 @@ yarn add log10ts zod
 ```
 <!-- End SDK Installation [installation] -->
 
+<!-- Start SDK Example Usage [usage] -->
+
 ## Example
 
-<!-- Start Requirements [requirements] -->
-## Requirements
-=======
-import { Log10 } from "log10ts";
+```typescript
+import OpenAI from "openai";
 
-const log10 = new Log10({
-  log10Token: "<YOUR_API_KEY_HERE>",
-});
+import { SDKOptions, Log10Wrapper } from "log10ts";
 
-async function run() {
-  const result = await log10.sessions.create();
+const options: SDKOptions = {
+  log10Token: process.env["LOG10_TOKEN"] || "",
+  xLog10Organization: process.env["LOG10_ORG_ID"] || "",
+  serverURL: "https://log10.io",
+};
 
-  // Handle the result
-  console.log(result);
+const client = new OpenAI();
+const wrapper = new Log10Wrapper(options);
+wrapper.wrap(client);
+
+
+async function main() {
+  const response = await client.chat.completions.create({
+    messages: [{ role: "user", content: "Knock knock - who is there?" }],
+    model: "gpt-3.5-turbo",
+  });
+
+  console.log(response);
 }
 
-run();
-
+main();
 ```
 <!-- End SDK Example Usage [usage] -->
 
@@ -1364,4 +1374,6 @@ While we value open-source contributions to this SDK, this library is generated 
 Feel free to open a PR or a Github issue as a proof of concept and we'll do our best to include it in a future release!
 
 For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
+
+<!-- Start Requirements [requirements] -->
 <!-- End Requirements [requirements] -->
