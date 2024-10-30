@@ -3,23 +3,25 @@ id: ca95c839-5377-4981-9bcb-4cedc7e35f2b
 management:
   docChecksum: afd320be35d7ac594f72868b9cbd0ef4
   docVersion: 1.0.0
-  speakeasyVersion: 1.337.1
-  generationVersion: 2.373.2
-  releaseVersion: 0.2.0
-  configChecksum: b17dbcaa0019f79c5794545774f39af6
+  speakeasyVersion: 1.423.2
+  generationVersion: 2.442.11
+  releaseVersion: 0.3.0
+  configChecksum: 2235607c57680937544eb6dfcdb9c2cd
   repoURL: https://github.com/log10-io/log10ts.git
   installationURL: https://github.com/log10-io/log10ts
   published: true
 features:
   typescript:
     additionalDependencies: 0.1.0
-    constsAndDefaults: 0.1.5
-    core: 3.11.7
+    constsAndDefaults: 0.1.11
+    core: 3.18.2
     defaultEnabledRetries: 0.1.0
     deprecations: 2.81.1
+    enumUnions: 0.1.0
+    envVarSecurityUsage: 0.1.1
     examples: 2.81.4
-    flattening: 2.81.1
-    globalSecurity: 2.82.9
+    flattening: 2.82.0
+    globalSecurity: 2.82.11
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.4
@@ -30,174 +32,254 @@ features:
     retries: 2.83.0
     sdkHooks: 0.1.0
     typeOverrides: 2.81.1
-    unions: 2.85.5
+    unions: 2.85.7
 generatedFiles:
-  - src/sdk/completions.ts
-  - src/sdk/sessions.ts
-  - src/sdk/feedbacksdk.ts
-  - src/sdk/feedbacktasks.ts
-  - src/sdk/sdk.ts
   - .eslintrc.cjs
+  - .gitattributes
   - .npmignore
+  - CONTRIBUTING.md
+  - FUNCTIONS.md
   - RUNTIMES.md
+  - USAGE.md
+  - docs/lib/utils/retryconfig.md
+  - docs/models/chatcompletionfunctioncalloption.md
+  - docs/models/chatcompletionfunctions.md
+  - docs/models/chatcompletionmessagetoolcall.md
+  - docs/models/chatcompletionmessagetoolcalltype.md
+  - docs/models/chatcompletionnamedtoolchoice.md
+  - docs/models/chatcompletionnamedtoolchoicefunction.md
+  - docs/models/chatcompletionnamedtoolchoicetype.md
+  - docs/models/chatcompletionrequestassistantmessage.md
+  - docs/models/chatcompletionrequestfunctionmessage.md
+  - docs/models/chatcompletionrequestmessage.md
+  - docs/models/chatcompletionrequestmessagecontentpart.md
+  - docs/models/chatcompletionrequestmessagecontentpartimage.md
+  - docs/models/chatcompletionrequestmessagecontentpartimagetype.md
+  - docs/models/chatcompletionrequestmessagecontentparttext.md
+  - docs/models/chatcompletionrequestsystemmessage.md
+  - docs/models/chatcompletionrequesttoolmessage.md
+  - docs/models/chatcompletionrequestusermessage.md
+  - docs/models/chatcompletionresponsemessage.md
+  - docs/models/chatcompletionresponsemessagefunctioncall.md
+  - docs/models/chatcompletionrole.md
+  - docs/models/chatcompletionstreamoptions.md
+  - docs/models/chatcompletiontokenlogprob.md
+  - docs/models/chatcompletiontool.md
+  - docs/models/chatcompletiontoolchoiceoption.md
+  - docs/models/chatcompletiontoolchoiceoption1.md
+  - docs/models/chatcompletiontooltype.md
+  - docs/models/choices.md
+  - docs/models/completion.md
+  - docs/models/completiontagsselector.md
+  - docs/models/completionusage.md
+  - docs/models/content.md
+  - docs/models/createchatcompletionrequest.md
+  - docs/models/createchatcompletionrequestfunctioncall.md
+  - docs/models/createchatcompletionrequesttype.md
+  - docs/models/createchatcompletionresponse.md
+  - docs/models/createfeedbacktaskresponse.md
+  - docs/models/createglobals.md
+  - docs/models/createrequest.md
+  - docs/models/createresponse.md
+  - docs/models/createsessionglobals.md
+  - docs/models/createsessionrequest.md
+  - docs/models/createsessionresponse.md
+  - docs/models/createsessionresponsebody.md
+  - docs/models/detail.md
+  - docs/models/feedback.md
+  - docs/models/finishreason.md
+  - docs/models/functioncall.md
+  - docs/models/functionobject.md
+  - docs/models/functiont.md
+  - docs/models/getfeedbacktaskrequest.md
+  - docs/models/getfeedbacktaskresponse.md
+  - docs/models/getglobals.md
+  - docs/models/getrequest.md
+  - docs/models/getresponse.md
+  - docs/models/httpmetadata.md
+  - docs/models/imageurl.md
+  - docs/models/jsonschema.md
+  - docs/models/jsonvalues.md
+  - docs/models/kind.md
+  - docs/models/listfeedbacktasksresponse.md
+  - docs/models/listungradedglobals.md
+  - docs/models/listungradedrequest.md
+  - docs/models/listungradedresponse.md
+  - docs/models/listungradedresponsebody.md
+  - docs/models/logprobs.md
+  - docs/models/objectt.md
+  - docs/models/one.md
+  - docs/models/requestbody1.md
+  - docs/models/requestbodyjsonvalues.md
+  - docs/models/responseformat.md
+  - docs/models/security.md
+  - docs/models/session.md
+  - docs/models/stacktrace.md
+  - docs/models/status.md
+  - docs/models/stop.md
+  - docs/models/task.md
+  - docs/models/toplogprobs.md
+  - docs/models/two.md
+  - docs/models/type.md
+  - docs/models/updateglobals.md
+  - docs/models/updaterequest.md
+  - docs/models/updateresponse.md
+  - docs/models/uploadglobals.md
+  - docs/models/uploadrequest.md
+  - docs/models/uploadrequestbody.md
+  - docs/models/uploadrequestbodyjsonvalues.md
+  - docs/models/uploadresponse.md
+  - docs/sdks/completions/README.md
+  - docs/sdks/feedbacksdk/README.md
+  - docs/sdks/feedbacktasks/README.md
+  - docs/sdks/log10/README.md
+  - docs/sdks/sessions/README.md
   - jsr.json
   - package.json
+  - src/core.ts
+  - src/funcs/completionsCreate.ts
+  - src/funcs/completionsListUngraded.ts
+  - src/funcs/completionsUpdate.ts
+  - src/funcs/feedbackGet.ts
+  - src/funcs/feedbackTasksCreate.ts
+  - src/funcs/feedbackTasksGet.ts
+  - src/funcs/feedbackTasksList.ts
+  - src/funcs/feedbackUpload.ts
+  - src/funcs/sessionsCreate.ts
+  - src/hooks/hooks.ts
+  - src/hooks/index.ts
+  - src/hooks/types.ts
   - src/index.ts
   - src/lib/base64.ts
   - src/lib/config.ts
+  - src/lib/dlv.ts
   - src/lib/encodings.ts
+  - src/lib/files.ts
   - src/lib/http.ts
   - src/lib/is-plain-object.ts
+  - src/lib/logger.ts
+  - src/lib/matchers.ts
   - src/lib/primitives.ts
   - src/lib/retries.ts
   - src/lib/schemas.ts
   - src/lib/sdks.ts
   - src/lib/security.ts
   - src/lib/url.ts
-  - src/sdk/index.ts
+  - src/models/chatcompletionfunctioncalloption.ts
+  - src/models/chatcompletionfunctions.ts
+  - src/models/chatcompletionmessagetoolcall.ts
+  - src/models/chatcompletionnamedtoolchoice.ts
+  - src/models/chatcompletionrequestassistantmessage.ts
+  - src/models/chatcompletionrequestfunctionmessage.ts
+  - src/models/chatcompletionrequestmessage.ts
+  - src/models/chatcompletionrequestmessagecontentpart.ts
+  - src/models/chatcompletionrequestmessagecontentpartimage.ts
+  - src/models/chatcompletionrequestmessagecontentparttext.ts
+  - src/models/chatcompletionrequestsystemmessage.ts
+  - src/models/chatcompletionrequesttoolmessage.ts
+  - src/models/chatcompletionrequestusermessage.ts
+  - src/models/chatcompletionresponsemessage.ts
+  - src/models/chatcompletionrole.ts
+  - src/models/chatcompletionstreamoptions.ts
+  - src/models/chatcompletiontokenlogprob.ts
+  - src/models/chatcompletiontool.ts
+  - src/models/chatcompletiontoolchoiceoption.ts
+  - src/models/completion.ts
+  - src/models/completionusage.ts
+  - src/models/createchatcompletionrequest.ts
+  - src/models/createchatcompletionresponse.ts
+  - src/models/createfeedbacktaskop.ts
+  - src/models/createop.ts
+  - src/models/createsessionop.ts
+  - src/models/feedback.ts
+  - src/models/functionobject.ts
+  - src/models/getfeedbacktaskop.ts
+  - src/models/getop.ts
+  - src/models/httpclienterrors.ts
+  - src/models/httpmetadata.ts
+  - src/models/index.ts
+  - src/models/listfeedbacktasksop.ts
+  - src/models/listungradedop.ts
   - src/models/sdkerror.ts
   - src/models/sdkvalidationerror.ts
+  - src/models/security.ts
+  - src/models/session.ts
+  - src/models/task.ts
+  - src/models/updateop.ts
+  - src/models/uploadop.ts
+  - src/sdk/completions.ts
+  - src/sdk/feedbacksdk.ts
+  - src/sdk/feedbacktasks.ts
+  - src/sdk/index.ts
+  - src/sdk/sdk.ts
+  - src/sdk/sessions.ts
   - src/types/blobs.ts
+  - src/types/constdatetime.ts
   - src/types/enums.ts
+  - src/types/fp.ts
   - src/types/index.ts
   - src/types/operations.ts
   - src/types/rfcdate.ts
+  - src/types/streams.ts
   - tsconfig.json
-  - src/models/createop.ts
-  - src/models/completion.ts
-  - src/models/createchatcompletionresponse.ts
-  - src/models/completionusage.ts
-  - src/models/chatcompletiontokenlogprob.ts
-  - src/models/chatcompletionresponsemessage.ts
-  - src/models/chatcompletionrole.ts
-  - src/models/chatcompletionmessagetoolcall.ts
-  - src/models/createchatcompletionrequest.ts
-  - src/models/chatcompletionfunctions.ts
-  - src/models/chatcompletionfunctioncalloption.ts
-  - src/models/chatcompletiontoolchoiceoption.ts
-  - src/models/chatcompletionnamedtoolchoice.ts
-  - src/models/chatcompletiontool.ts
-  - src/models/functionobject.ts
-  - src/models/chatcompletionstreamoptions.ts
-  - src/models/chatcompletionrequestmessage.ts
-  - src/models/chatcompletionrequestsystemmessage.ts
-  - src/models/chatcompletionrequestusermessage.ts
-  - src/models/chatcompletionrequestmessagecontentpart.ts
-  - src/models/chatcompletionrequestmessagecontentparttext.ts
-  - src/models/chatcompletionrequestmessagecontentpartimage.ts
-  - src/models/chatcompletionrequestassistantmessage.ts
-  - src/models/chatcompletionrequesttoolmessage.ts
-  - src/models/chatcompletionrequestfunctionmessage.ts
-  - src/models/httpmetadata.ts
-  - src/models/updateop.ts
-  - src/models/listungradedop.ts
-  - src/models/createsessionop.ts
-  - src/models/session.ts
-  - src/models/getop.ts
-  - src/models/feedback.ts
-  - src/models/uploadop.ts
-  - src/models/listfeedbacktasksop.ts
-  - src/models/task.ts
-  - src/models/createfeedbacktaskop.ts
-  - src/models/getfeedbacktaskop.ts
-  - src/models/security.ts
-  - src/models/index.ts
-  - docs/models/createglobals.md
-  - docs/models/createrequest.md
-  - docs/models/createresponse.md
-  - docs/models/kind.md
-  - docs/models/status.md
-  - docs/models/stacktrace.md
-  - docs/models/completion.md
-  - docs/models/finishreason.md
-  - docs/models/logprobs.md
-  - docs/models/choices.md
-  - docs/models/objectt.md
-  - docs/models/createchatcompletionresponse.md
-  - docs/models/completionusage.md
-  - docs/models/toplogprobs.md
-  - docs/models/chatcompletiontokenlogprob.md
-  - docs/models/chatcompletionresponsemessagefunctioncall.md
-  - docs/models/chatcompletionresponsemessage.md
-  - docs/models/chatcompletionrole.md
-  - docs/models/chatcompletionmessagetoolcalltype.md
-  - docs/models/functiont.md
-  - docs/models/chatcompletionmessagetoolcall.md
-  - docs/models/createchatcompletionrequesttype.md
-  - docs/models/responseformat.md
-  - docs/models/stop.md
-  - docs/models/one.md
-  - docs/models/createchatcompletionrequestfunctioncall.md
-  - docs/models/createchatcompletionrequest.md
-  - docs/models/chatcompletionfunctions.md
-  - docs/models/chatcompletionfunctioncalloption.md
-  - docs/models/chatcompletiontoolchoiceoption1.md
-  - docs/models/chatcompletiontoolchoiceoption.md
-  - docs/models/chatcompletionnamedtoolchoicetype.md
-  - docs/models/chatcompletionnamedtoolchoicefunction.md
-  - docs/models/chatcompletionnamedtoolchoice.md
-  - docs/models/chatcompletiontooltype.md
-  - docs/models/chatcompletiontool.md
-  - docs/models/functionobject.md
-  - docs/models/chatcompletionstreamoptions.md
-  - docs/models/chatcompletionrequestmessage.md
-  - docs/models/chatcompletionrequestsystemmessage.md
-  - docs/models/content.md
-  - docs/models/chatcompletionrequestusermessage.md
-  - docs/models/chatcompletionrequestmessagecontentpart.md
-  - docs/models/type.md
-  - docs/models/chatcompletionrequestmessagecontentparttext.md
-  - docs/models/chatcompletionrequestmessagecontentpartimagetype.md
-  - docs/models/detail.md
-  - docs/models/imageurl.md
-  - docs/models/chatcompletionrequestmessagecontentpartimage.md
-  - docs/models/functioncall.md
-  - docs/models/chatcompletionrequestassistantmessage.md
-  - docs/models/chatcompletionrequesttoolmessage.md
-  - docs/models/chatcompletionrequestfunctionmessage.md
-  - docs/models/httpmetadata.md
-  - docs/models/updateglobals.md
-  - docs/models/updaterequest.md
-  - docs/models/updateresponse.md
-  - docs/models/listungradedglobals.md
-  - docs/models/listungradedrequest.md
-  - docs/models/listungradedresponsebody.md
-  - docs/models/listungradedresponse.md
-  - docs/models/createsessionglobals.md
-  - docs/models/createsessionrequest.md
-  - docs/models/createsessionresponsebody.md
-  - docs/models/createsessionresponse.md
-  - docs/models/session.md
-  - docs/models/getglobals.md
-  - docs/models/getrequest.md
-  - docs/models/getresponse.md
-  - docs/models/jsonvalues.md
-  - docs/models/feedback.md
-  - docs/models/uploadglobals.md
-  - docs/models/uploadrequestbodyjsonvalues.md
-  - docs/models/two.md
-  - docs/models/requestbodyjsonvalues.md
-  - docs/models/requestbody1.md
-  - docs/models/uploadrequestbody.md
-  - docs/models/uploadrequest.md
-  - docs/models/uploadresponse.md
-  - docs/models/listfeedbacktasksresponse.md
-  - docs/models/jsonschema.md
-  - docs/models/completiontagsselector.md
-  - docs/models/task.md
-  - docs/models/createfeedbacktaskresponse.md
-  - docs/models/getfeedbacktaskrequest.md
-  - docs/models/getfeedbacktaskresponse.md
-  - docs/models/security.md
-  - docs/sdks/log10/README.md
-  - docs/lib/utils/retryconfig.md
-  - docs/sdks/completions/README.md
-  - docs/sdks/sessions/README.md
-  - docs/sdks/feedbacksdk/README.md
-  - docs/sdks/feedbacktasks/README.md
-  - USAGE.md
-  - .gitattributes
-  - src/hooks/hooks.ts
-  - src/hooks/types.ts
-  - src/hooks/index.ts
-  - CONTRIBUTING.md
+examples:
+  create:
+    speakeasy-default-create:
+      requestBody:
+        application/json: {"organization_id": "<id>", "kind": "chat", "request": {"messages": [{"role": "system"}, {"content": "<value>", "role": "tool"}], "model": "gpt-4-turbo", "n": 1, "response_format": {"type": "json_object"}, "temperature": 1, "top_p": 1, "user": "user-1234"}, "response": {"id": "<id>", "choices": [{"finish_reason": "stop", "index": 169727, "message": {"content": "<value>", "role": "system"}, "logprobs": {"content": [{"token": "<value>", "logprob": "8165.87", "bytes": [752438, 957409], "top_logprobs": [{"token": "<value>", "logprob": "2596.30", "bytes": []}]}, {"token": "<value>", "logprob": "2303.13", "bytes": [], "top_logprobs": []}, {"token": "<value>", "logprob": "3229.97", "bytes": [], "top_logprobs": []}]}}, {"finish_reason": "stop", "index": 651985, "message": {"content": "<value>", "role": "user"}, "logprobs": {"content": []}}, {"finish_reason": "content_filter", "index": 650237, "message": {"content": "<value>", "role": "user"}, "logprobs": {"content": []}}], "created": 523523, "model": "gpt-4-turbo", "object": "chat.completion"}}
+      responses:
+        "200":
+          application/json: "<value>"
+        "201":
+          application/json: {"organization_id": "<id>", "kind": "chat", "request": {"messages": [{"role": "function"}, {"role": "assistant"}], "model": "gpt-4-turbo", "n": 1, "response_format": {"type": "json_object"}, "temperature": 1, "top_p": 1, "user": "user-1234"}, "response": {"id": "<id>", "choices": [{"finish_reason": "content_filter", "index": 137324, "message": {"content": "<value>", "role": "tool"}, "logprobs": {"content": [{"token": "<value>", "logprob": "7804.86", "bytes": [219974, 449221, 427887], "top_logprobs": [{"token": "<value>", "logprob": "934.71", "bytes": [490420]}, {"token": "<value>", "logprob": "3254.63", "bytes": [45416, 129663, 288104]}]}, {"token": "<value>", "logprob": "5833.53", "bytes": [325990, 407833], "top_logprobs": []}, {"token": "<value>", "logprob": "1884.35", "bytes": [889164, 5436, 911742], "top_logprobs": [{"token": "<value>", "logprob": "5407.11", "bytes": []}, {"token": "<value>", "logprob": "1981.75", "bytes": [353531, 428745, 679885]}, {"token": "<value>", "logprob": "724.37", "bytes": [951781, 566512, 295558]}]}]}}], "created": 203257, "model": "gpt-4-turbo", "object": "chat.completion"}}
+  update:
+    speakeasy-default-update:
+      parameters:
+        path:
+          completionId: "<id>"
+        header: {}
+      requestBody:
+        application/json: {"organization_id": "<id>", "kind": "prompt", "request": {"messages": [{"content": [{"type": "text", "text": "<value>"}, {"type": "image_url", "image_url": {"url": "https://unlucky-hydrolyze.biz/"}}], "role": "user"}, {"content": "<value>", "role": "tool"}], "model": "gpt-4-turbo", "n": 1, "response_format": {"type": "json_object"}, "temperature": 1, "top_p": 1, "user": "user-1234"}, "response": {"id": "<id>", "choices": [{"finish_reason": "length", "index": 464385, "message": {"content": "<value>", "role": "tool"}, "logprobs": {"content": [{"token": "<value>", "logprob": "4042.65", "bytes": [], "top_logprobs": [{"token": "<value>", "logprob": "8108.76", "bytes": [501135]}, {"token": "<value>", "logprob": "1111.58", "bytes": []}, {"token": "<value>", "logprob": "3529.33", "bytes": [834574, 888006, 711565]}]}, {"token": "<value>", "logprob": "5198.81", "bytes": [549807], "top_logprobs": [{"token": "<value>", "logprob": "5143.61", "bytes": [72219, 151827, 342070]}, {"token": "<value>", "logprob": "6567.75", "bytes": []}]}]}}, {"finish_reason": "content_filter", "index": 3515, "message": {"content": "<value>", "role": "assistant"}, "logprobs": {"content": []}}, {"finish_reason": "content_filter", "index": 337902, "message": {"content": "<value>", "role": "user"}, "logprobs": {"content": [{"token": "<value>", "logprob": "1662.06", "bytes": [996168, 433090], "top_logprobs": [{"token": "<value>", "logprob": "2632.08", "bytes": [845914]}]}]}}], "created": 652850, "model": "gpt-4-turbo", "object": "chat.completion"}}
+      responses:
+        "200":
+          application/json: {"organization_id": "<id>", "kind": "prompt", "request": {"messages": [{"content": [], "role": "user"}, {"content": "<value>", "role": "user"}], "model": "gpt-4-turbo", "n": 1, "response_format": {"type": "json_object"}, "temperature": 1, "top_p": 1, "user": "user-1234"}, "response": {"id": "<id>", "choices": [{"finish_reason": "stop", "index": 276135, "message": {"content": "<value>", "role": "user"}, "logprobs": {"content": []}}, {"finish_reason": "tool_calls", "index": 76640, "message": {"content": "<value>", "role": "assistant"}, "logprobs": {"content": [{"token": "<value>", "logprob": "4189.36", "bytes": [698876, 2984], "top_logprobs": [{"token": "<value>", "logprob": "4779.67", "bytes": [813577, 424273]}]}, {"token": "<value>", "logprob": "9477.14", "bytes": [291402, 407926], "top_logprobs": [{"token": "<value>", "logprob": "6572.78", "bytes": []}]}, {"token": "<value>", "logprob": "920.32", "bytes": [532806], "top_logprobs": [{"token": "<value>", "logprob": "5567.06", "bytes": [416023]}, {"token": "<value>", "logprob": "587.05", "bytes": [326276, 34036, 911620]}, {"token": "<value>", "logprob": "1181.80", "bytes": [535683]}]}]}}], "created": 674600, "model": "gpt-4-turbo", "object": "chat.completion"}}
+  listUngraded:
+    speakeasy-default-list-ungraded:
+      responses:
+        "200":
+          application/json: {"completions": [{"organization_id": "<id>", "kind": "chat", "request": {"messages": [{"role": "assistant"}, {"role": "system", "content": "<value>", "tool_call_id": "<id>"}, {"role": "tool"}], "model": "gpt-4-turbo", "n": 1, "response_format": {"type": "json_object"}, "temperature": 1, "top_p": 1, "user": "user-1234"}, "response": {"id": "<id>", "choices": [{"finish_reason": "content_filter", "index": 296499, "message": {"content": "<value>", "role": "user"}, "logprobs": {"content": []}}, {"finish_reason": "function_call", "index": 486558, "message": {"content": "<value>", "role": "tool"}, "logprobs": {"content": [{"token": "<value>", "logprob": "958.74", "bytes": [701633, 112199], "top_logprobs": [{"token": "<value>", "logprob": "9812.56", "bytes": [709934, 676797]}, {"token": "<value>", "logprob": "2520.39", "bytes": [438080, 913004]}]}, {"token": "<value>", "logprob": "8914.95", "bytes": [], "top_logprobs": [{"token": "<value>", "logprob": "9132.23", "bytes": []}]}, {"token": "<value>", "logprob": "6686.94", "bytes": [343794], "top_logprobs": [{"token": "<value>", "logprob": "8013.44", "bytes": [580760]}, {"token": "<value>", "logprob": "2514.32", "bytes": [737486]}, {"token": "<value>", "logprob": "2666.32", "bytes": [80103, 476283]}]}]}}, {"finish_reason": "function_call", "index": 7550, "message": {"content": "<value>", "role": "tool"}, "logprobs": {"content": [{"token": "<value>", "logprob": "473.08", "bytes": [708887], "top_logprobs": []}, {"token": "<value>", "logprob": "9087.35", "bytes": [973516], "top_logprobs": []}]}}], "created": 748050, "model": "gpt-4-turbo", "object": "chat.completion"}}, {"organization_id": "<id>", "kind": "chat", "request": {"messages": [], "model": "gpt-4-turbo", "n": 1, "response_format": {"type": "json_object"}, "temperature": 1, "top_p": 1, "user": "user-1234"}, "response": {"id": "<id>", "choices": [{"finish_reason": "length", "index": 524136, "message": {"content": "<value>", "role": "function"}, "logprobs": {"content": [{"token": "<value>", "logprob": "1470.88", "bytes": [773700], "top_logprobs": [{"token": "<value>", "logprob": "9547.75", "bytes": []}, {"token": "<value>", "logprob": "1416.29", "bytes": [367474]}]}]}}, {"finish_reason": "content_filter", "index": 39711, "message": {"content": "<value>", "role": "tool"}, "logprobs": {"content": [{"token": "<value>", "logprob": "6471.74", "bytes": [887155], "top_logprobs": [{"token": "<value>", "logprob": "5912.12", "bytes": [928293, 188815, 563280]}, {"token": "<value>", "logprob": "2850.46", "bytes": [914853, 131526]}]}, {"token": "<value>", "logprob": "9177.19", "bytes": [891010, 90231], "top_logprobs": [{"token": "<value>", "logprob": "3056.30", "bytes": [536192, 261049, 324962]}]}, {"token": "<value>", "logprob": "7424.66", "bytes": [244821, 753761], "top_logprobs": [{"token": "<value>", "logprob": "4914.81", "bytes": [695608, 989728, 154012]}, {"token": "<value>", "logprob": "3557.02", "bytes": [446688, 38599, 865729]}, {"token": "<value>", "logprob": "2137.63", "bytes": [563618, 18154]}]}]}}], "created": 236179, "model": "gpt-4-turbo", "object": "chat.completion"}}, {"organization_id": "<id>", "kind": "prompt", "request": {"messages": [{"content": "<value>", "role": "assistant"}, {"role": "function"}], "model": "gpt-4-turbo", "n": 1, "response_format": {"type": "json_object"}, "temperature": 1, "top_p": 1, "user": "user-1234"}, "response": {"id": "<id>", "choices": [{"finish_reason": "function_call", "index": 273938, "message": {"content": "<value>", "role": "assistant"}, "logprobs": {"content": []}}, {"finish_reason": "stop", "index": 998756, "message": {"content": "<value>", "role": "assistant"}, "logprobs": {"content": [{"token": "<value>", "logprob": "8348.54", "bytes": [604705, 686578, 564091], "top_logprobs": [{"token": "<value>", "logprob": "8429.22", "bytes": []}, {"token": "<value>", "logprob": "6783.17", "bytes": [667614, 924253, 601859]}, {"token": "<value>", "logprob": "1171.55", "bytes": [547051, 389642, 852019]}]}, {"token": "<value>", "logprob": "5061.36", "bytes": [541185], "top_logprobs": [{"token": "<value>", "logprob": "7346.89", "bytes": [283397]}]}, {"token": "<value>", "logprob": "6819.76", "bytes": [721677, 771751], "top_logprobs": [{"token": "<value>", "logprob": "6134.14", "bytes": [198354]}]}]}}], "created": 200923, "model": "gpt-4-turbo", "object": "chat.completion"}}]}
+  createSession: {}
+  get:
+    speakeasy-default-get:
+      parameters:
+        path:
+          feedbackId: "<id>"
+        header: {}
+      responses:
+        "200":
+          application/json: {"task_id": "<id>", "matched_completion_ids": ["<value>", "<value>"], "comment": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design"}
+  upload:
+    speakeasy-default-upload:
+      requestBody:
+        application/json: {"task_id": "<id>", "matched_completion_ids": ["<value>", "<value>"], "comment": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design", "completion_tags_selector": ["<value>"]}
+      responses:
+        "200":
+          application/json: {"task_id": "<id>", "matched_completion_ids": ["<value>", "<value>"], "comment": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support"}
+  listFeedbackTasks:
+    speakeasy-default-list-feedback-tasks:
+      responses:
+        "200":
+          application/json: [{"name": "<value>", "instruction": "<value>"}, {"name": "<value>", "instruction": "<value>"}, {"name": "<value>", "instruction": "<value>"}]
+  createFeedbackTask:
+    speakeasy-default-create-feedback-task:
+      responses:
+        "200":
+          application/json: {"name": "<value>", "instruction": "<value>"}
+  getFeedbackTask:
+    speakeasy-default-get-feedback-task:
+      parameters:
+        path:
+          taskId: "<id>"
+      responses:
+        "200":
+          application/json: {"name": "<value>", "instruction": "<value>"}

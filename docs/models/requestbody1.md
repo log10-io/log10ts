@@ -1,5 +1,23 @@
 # RequestBody1
 
+## Example Usage
+
+```typescript
+import { RequestBody1 } from "log10ts";
+
+let value: RequestBody1 = {
+  taskId: "<id>",
+  jsonValues: {},
+  matchedCompletionIds: [
+    "<value>",
+  ],
+  comment:
+    "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+  completionTagsSelector: [
+    "<value>",
+  ],
+};
+```
 
 ## Fields
 

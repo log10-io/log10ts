@@ -1,5 +1,39 @@
 # Choices
 
+## Example Usage
+
+```typescript
+import { ChatCompletionRole, Choices, FinishReason } from "log10ts";
+
+let value: Choices = {
+  finishReason: FinishReason.ToolCalls,
+  index: 697631,
+  message: {
+    content: "<value>",
+    role: ChatCompletionRole.System,
+  },
+  logprobs: {
+    content: [
+      {
+        token: "<value>",
+        logprob: 6667.67,
+        bytes: [
+          670638,
+        ],
+        topLogprobs: [
+          {
+            token: "<value>",
+            logprob: 2103.83,
+            bytes: [
+              128926,
+            ],
+          },
+        ],
+      },
+    ],
+  },
+};
+```
 
 ## Fields
 

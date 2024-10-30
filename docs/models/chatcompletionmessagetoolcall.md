@@ -1,5 +1,19 @@
 # ChatCompletionMessageToolCall
 
+## Example Usage
+
+```typescript
+import { ChatCompletionMessageToolCall, ChatCompletionMessageToolCallType } from "log10ts";
+
+let value: ChatCompletionMessageToolCall = {
+  id: "<id>",
+  type: ChatCompletionMessageToolCallType.Function,
+  function: {
+    name: "<value>",
+    arguments: "<value>",
+  },
+};
+```
 
 ## Fields
 

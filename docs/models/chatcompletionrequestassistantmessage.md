@@ -1,5 +1,14 @@
 # ChatCompletionRequestAssistantMessage
 
+## Example Usage
+
+```typescript
+import { ChatCompletionRequestAssistantMessage, ChatCompletionRole } from "log10ts";
+
+let value: ChatCompletionRequestAssistantMessage = {
+  role: ChatCompletionRole.System,
+};
+```
 
 ## Fields
 

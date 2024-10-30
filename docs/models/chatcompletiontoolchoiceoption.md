@@ -15,12 +15,18 @@ Specifying a particular tool via `{"type": "function", "function": {"name": "my_
 ### `models.ChatCompletionToolChoiceOption1`
 
 ```typescript
-const value: models.ChatCompletionToolChoiceOption1 = /* values here */
+const value: models.ChatCompletionToolChoiceOption1 =
+  ChatCompletionToolChoiceOption1.Required;
 ```
 
 ### `models.ChatCompletionNamedToolChoice`
 
 ```typescript
-const value: models.ChatCompletionNamedToolChoice = /* values here */
+const value: models.ChatCompletionNamedToolChoice = {
+  type: ChatCompletionNamedToolChoiceType.Function,
+  function: {
+    name: "<value>",
+  },
+};
 ```
 

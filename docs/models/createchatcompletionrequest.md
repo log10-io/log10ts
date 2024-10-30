@@ -1,5 +1,27 @@
 # CreateChatCompletionRequest
 
+## Example Usage
+
+```typescript
+import { ChatCompletionRole, CreateChatCompletionRequest, CreateChatCompletionRequestType } from "log10ts";
+
+let value: CreateChatCompletionRequest = {
+  messages: [
+    {
+      content: "<value>",
+      role: ChatCompletionRole.Function,
+    },
+  ],
+  model: "gpt-4-turbo",
+  n: 1,
+  responseFormat: {
+    type: CreateChatCompletionRequestType.JsonObject,
+  },
+  temperature: 1,
+  topP: 1,
+  user: "user-1234",
+};
+```
 
 ## Fields
 

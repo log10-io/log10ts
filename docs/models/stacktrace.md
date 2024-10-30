@@ -1,5 +1,17 @@
 # Stacktrace
 
+## Example Usage
+
+```typescript
+import { Stacktrace } from "log10ts";
+
+let value: Stacktrace = {
+  file: "<value>",
+  line: "<value>",
+  lineno: 1182.74,
+  name: "<value>",
+};
+```
 
 ## Fields
 

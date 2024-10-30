@@ -9,12 +9,14 @@ Up to 4 sequences where the API will stop generating further tokens.
 ### `string`
 
 ```typescript
-const value: string = /* values here */
+const value: string = "<value>";
 ```
 
 ### `string[]`
 
 ```typescript
-const value: string[] = /* values here */
+const value: string[] = [
+  "<value>",
+];
 ```
 

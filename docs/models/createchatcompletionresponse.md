@@ -2,6 +2,48 @@
 
 Represents a chat completion response returned by model, based on the provided input.
 
+## Example Usage
+
+```typescript
+import { ChatCompletionRole, CreateChatCompletionResponse, FinishReason, ObjectT } from "log10ts";
+
+let value: CreateChatCompletionResponse = {
+  id: "<id>",
+  choices: [
+    {
+      finishReason: FinishReason.Length,
+      index: 363711,
+      message: {
+        content: "<value>",
+        role: ChatCompletionRole.Assistant,
+      },
+      logprobs: {
+        content: [
+          {
+            token: "<value>",
+            logprob: 4386.02,
+            bytes: [
+              988374,
+            ],
+            topLogprobs: [
+              {
+                token: "<value>",
+                logprob: 1020.45,
+                bytes: [
+                  208876,
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+  created: 161309,
+  model: "gpt-4-turbo",
+  object: ObjectT.ChatCompletion,
+};
+```
 
 ## Fields
 

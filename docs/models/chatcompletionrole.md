@@ -2,6 +2,13 @@
 
 The role of the author of a message
 
+## Example Usage
+
+```typescript
+import { ChatCompletionRole } from "log10ts";
+
+let value: ChatCompletionRole = ChatCompletionRole.Function;
+```
 
 ## Values
 

@@ -1,5 +1,15 @@
 # ChatCompletionRequestSystemMessage
 
+## Example Usage
+
+```typescript
+import { ChatCompletionRequestSystemMessage, ChatCompletionRole } from "log10ts";
+
+let value: ChatCompletionRequestSystemMessage = {
+  content: "<value>",
+  role: ChatCompletionRole.User,
+};
+```
 
 ## Fields
 

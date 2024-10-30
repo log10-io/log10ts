@@ -1,5 +1,17 @@
 # Task
 
+## Example Usage
+
+```typescript
+import { Task } from "log10ts";
+
+let value: Task = {
+  jsonSchema: {},
+  name: "<value>",
+  instruction: "<value>",
+  completionTagsSelector: {},
+};
+```
 
 ## Fields
 

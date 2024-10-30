@@ -2,6 +2,13 @@
 
 Created
 
+## Example Usage
+
+```typescript
+import { CreateSessionResponseBody } from "log10ts";
+
+let value: CreateSessionResponseBody = {};
+```
 
 ## Fields
 
