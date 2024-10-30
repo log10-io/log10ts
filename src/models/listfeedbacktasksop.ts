@@ -3,8 +3,13 @@
  */
 
 import { remap as remap$ } from "../lib/primitives.js";
-import { HTTPMetadata, HTTPMetadata$ } from "./httpmetadata.js";
-import { Task, Task$ } from "./task.js";
+import {
+    HTTPMetadata,
+    HTTPMetadata$inboundSchema,
+    HTTPMetadata$Outbound,
+    HTTPMetadata$outboundSchema,
+} from "./httpmetadata.js";
+import { Task, Task$inboundSchema, Task$Outbound, Task$outboundSchema } from "./task.js";
 import * as z from "zod";
 
 export type ListFeedbackTasksResponse = {
@@ -16,33 +21,54 @@ export type ListFeedbackTasksResponse = {
 };
 
 /** @internal */
+export const ListFeedbackTasksResponse$inboundSchema: z.ZodType<
+    ListFeedbackTasksResponse,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        HttpMeta: HTTPMetadata$inboundSchema,
+        Tasks: z.array(Task$inboundSchema).optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            HttpMeta: "httpMeta",
+            Tasks: "tasks",
+        });
+    });
+
+/** @internal */
+export type ListFeedbackTasksResponse$Outbound = {
+    HttpMeta: HTTPMetadata$Outbound;
+    Tasks?: Array<Task$Outbound> | undefined;
+};
+
+/** @internal */
+export const ListFeedbackTasksResponse$outboundSchema: z.ZodType<
+    ListFeedbackTasksResponse$Outbound,
+    z.ZodTypeDef,
+    ListFeedbackTasksResponse
+> = z
+    .object({
+        httpMeta: HTTPMetadata$outboundSchema,
+        tasks: z.array(Task$outboundSchema).optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            httpMeta: "HttpMeta",
+            tasks: "Tasks",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ListFeedbackTasksResponse$ {
-    export const inboundSchema: z.ZodType<ListFeedbackTasksResponse, z.ZodTypeDef, unknown> = z
-        .object({
-            HttpMeta: HTTPMetadata$.inboundSchema,
-            Tasks: z.array(Task$.inboundSchema).optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                HttpMeta: "httpMeta",
-                Tasks: "tasks",
-            });
-        });
-
-    export type Outbound = {
-        HttpMeta: HTTPMetadata$.Outbound;
-        Tasks?: Array<Task$.Outbound> | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListFeedbackTasksResponse> = z
-        .object({
-            httpMeta: HTTPMetadata$.outboundSchema,
-            tasks: z.array(Task$.outboundSchema).optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                httpMeta: "HttpMeta",
-                tasks: "Tasks",
-            });
-        });
+    /** @deprecated use `ListFeedbackTasksResponse$inboundSchema` instead. */
+    export const inboundSchema = ListFeedbackTasksResponse$inboundSchema;
+    /** @deprecated use `ListFeedbackTasksResponse$outboundSchema` instead. */
+    export const outboundSchema = ListFeedbackTasksResponse$outboundSchema;
+    /** @deprecated use `ListFeedbackTasksResponse$Outbound` instead. */
+    export type Outbound = ListFeedbackTasksResponse$Outbound;
 }

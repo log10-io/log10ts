@@ -3,8 +3,13 @@
  */
 
 import { remap as remap$ } from "../lib/primitives.js";
-import { HTTPMetadata, HTTPMetadata$ } from "./httpmetadata.js";
-import { Task, Task$ } from "./task.js";
+import {
+    HTTPMetadata,
+    HTTPMetadata$inboundSchema,
+    HTTPMetadata$Outbound,
+    HTTPMetadata$outboundSchema,
+} from "./httpmetadata.js";
+import { Task, Task$inboundSchema, Task$Outbound, Task$outboundSchema } from "./task.js";
 import * as z from "zod";
 
 export type GetFeedbackTaskRequest = {
@@ -23,51 +28,90 @@ export type GetFeedbackTaskResponse = {
 };
 
 /** @internal */
+export const GetFeedbackTaskRequest$inboundSchema: z.ZodType<
+    GetFeedbackTaskRequest,
+    z.ZodTypeDef,
+    unknown
+> = z.object({
+    taskId: z.string(),
+});
+
+/** @internal */
+export type GetFeedbackTaskRequest$Outbound = {
+    taskId: string;
+};
+
+/** @internal */
+export const GetFeedbackTaskRequest$outboundSchema: z.ZodType<
+    GetFeedbackTaskRequest$Outbound,
+    z.ZodTypeDef,
+    GetFeedbackTaskRequest
+> = z.object({
+    taskId: z.string(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace GetFeedbackTaskRequest$ {
-    export const inboundSchema: z.ZodType<GetFeedbackTaskRequest, z.ZodTypeDef, unknown> = z.object(
-        {
-            taskId: z.string(),
-        }
-    );
-
-    export type Outbound = {
-        taskId: string;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetFeedbackTaskRequest> =
-        z.object({
-            taskId: z.string(),
-        });
+    /** @deprecated use `GetFeedbackTaskRequest$inboundSchema` instead. */
+    export const inboundSchema = GetFeedbackTaskRequest$inboundSchema;
+    /** @deprecated use `GetFeedbackTaskRequest$outboundSchema` instead. */
+    export const outboundSchema = GetFeedbackTaskRequest$outboundSchema;
+    /** @deprecated use `GetFeedbackTaskRequest$Outbound` instead. */
+    export type Outbound = GetFeedbackTaskRequest$Outbound;
 }
 
 /** @internal */
+export const GetFeedbackTaskResponse$inboundSchema: z.ZodType<
+    GetFeedbackTaskResponse,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        HttpMeta: HTTPMetadata$inboundSchema,
+        Task: Task$inboundSchema.optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            HttpMeta: "httpMeta",
+            Task: "task",
+        });
+    });
+
+/** @internal */
+export type GetFeedbackTaskResponse$Outbound = {
+    HttpMeta: HTTPMetadata$Outbound;
+    Task?: Task$Outbound | undefined;
+};
+
+/** @internal */
+export const GetFeedbackTaskResponse$outboundSchema: z.ZodType<
+    GetFeedbackTaskResponse$Outbound,
+    z.ZodTypeDef,
+    GetFeedbackTaskResponse
+> = z
+    .object({
+        httpMeta: HTTPMetadata$outboundSchema,
+        task: Task$outboundSchema.optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            httpMeta: "HttpMeta",
+            task: "Task",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace GetFeedbackTaskResponse$ {
-    export const inboundSchema: z.ZodType<GetFeedbackTaskResponse, z.ZodTypeDef, unknown> = z
-        .object({
-            HttpMeta: HTTPMetadata$.inboundSchema,
-            Task: Task$.inboundSchema.optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                HttpMeta: "httpMeta",
-                Task: "task",
-            });
-        });
-
-    export type Outbound = {
-        HttpMeta: HTTPMetadata$.Outbound;
-        Task?: Task$.Outbound | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetFeedbackTaskResponse> = z
-        .object({
-            httpMeta: HTTPMetadata$.outboundSchema,
-            task: Task$.outboundSchema.optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                httpMeta: "HttpMeta",
-                task: "Task",
-            });
-        });
+    /** @deprecated use `GetFeedbackTaskResponse$inboundSchema` instead. */
+    export const inboundSchema = GetFeedbackTaskResponse$inboundSchema;
+    /** @deprecated use `GetFeedbackTaskResponse$outboundSchema` instead. */
+    export const outboundSchema = GetFeedbackTaskResponse$outboundSchema;
+    /** @deprecated use `GetFeedbackTaskResponse$Outbound` instead. */
+    export type Outbound = GetFeedbackTaskResponse$Outbound;
 }

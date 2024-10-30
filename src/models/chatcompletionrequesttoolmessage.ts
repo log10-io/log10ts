@@ -3,7 +3,11 @@
  */
 
 import { remap as remap$ } from "../lib/primitives.js";
-import { ChatCompletionRole, ChatCompletionRole$ } from "./chatcompletionrole.js";
+import {
+    ChatCompletionRole,
+    ChatCompletionRole$inboundSchema,
+    ChatCompletionRole$outboundSchema,
+} from "./chatcompletionrole.js";
 import * as z from "zod";
 
 export type ChatCompletionRequestToolMessage = {
@@ -22,39 +26,55 @@ export type ChatCompletionRequestToolMessage = {
 };
 
 /** @internal */
-export namespace ChatCompletionRequestToolMessage$ {
-    export const inboundSchema: z.ZodType<ChatCompletionRequestToolMessage, z.ZodTypeDef, unknown> =
-        z
-            .object({
-                role: ChatCompletionRole$.inboundSchema,
-                content: z.string(),
-                tool_call_id: z.string(),
-            })
-            .transform((v) => {
-                return remap$(v, {
-                    tool_call_id: "toolCallId",
-                });
-            });
-
-    export type Outbound = {
-        role: string;
-        content: string;
-        tool_call_id: string;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        ChatCompletionRequestToolMessage
-    > = z
-        .object({
-            role: ChatCompletionRole$.outboundSchema,
-            content: z.string(),
-            toolCallId: z.string(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                toolCallId: "tool_call_id",
-            });
+export const ChatCompletionRequestToolMessage$inboundSchema: z.ZodType<
+    ChatCompletionRequestToolMessage,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        role: ChatCompletionRole$inboundSchema,
+        content: z.string(),
+        tool_call_id: z.string(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            tool_call_id: "toolCallId",
         });
+    });
+
+/** @internal */
+export type ChatCompletionRequestToolMessage$Outbound = {
+    role: string;
+    content: string;
+    tool_call_id: string;
+};
+
+/** @internal */
+export const ChatCompletionRequestToolMessage$outboundSchema: z.ZodType<
+    ChatCompletionRequestToolMessage$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionRequestToolMessage
+> = z
+    .object({
+        role: ChatCompletionRole$outboundSchema,
+        content: z.string(),
+        toolCallId: z.string(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            toolCallId: "tool_call_id",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ChatCompletionRequestToolMessage$ {
+    /** @deprecated use `ChatCompletionRequestToolMessage$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionRequestToolMessage$inboundSchema;
+    /** @deprecated use `ChatCompletionRequestToolMessage$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionRequestToolMessage$outboundSchema;
+    /** @deprecated use `ChatCompletionRequestToolMessage$Outbound` instead. */
+    export type Outbound = ChatCompletionRequestToolMessage$Outbound;
 }

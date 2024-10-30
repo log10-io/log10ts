@@ -4,9 +4,15 @@
 
 import {
     ChatCompletionRequestMessageContentPart,
-    ChatCompletionRequestMessageContentPart$,
+    ChatCompletionRequestMessageContentPart$inboundSchema,
+    ChatCompletionRequestMessageContentPart$Outbound,
+    ChatCompletionRequestMessageContentPart$outboundSchema,
 } from "./chatcompletionrequestmessagecontentpart.js";
-import { ChatCompletionRole, ChatCompletionRole$ } from "./chatcompletionrole.js";
+import {
+    ChatCompletionRole,
+    ChatCompletionRole$inboundSchema,
+    ChatCompletionRole$outboundSchema,
+} from "./chatcompletionrole.js";
 import * as z from "zod";
 
 /**
@@ -36,47 +42,71 @@ export type ChatCompletionRequestUserMessage = {
 };
 
 /** @internal */
-export namespace Content$ {
-    export const inboundSchema: z.ZodType<Content, z.ZodTypeDef, unknown> = z.union([
-        z.string(),
-        z.array(ChatCompletionRequestMessageContentPart$.inboundSchema),
-    ]);
+export const Content$inboundSchema: z.ZodType<Content, z.ZodTypeDef, unknown> = z.union([
+    z.string(),
+    z.array(ChatCompletionRequestMessageContentPart$inboundSchema),
+]);
 
-    export type Outbound = string | Array<ChatCompletionRequestMessageContentPart$.Outbound>;
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Content> = z.union([
-        z.string(),
-        z.array(ChatCompletionRequestMessageContentPart$.outboundSchema),
-    ]);
+/** @internal */
+export type Content$Outbound = string | Array<ChatCompletionRequestMessageContentPart$Outbound>;
+
+/** @internal */
+export const Content$outboundSchema: z.ZodType<Content$Outbound, z.ZodTypeDef, Content> = z.union([
+    z.string(),
+    z.array(ChatCompletionRequestMessageContentPart$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace Content$ {
+    /** @deprecated use `Content$inboundSchema` instead. */
+    export const inboundSchema = Content$inboundSchema;
+    /** @deprecated use `Content$outboundSchema` instead. */
+    export const outboundSchema = Content$outboundSchema;
+    /** @deprecated use `Content$Outbound` instead. */
+    export type Outbound = Content$Outbound;
 }
 
 /** @internal */
+export const ChatCompletionRequestUserMessage$inboundSchema: z.ZodType<
+    ChatCompletionRequestUserMessage,
+    z.ZodTypeDef,
+    unknown
+> = z.object({
+    content: z.union([z.string(), z.array(ChatCompletionRequestMessageContentPart$inboundSchema)]),
+    role: ChatCompletionRole$inboundSchema,
+    name: z.string().optional(),
+});
+
+/** @internal */
+export type ChatCompletionRequestUserMessage$Outbound = {
+    content: string | Array<ChatCompletionRequestMessageContentPart$Outbound>;
+    role: string;
+    name?: string | undefined;
+};
+
+/** @internal */
+export const ChatCompletionRequestUserMessage$outboundSchema: z.ZodType<
+    ChatCompletionRequestUserMessage$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionRequestUserMessage
+> = z.object({
+    content: z.union([z.string(), z.array(ChatCompletionRequestMessageContentPart$outboundSchema)]),
+    role: ChatCompletionRole$outboundSchema,
+    name: z.string().optional(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ChatCompletionRequestUserMessage$ {
-    export const inboundSchema: z.ZodType<ChatCompletionRequestUserMessage, z.ZodTypeDef, unknown> =
-        z.object({
-            content: z.union([
-                z.string(),
-                z.array(ChatCompletionRequestMessageContentPart$.inboundSchema),
-            ]),
-            role: ChatCompletionRole$.inboundSchema,
-            name: z.string().optional(),
-        });
-
-    export type Outbound = {
-        content: string | Array<ChatCompletionRequestMessageContentPart$.Outbound>;
-        role: string;
-        name?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        ChatCompletionRequestUserMessage
-    > = z.object({
-        content: z.union([
-            z.string(),
-            z.array(ChatCompletionRequestMessageContentPart$.outboundSchema),
-        ]),
-        role: ChatCompletionRole$.outboundSchema,
-        name: z.string().optional(),
-    });
+    /** @deprecated use `ChatCompletionRequestUserMessage$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionRequestUserMessage$inboundSchema;
+    /** @deprecated use `ChatCompletionRequestUserMessage$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionRequestUserMessage$outboundSchema;
+    /** @deprecated use `ChatCompletionRequestUserMessage$Outbound` instead. */
+    export type Outbound = ChatCompletionRequestUserMessage$Outbound;
 }

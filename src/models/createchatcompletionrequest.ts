@@ -5,21 +5,39 @@
 import { remap as remap$ } from "../lib/primitives.js";
 import {
     ChatCompletionFunctionCallOption,
-    ChatCompletionFunctionCallOption$,
+    ChatCompletionFunctionCallOption$inboundSchema,
+    ChatCompletionFunctionCallOption$Outbound,
+    ChatCompletionFunctionCallOption$outboundSchema,
 } from "./chatcompletionfunctioncalloption.js";
-import { ChatCompletionFunctions, ChatCompletionFunctions$ } from "./chatcompletionfunctions.js";
+import {
+    ChatCompletionFunctions,
+    ChatCompletionFunctions$inboundSchema,
+    ChatCompletionFunctions$Outbound,
+    ChatCompletionFunctions$outboundSchema,
+} from "./chatcompletionfunctions.js";
 import {
     ChatCompletionRequestMessage,
-    ChatCompletionRequestMessage$,
+    ChatCompletionRequestMessage$inboundSchema,
+    ChatCompletionRequestMessage$Outbound,
+    ChatCompletionRequestMessage$outboundSchema,
 } from "./chatcompletionrequestmessage.js";
 import {
     ChatCompletionStreamOptions,
-    ChatCompletionStreamOptions$,
+    ChatCompletionStreamOptions$inboundSchema,
+    ChatCompletionStreamOptions$Outbound,
+    ChatCompletionStreamOptions$outboundSchema,
 } from "./chatcompletionstreamoptions.js";
-import { ChatCompletionTool, ChatCompletionTool$ } from "./chatcompletiontool.js";
+import {
+    ChatCompletionTool,
+    ChatCompletionTool$inboundSchema,
+    ChatCompletionTool$Outbound,
+    ChatCompletionTool$outboundSchema,
+} from "./chatcompletiontool.js";
 import {
     ChatCompletionToolChoiceOption,
-    ChatCompletionToolChoiceOption$,
+    ChatCompletionToolChoiceOption$inboundSchema,
+    ChatCompletionToolChoiceOption$Outbound,
+    ChatCompletionToolChoiceOption$outboundSchema,
 } from "./chatcompletiontoolchoiceoption.js";
 import * as z from "zod";
 
@@ -257,173 +275,266 @@ export type CreateChatCompletionRequest = {
 };
 
 /** @internal */
+export const CreateChatCompletionRequestType$inboundSchema: z.ZodNativeEnum<
+    typeof CreateChatCompletionRequestType
+> = z.nativeEnum(CreateChatCompletionRequestType);
+
+/** @internal */
+export const CreateChatCompletionRequestType$outboundSchema: z.ZodNativeEnum<
+    typeof CreateChatCompletionRequestType
+> = CreateChatCompletionRequestType$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace CreateChatCompletionRequestType$ {
-    export const inboundSchema: z.ZodNativeEnum<typeof CreateChatCompletionRequestType> =
-        z.nativeEnum(CreateChatCompletionRequestType);
-    export const outboundSchema: z.ZodNativeEnum<typeof CreateChatCompletionRequestType> =
-        inboundSchema;
+    /** @deprecated use `CreateChatCompletionRequestType$inboundSchema` instead. */
+    export const inboundSchema = CreateChatCompletionRequestType$inboundSchema;
+    /** @deprecated use `CreateChatCompletionRequestType$outboundSchema` instead. */
+    export const outboundSchema = CreateChatCompletionRequestType$outboundSchema;
 }
 
 /** @internal */
+export const ResponseFormat$inboundSchema: z.ZodType<ResponseFormat, z.ZodTypeDef, unknown> =
+    z.object({
+        type: CreateChatCompletionRequestType$inboundSchema.default(
+            CreateChatCompletionRequestType.Text
+        ),
+    });
+
+/** @internal */
+export type ResponseFormat$Outbound = {
+    type: string;
+};
+
+/** @internal */
+export const ResponseFormat$outboundSchema: z.ZodType<
+    ResponseFormat$Outbound,
+    z.ZodTypeDef,
+    ResponseFormat
+> = z.object({
+    type: CreateChatCompletionRequestType$outboundSchema.default(
+        CreateChatCompletionRequestType.Text
+    ),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ResponseFormat$ {
-    export const inboundSchema: z.ZodType<ResponseFormat, z.ZodTypeDef, unknown> = z.object({
-        type: CreateChatCompletionRequestType$.inboundSchema.default(
-            CreateChatCompletionRequestType.Text
-        ),
-    });
-
-    export type Outbound = {
-        type: string;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ResponseFormat> = z.object({
-        type: CreateChatCompletionRequestType$.outboundSchema.default(
-            CreateChatCompletionRequestType.Text
-        ),
-    });
+    /** @deprecated use `ResponseFormat$inboundSchema` instead. */
+    export const inboundSchema = ResponseFormat$inboundSchema;
+    /** @deprecated use `ResponseFormat$outboundSchema` instead. */
+    export const outboundSchema = ResponseFormat$outboundSchema;
+    /** @deprecated use `ResponseFormat$Outbound` instead. */
+    export type Outbound = ResponseFormat$Outbound;
 }
 
 /** @internal */
+export const Stop$inboundSchema: z.ZodType<Stop, z.ZodTypeDef, unknown> = z.union([
+    z.string(),
+    z.array(z.string()),
+]);
+
+/** @internal */
+export type Stop$Outbound = string | Array<string>;
+
+/** @internal */
+export const Stop$outboundSchema: z.ZodType<Stop$Outbound, z.ZodTypeDef, Stop> = z.union([
+    z.string(),
+    z.array(z.string()),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace Stop$ {
-    export const inboundSchema: z.ZodType<Stop, z.ZodTypeDef, unknown> = z.union([
-        z.string(),
-        z.array(z.string()),
-    ]);
-
-    export type Outbound = string | Array<string>;
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Stop> = z.union([
-        z.string(),
-        z.array(z.string()),
-    ]);
+    /** @deprecated use `Stop$inboundSchema` instead. */
+    export const inboundSchema = Stop$inboundSchema;
+    /** @deprecated use `Stop$outboundSchema` instead. */
+    export const outboundSchema = Stop$outboundSchema;
+    /** @deprecated use `Stop$Outbound` instead. */
+    export type Outbound = Stop$Outbound;
 }
 
 /** @internal */
+export const One$inboundSchema: z.ZodNativeEnum<typeof One> = z.nativeEnum(One);
+
+/** @internal */
+export const One$outboundSchema: z.ZodNativeEnum<typeof One> = One$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace One$ {
-    export const inboundSchema: z.ZodNativeEnum<typeof One> = z.nativeEnum(One);
-    export const outboundSchema: z.ZodNativeEnum<typeof One> = inboundSchema;
+    /** @deprecated use `One$inboundSchema` instead. */
+    export const inboundSchema = One$inboundSchema;
+    /** @deprecated use `One$outboundSchema` instead. */
+    export const outboundSchema = One$outboundSchema;
 }
 
 /** @internal */
+export const CreateChatCompletionRequestFunctionCall$inboundSchema: z.ZodType<
+    CreateChatCompletionRequestFunctionCall,
+    z.ZodTypeDef,
+    unknown
+> = z.union([ChatCompletionFunctionCallOption$inboundSchema, One$inboundSchema]);
+
+/** @internal */
+export type CreateChatCompletionRequestFunctionCall$Outbound =
+    | ChatCompletionFunctionCallOption$Outbound
+    | string;
+
+/** @internal */
+export const CreateChatCompletionRequestFunctionCall$outboundSchema: z.ZodType<
+    CreateChatCompletionRequestFunctionCall$Outbound,
+    z.ZodTypeDef,
+    CreateChatCompletionRequestFunctionCall
+> = z.union([ChatCompletionFunctionCallOption$outboundSchema, One$outboundSchema]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace CreateChatCompletionRequestFunctionCall$ {
-    export const inboundSchema: z.ZodType<
-        CreateChatCompletionRequestFunctionCall,
-        z.ZodTypeDef,
-        unknown
-    > = z.union([ChatCompletionFunctionCallOption$.inboundSchema, One$.inboundSchema]);
-
-    export type Outbound = ChatCompletionFunctionCallOption$.Outbound | string;
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        CreateChatCompletionRequestFunctionCall
-    > = z.union([ChatCompletionFunctionCallOption$.outboundSchema, One$.outboundSchema]);
+    /** @deprecated use `CreateChatCompletionRequestFunctionCall$inboundSchema` instead. */
+    export const inboundSchema = CreateChatCompletionRequestFunctionCall$inboundSchema;
+    /** @deprecated use `CreateChatCompletionRequestFunctionCall$outboundSchema` instead. */
+    export const outboundSchema = CreateChatCompletionRequestFunctionCall$outboundSchema;
+    /** @deprecated use `CreateChatCompletionRequestFunctionCall$Outbound` instead. */
+    export type Outbound = CreateChatCompletionRequestFunctionCall$Outbound;
 }
 
 /** @internal */
+export const CreateChatCompletionRequest$inboundSchema: z.ZodType<
+    CreateChatCompletionRequest,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        messages: z.array(ChatCompletionRequestMessage$inboundSchema),
+        model: z.nullable(z.any()).optional(),
+        frequency_penalty: z.nullable(z.number().default(0)),
+        logit_bias: z.nullable(z.record(z.number().int())).optional(),
+        logprobs: z.nullable(z.boolean().default(false)),
+        top_logprobs: z.nullable(z.number().int()).optional(),
+        max_tokens: z.nullable(z.number().int()).optional(),
+        n: z.nullable(z.number().int().default(1)),
+        presence_penalty: z.nullable(z.number().default(0)),
+        response_format: z.lazy(() => ResponseFormat$inboundSchema).optional(),
+        seed: z.nullable(z.number().int()).optional(),
+        stop: z.nullable(z.union([z.string(), z.array(z.string())])).optional(),
+        stream: z.nullable(z.boolean().default(false)),
+        stream_options: z.nullable(ChatCompletionStreamOptions$inboundSchema).optional(),
+        temperature: z.nullable(z.number().default(1)),
+        top_p: z.nullable(z.number().default(1)),
+        tools: z.array(ChatCompletionTool$inboundSchema).optional(),
+        tool_choice: ChatCompletionToolChoiceOption$inboundSchema.optional(),
+        user: z.string().optional(),
+        function_call: z
+            .union([ChatCompletionFunctionCallOption$inboundSchema, One$inboundSchema])
+            .optional(),
+        functions: z.array(ChatCompletionFunctions$inboundSchema).optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            frequency_penalty: "frequencyPenalty",
+            logit_bias: "logitBias",
+            top_logprobs: "topLogprobs",
+            max_tokens: "maxTokens",
+            presence_penalty: "presencePenalty",
+            response_format: "responseFormat",
+            stream_options: "streamOptions",
+            top_p: "topP",
+            tool_choice: "toolChoice",
+            function_call: "functionCall",
+        });
+    });
+
+/** @internal */
+export type CreateChatCompletionRequest$Outbound = {
+    messages: Array<ChatCompletionRequestMessage$Outbound>;
+    model?: any | null | undefined;
+    frequency_penalty: number | null;
+    logit_bias?: { [k: string]: number } | null | undefined;
+    logprobs: boolean | null;
+    top_logprobs?: number | null | undefined;
+    max_tokens?: number | null | undefined;
+    n: number | null;
+    presence_penalty: number | null;
+    response_format?: ResponseFormat$Outbound | undefined;
+    seed?: number | null | undefined;
+    stop?: string | Array<string> | null | undefined;
+    stream: boolean | null;
+    stream_options?: ChatCompletionStreamOptions$Outbound | null | undefined;
+    temperature: number | null;
+    top_p: number | null;
+    tools?: Array<ChatCompletionTool$Outbound> | undefined;
+    tool_choice?: ChatCompletionToolChoiceOption$Outbound | undefined;
+    user?: string | undefined;
+    function_call?: ChatCompletionFunctionCallOption$Outbound | string | undefined;
+    functions?: Array<ChatCompletionFunctions$Outbound> | undefined;
+};
+
+/** @internal */
+export const CreateChatCompletionRequest$outboundSchema: z.ZodType<
+    CreateChatCompletionRequest$Outbound,
+    z.ZodTypeDef,
+    CreateChatCompletionRequest
+> = z
+    .object({
+        messages: z.array(ChatCompletionRequestMessage$outboundSchema),
+        model: z.nullable(z.any()).optional(),
+        frequencyPenalty: z.nullable(z.number().default(0)),
+        logitBias: z.nullable(z.record(z.number().int())).optional(),
+        logprobs: z.nullable(z.boolean().default(false)),
+        topLogprobs: z.nullable(z.number().int()).optional(),
+        maxTokens: z.nullable(z.number().int()).optional(),
+        n: z.nullable(z.number().int().default(1)),
+        presencePenalty: z.nullable(z.number().default(0)),
+        responseFormat: z.lazy(() => ResponseFormat$outboundSchema).optional(),
+        seed: z.nullable(z.number().int()).optional(),
+        stop: z.nullable(z.union([z.string(), z.array(z.string())])).optional(),
+        stream: z.nullable(z.boolean().default(false)),
+        streamOptions: z.nullable(ChatCompletionStreamOptions$outboundSchema).optional(),
+        temperature: z.nullable(z.number().default(1)),
+        topP: z.nullable(z.number().default(1)),
+        tools: z.array(ChatCompletionTool$outboundSchema).optional(),
+        toolChoice: ChatCompletionToolChoiceOption$outboundSchema.optional(),
+        user: z.string().optional(),
+        functionCall: z
+            .union([ChatCompletionFunctionCallOption$outboundSchema, One$outboundSchema])
+            .optional(),
+        functions: z.array(ChatCompletionFunctions$outboundSchema).optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            frequencyPenalty: "frequency_penalty",
+            logitBias: "logit_bias",
+            topLogprobs: "top_logprobs",
+            maxTokens: "max_tokens",
+            presencePenalty: "presence_penalty",
+            responseFormat: "response_format",
+            streamOptions: "stream_options",
+            topP: "top_p",
+            toolChoice: "tool_choice",
+            functionCall: "function_call",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace CreateChatCompletionRequest$ {
-    export const inboundSchema: z.ZodType<CreateChatCompletionRequest, z.ZodTypeDef, unknown> = z
-        .object({
-            messages: z.array(ChatCompletionRequestMessage$.inboundSchema),
-            model: z.nullable(z.any()).optional(),
-            frequency_penalty: z.nullable(z.number().default(0)),
-            logit_bias: z.nullable(z.record(z.number().int())).optional(),
-            logprobs: z.nullable(z.boolean().default(false)),
-            top_logprobs: z.nullable(z.number().int()).optional(),
-            max_tokens: z.nullable(z.number().int()).optional(),
-            n: z.nullable(z.number().int().default(1)),
-            presence_penalty: z.nullable(z.number().default(0)),
-            response_format: z.lazy(() => ResponseFormat$.inboundSchema).optional(),
-            seed: z.nullable(z.number().int()).optional(),
-            stop: z.nullable(z.union([z.string(), z.array(z.string())])).optional(),
-            stream: z.nullable(z.boolean().default(false)),
-            stream_options: z.nullable(ChatCompletionStreamOptions$.inboundSchema).optional(),
-            temperature: z.nullable(z.number().default(1)),
-            top_p: z.nullable(z.number().default(1)),
-            tools: z.array(ChatCompletionTool$.inboundSchema).optional(),
-            tool_choice: ChatCompletionToolChoiceOption$.inboundSchema.optional(),
-            user: z.string().optional(),
-            function_call: z
-                .union([ChatCompletionFunctionCallOption$.inboundSchema, One$.inboundSchema])
-                .optional(),
-            functions: z.array(ChatCompletionFunctions$.inboundSchema).optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                frequency_penalty: "frequencyPenalty",
-                logit_bias: "logitBias",
-                top_logprobs: "topLogprobs",
-                max_tokens: "maxTokens",
-                presence_penalty: "presencePenalty",
-                response_format: "responseFormat",
-                stream_options: "streamOptions",
-                top_p: "topP",
-                tool_choice: "toolChoice",
-                function_call: "functionCall",
-            });
-        });
-
-    export type Outbound = {
-        messages: Array<ChatCompletionRequestMessage$.Outbound>;
-        model?: any | null | undefined;
-        frequency_penalty: number | null;
-        logit_bias?: { [k: string]: number } | null | undefined;
-        logprobs: boolean | null;
-        top_logprobs?: number | null | undefined;
-        max_tokens?: number | null | undefined;
-        n: number | null;
-        presence_penalty: number | null;
-        response_format?: ResponseFormat$.Outbound | undefined;
-        seed?: number | null | undefined;
-        stop?: string | Array<string> | null | undefined;
-        stream: boolean | null;
-        stream_options?: ChatCompletionStreamOptions$.Outbound | null | undefined;
-        temperature: number | null;
-        top_p: number | null;
-        tools?: Array<ChatCompletionTool$.Outbound> | undefined;
-        tool_choice?: ChatCompletionToolChoiceOption$.Outbound | undefined;
-        user?: string | undefined;
-        function_call?: ChatCompletionFunctionCallOption$.Outbound | string | undefined;
-        functions?: Array<ChatCompletionFunctions$.Outbound> | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreateChatCompletionRequest> = z
-        .object({
-            messages: z.array(ChatCompletionRequestMessage$.outboundSchema),
-            model: z.nullable(z.any()).optional(),
-            frequencyPenalty: z.nullable(z.number().default(0)),
-            logitBias: z.nullable(z.record(z.number().int())).optional(),
-            logprobs: z.nullable(z.boolean().default(false)),
-            topLogprobs: z.nullable(z.number().int()).optional(),
-            maxTokens: z.nullable(z.number().int()).optional(),
-            n: z.nullable(z.number().int().default(1)),
-            presencePenalty: z.nullable(z.number().default(0)),
-            responseFormat: z.lazy(() => ResponseFormat$.outboundSchema).optional(),
-            seed: z.nullable(z.number().int()).optional(),
-            stop: z.nullable(z.union([z.string(), z.array(z.string())])).optional(),
-            stream: z.nullable(z.boolean().default(false)),
-            streamOptions: z.nullable(ChatCompletionStreamOptions$.outboundSchema).optional(),
-            temperature: z.nullable(z.number().default(1)),
-            topP: z.nullable(z.number().default(1)),
-            tools: z.array(ChatCompletionTool$.outboundSchema).optional(),
-            toolChoice: ChatCompletionToolChoiceOption$.outboundSchema.optional(),
-            user: z.string().optional(),
-            functionCall: z
-                .union([ChatCompletionFunctionCallOption$.outboundSchema, One$.outboundSchema])
-                .optional(),
-            functions: z.array(ChatCompletionFunctions$.outboundSchema).optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                frequencyPenalty: "frequency_penalty",
-                logitBias: "logit_bias",
-                topLogprobs: "top_logprobs",
-                maxTokens: "max_tokens",
-                presencePenalty: "presence_penalty",
-                responseFormat: "response_format",
-                streamOptions: "stream_options",
-                topP: "top_p",
-                toolChoice: "tool_choice",
-                functionCall: "function_call",
-            });
-        });
+    /** @deprecated use `CreateChatCompletionRequest$inboundSchema` instead. */
+    export const inboundSchema = CreateChatCompletionRequest$inboundSchema;
+    /** @deprecated use `CreateChatCompletionRequest$outboundSchema` instead. */
+    export const outboundSchema = CreateChatCompletionRequest$outboundSchema;
+    /** @deprecated use `CreateChatCompletionRequest$Outbound` instead. */
+    export type Outbound = CreateChatCompletionRequest$Outbound;
 }

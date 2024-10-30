@@ -3,10 +3,10 @@ id: ca95c839-5377-4981-9bcb-4cedc7e35f2b
 management:
   docChecksum: afd320be35d7ac594f72868b9cbd0ef4
   docVersion: 1.0.0
-  speakeasyVersion: 1.315.2
-  generationVersion: 2.352.0
-  releaseVersion: 0.1.0
-  configChecksum: 04922ef8dd4ee0188bb717df63bb8866
+  speakeasyVersion: 1.337.1
+  generationVersion: 2.373.2
+  releaseVersion: 0.2.0
+  configChecksum: b17dbcaa0019f79c5794545774f39af6
   repoURL: https://github.com/log10-io/log10ts.git
   installationURL: https://github.com/log10-io/log10ts
   published: true
@@ -14,7 +14,8 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.5
-    core: 3.10.2
+    core: 3.11.7
+    defaultEnabledRetries: 0.1.0
     deprecations: 2.81.1
     examples: 2.81.4
     flattening: 2.81.1
@@ -26,6 +27,7 @@ features:
     nameOverrides: 2.81.2
     nullables: 0.1.0
     responseFormat: 0.2.3
+    retries: 2.83.0
     sdkHooks: 0.1.0
     typeOverrides: 2.81.1
     unions: 2.85.5
@@ -188,6 +190,7 @@ generatedFiles:
   - docs/models/getfeedbacktaskresponse.md
   - docs/models/security.md
   - docs/sdks/log10/README.md
+  - docs/lib/utils/retryconfig.md
   - docs/sdks/completions/README.md
   - docs/sdks/sessions/README.md
   - docs/sdks/feedbacksdk/README.md
@@ -197,3 +200,4 @@ generatedFiles:
   - src/hooks/hooks.ts
   - src/hooks/types.ts
   - src/hooks/index.ts
+  - CONTRIBUTING.md

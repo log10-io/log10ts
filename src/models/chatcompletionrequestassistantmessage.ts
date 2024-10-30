@@ -5,9 +5,15 @@
 import { remap as remap$ } from "../lib/primitives.js";
 import {
     ChatCompletionMessageToolCall,
-    ChatCompletionMessageToolCall$,
+    ChatCompletionMessageToolCall$inboundSchema,
+    ChatCompletionMessageToolCall$Outbound,
+    ChatCompletionMessageToolCall$outboundSchema,
 } from "./chatcompletionmessagetoolcall.js";
-import { ChatCompletionRole, ChatCompletionRole$ } from "./chatcompletionrole.js";
+import {
+    ChatCompletionRole,
+    ChatCompletionRole$inboundSchema,
+    ChatCompletionRole$outboundSchema,
+} from "./chatcompletionrole.js";
 import * as z from "zod";
 
 /**
@@ -55,68 +61,98 @@ export type ChatCompletionRequestAssistantMessage = {
 };
 
 /** @internal */
+export const FunctionCall$inboundSchema: z.ZodType<FunctionCall, z.ZodTypeDef, unknown> = z.object({
+    arguments: z.string(),
+    name: z.string(),
+});
+
+/** @internal */
+export type FunctionCall$Outbound = {
+    arguments: string;
+    name: string;
+};
+
+/** @internal */
+export const FunctionCall$outboundSchema: z.ZodType<
+    FunctionCall$Outbound,
+    z.ZodTypeDef,
+    FunctionCall
+> = z.object({
+    arguments: z.string(),
+    name: z.string(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace FunctionCall$ {
-    export const inboundSchema: z.ZodType<FunctionCall, z.ZodTypeDef, unknown> = z.object({
-        arguments: z.string(),
-        name: z.string(),
-    });
-
-    export type Outbound = {
-        arguments: string;
-        name: string;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, FunctionCall> = z.object({
-        arguments: z.string(),
-        name: z.string(),
-    });
+    /** @deprecated use `FunctionCall$inboundSchema` instead. */
+    export const inboundSchema = FunctionCall$inboundSchema;
+    /** @deprecated use `FunctionCall$outboundSchema` instead. */
+    export const outboundSchema = FunctionCall$outboundSchema;
+    /** @deprecated use `FunctionCall$Outbound` instead. */
+    export type Outbound = FunctionCall$Outbound;
 }
 
 /** @internal */
+export const ChatCompletionRequestAssistantMessage$inboundSchema: z.ZodType<
+    ChatCompletionRequestAssistantMessage,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        content: z.nullable(z.string()).optional(),
+        role: ChatCompletionRole$inboundSchema,
+        name: z.string().optional(),
+        tool_calls: z.array(ChatCompletionMessageToolCall$inboundSchema).optional(),
+        function_call: z.lazy(() => FunctionCall$inboundSchema).optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            tool_calls: "toolCalls",
+            function_call: "functionCall",
+        });
+    });
+
+/** @internal */
+export type ChatCompletionRequestAssistantMessage$Outbound = {
+    content?: string | null | undefined;
+    role: string;
+    name?: string | undefined;
+    tool_calls?: Array<ChatCompletionMessageToolCall$Outbound> | undefined;
+    function_call?: FunctionCall$Outbound | undefined;
+};
+
+/** @internal */
+export const ChatCompletionRequestAssistantMessage$outboundSchema: z.ZodType<
+    ChatCompletionRequestAssistantMessage$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionRequestAssistantMessage
+> = z
+    .object({
+        content: z.nullable(z.string()).optional(),
+        role: ChatCompletionRole$outboundSchema,
+        name: z.string().optional(),
+        toolCalls: z.array(ChatCompletionMessageToolCall$outboundSchema).optional(),
+        functionCall: z.lazy(() => FunctionCall$outboundSchema).optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            toolCalls: "tool_calls",
+            functionCall: "function_call",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ChatCompletionRequestAssistantMessage$ {
-    export const inboundSchema: z.ZodType<
-        ChatCompletionRequestAssistantMessage,
-        z.ZodTypeDef,
-        unknown
-    > = z
-        .object({
-            content: z.nullable(z.string()).optional(),
-            role: ChatCompletionRole$.inboundSchema,
-            name: z.string().optional(),
-            tool_calls: z.array(ChatCompletionMessageToolCall$.inboundSchema).optional(),
-            function_call: z.lazy(() => FunctionCall$.inboundSchema).optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                tool_calls: "toolCalls",
-                function_call: "functionCall",
-            });
-        });
-
-    export type Outbound = {
-        content?: string | null | undefined;
-        role: string;
-        name?: string | undefined;
-        tool_calls?: Array<ChatCompletionMessageToolCall$.Outbound> | undefined;
-        function_call?: FunctionCall$.Outbound | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        ChatCompletionRequestAssistantMessage
-    > = z
-        .object({
-            content: z.nullable(z.string()).optional(),
-            role: ChatCompletionRole$.outboundSchema,
-            name: z.string().optional(),
-            toolCalls: z.array(ChatCompletionMessageToolCall$.outboundSchema).optional(),
-            functionCall: z.lazy(() => FunctionCall$.outboundSchema).optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                toolCalls: "tool_calls",
-                functionCall: "function_call",
-            });
-        });
+    /** @deprecated use `ChatCompletionRequestAssistantMessage$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionRequestAssistantMessage$inboundSchema;
+    /** @deprecated use `ChatCompletionRequestAssistantMessage$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionRequestAssistantMessage$outboundSchema;
+    /** @deprecated use `ChatCompletionRequestAssistantMessage$Outbound` instead. */
+    export type Outbound = ChatCompletionRequestAssistantMessage$Outbound;
 }

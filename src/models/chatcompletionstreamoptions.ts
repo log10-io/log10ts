@@ -22,28 +22,49 @@ export type ChatCompletionStreamOptions = {
 };
 
 /** @internal */
+export const ChatCompletionStreamOptions$inboundSchema: z.ZodType<
+    ChatCompletionStreamOptions,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        include_usage: z.boolean().optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            include_usage: "includeUsage",
+        });
+    });
+
+/** @internal */
+export type ChatCompletionStreamOptions$Outbound = {
+    include_usage?: boolean | undefined;
+};
+
+/** @internal */
+export const ChatCompletionStreamOptions$outboundSchema: z.ZodType<
+    ChatCompletionStreamOptions$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionStreamOptions
+> = z
+    .object({
+        includeUsage: z.boolean().optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            includeUsage: "include_usage",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ChatCompletionStreamOptions$ {
-    export const inboundSchema: z.ZodType<ChatCompletionStreamOptions, z.ZodTypeDef, unknown> = z
-        .object({
-            include_usage: z.boolean().optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                include_usage: "includeUsage",
-            });
-        });
-
-    export type Outbound = {
-        include_usage?: boolean | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ChatCompletionStreamOptions> = z
-        .object({
-            includeUsage: z.boolean().optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                includeUsage: "include_usage",
-            });
-        });
+    /** @deprecated use `ChatCompletionStreamOptions$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionStreamOptions$inboundSchema;
+    /** @deprecated use `ChatCompletionStreamOptions$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionStreamOptions$outboundSchema;
+    /** @deprecated use `ChatCompletionStreamOptions$Outbound` instead. */
+    export type Outbound = ChatCompletionStreamOptions$Outbound;
 }

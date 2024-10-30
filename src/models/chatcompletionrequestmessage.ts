@@ -4,23 +4,33 @@
 
 import {
     ChatCompletionRequestAssistantMessage,
-    ChatCompletionRequestAssistantMessage$,
+    ChatCompletionRequestAssistantMessage$inboundSchema,
+    ChatCompletionRequestAssistantMessage$Outbound,
+    ChatCompletionRequestAssistantMessage$outboundSchema,
 } from "./chatcompletionrequestassistantmessage.js";
 import {
     ChatCompletionRequestFunctionMessage,
-    ChatCompletionRequestFunctionMessage$,
+    ChatCompletionRequestFunctionMessage$inboundSchema,
+    ChatCompletionRequestFunctionMessage$Outbound,
+    ChatCompletionRequestFunctionMessage$outboundSchema,
 } from "./chatcompletionrequestfunctionmessage.js";
 import {
     ChatCompletionRequestSystemMessage,
-    ChatCompletionRequestSystemMessage$,
+    ChatCompletionRequestSystemMessage$inboundSchema,
+    ChatCompletionRequestSystemMessage$Outbound,
+    ChatCompletionRequestSystemMessage$outboundSchema,
 } from "./chatcompletionrequestsystemmessage.js";
 import {
     ChatCompletionRequestToolMessage,
-    ChatCompletionRequestToolMessage$,
+    ChatCompletionRequestToolMessage$inboundSchema,
+    ChatCompletionRequestToolMessage$Outbound,
+    ChatCompletionRequestToolMessage$outboundSchema,
 } from "./chatcompletionrequesttoolmessage.js";
 import {
     ChatCompletionRequestUserMessage,
-    ChatCompletionRequestUserMessage$,
+    ChatCompletionRequestUserMessage$inboundSchema,
+    ChatCompletionRequestUserMessage$Outbound,
+    ChatCompletionRequestUserMessage$outboundSchema,
 } from "./chatcompletionrequestusermessage.js";
 import * as z from "zod";
 
@@ -32,28 +42,48 @@ export type ChatCompletionRequestMessage =
     | ChatCompletionRequestAssistantMessage;
 
 /** @internal */
-export namespace ChatCompletionRequestMessage$ {
-    export const inboundSchema: z.ZodType<ChatCompletionRequestMessage, z.ZodTypeDef, unknown> =
-        z.union([
-            ChatCompletionRequestSystemMessage$.inboundSchema,
-            ChatCompletionRequestUserMessage$.inboundSchema,
-            ChatCompletionRequestToolMessage$.inboundSchema,
-            ChatCompletionRequestFunctionMessage$.inboundSchema,
-            ChatCompletionRequestAssistantMessage$.inboundSchema,
-        ]);
+export const ChatCompletionRequestMessage$inboundSchema: z.ZodType<
+    ChatCompletionRequestMessage,
+    z.ZodTypeDef,
+    unknown
+> = z.union([
+    ChatCompletionRequestSystemMessage$inboundSchema,
+    ChatCompletionRequestUserMessage$inboundSchema,
+    ChatCompletionRequestToolMessage$inboundSchema,
+    ChatCompletionRequestFunctionMessage$inboundSchema,
+    ChatCompletionRequestAssistantMessage$inboundSchema,
+]);
 
-    export type Outbound =
-        | ChatCompletionRequestSystemMessage$.Outbound
-        | ChatCompletionRequestUserMessage$.Outbound
-        | ChatCompletionRequestToolMessage$.Outbound
-        | ChatCompletionRequestFunctionMessage$.Outbound
-        | ChatCompletionRequestAssistantMessage$.Outbound;
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ChatCompletionRequestMessage> =
-        z.union([
-            ChatCompletionRequestSystemMessage$.outboundSchema,
-            ChatCompletionRequestUserMessage$.outboundSchema,
-            ChatCompletionRequestToolMessage$.outboundSchema,
-            ChatCompletionRequestFunctionMessage$.outboundSchema,
-            ChatCompletionRequestAssistantMessage$.outboundSchema,
-        ]);
+/** @internal */
+export type ChatCompletionRequestMessage$Outbound =
+    | ChatCompletionRequestSystemMessage$Outbound
+    | ChatCompletionRequestUserMessage$Outbound
+    | ChatCompletionRequestToolMessage$Outbound
+    | ChatCompletionRequestFunctionMessage$Outbound
+    | ChatCompletionRequestAssistantMessage$Outbound;
+
+/** @internal */
+export const ChatCompletionRequestMessage$outboundSchema: z.ZodType<
+    ChatCompletionRequestMessage$Outbound,
+    z.ZodTypeDef,
+    ChatCompletionRequestMessage
+> = z.union([
+    ChatCompletionRequestSystemMessage$outboundSchema,
+    ChatCompletionRequestUserMessage$outboundSchema,
+    ChatCompletionRequestToolMessage$outboundSchema,
+    ChatCompletionRequestFunctionMessage$outboundSchema,
+    ChatCompletionRequestAssistantMessage$outboundSchema,
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ChatCompletionRequestMessage$ {
+    /** @deprecated use `ChatCompletionRequestMessage$inboundSchema` instead. */
+    export const inboundSchema = ChatCompletionRequestMessage$inboundSchema;
+    /** @deprecated use `ChatCompletionRequestMessage$outboundSchema` instead. */
+    export const outboundSchema = ChatCompletionRequestMessage$outboundSchema;
+    /** @deprecated use `ChatCompletionRequestMessage$Outbound` instead. */
+    export type Outbound = ChatCompletionRequestMessage$Outbound;
 }
