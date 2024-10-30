@@ -8,5 +8,3 @@ export * from "./sdk/sdk.js";
 
 export * from "./models/index.js";
 export * as types from "./types/index.js";
-
-export * from "./wrapper/index.js";

@@ -1,6 +1,6 @@
 {
   "name": "log10ts",
-  "version": "0.3.3",
+  "version": "0.3.10",
   "author": "Speakeasy",
   "main": "./index.js",
   "sideEffects": false,
@@ -26,8 +26,6 @@
     "zod": "^3.23.4"
   },
   "dependencies": {
-    "axios": "^1.7.7",
-    "openai": "^4.68.4",
-    "ts-jest": "^29.2.5"
+    "axios": "^1.7.7"
   }
 }
