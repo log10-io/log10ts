@@ -1,6 +1,7 @@
 ## 2024-10-30
 ### Changes
 - Triggering publishing workflow
+- Reusing SDK options class for wrapper
 
 ## 2024-06-11
 ### Changes
