@@ -12,9 +12,10 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
 typescript:
-  version: 0.3.10
+  version: 0.3.13
   additionalDependencies:
-    dependencies: {}
+    dependencies:
+      axios: ^1.7.7
     devDependencies: {}
     peerDependencies: {}
   additionalPackageJSON: {}
