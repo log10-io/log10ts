@@ -3,7 +3,7 @@
 - Triggering publishing workflow
 - Reusing SDK options class for wrapper
 - Updating examples
-- Bumping version (v0.3.2)
+- Bumping version (v0.3.3)
 
 ## 2024-06-11
 ### Changes

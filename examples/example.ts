@@ -11,7 +11,7 @@ const options: SDKOptions = {
 };
 
 const client = new OpenAI({
-  apiKey: process.env["OPENAI_API_KEY"], // This is the default and can be omitted
+  apiKey: process.env["OPENAI_API_KEY"],
 });
 const wrapper = new Log10Wrapper(options);
 wrapper.wrap(client);
