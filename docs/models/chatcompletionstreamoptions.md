@@ -3,6 +3,13 @@
 Options for streaming response. Only set this when you set `stream: true`.
 
 
+## Example Usage
+
+```typescript
+import { ChatCompletionStreamOptions } from "log10ts";
+
+let value: ChatCompletionStreamOptions = {};
+```
 
 ## Fields
 

@@ -1,5 +1,27 @@
 # ChatCompletionTokenLogprob
 
+## Example Usage
+
+```typescript
+import { ChatCompletionTokenLogprob } from "log10ts";
+
+let value: ChatCompletionTokenLogprob = {
+  token: "<value>",
+  logprob: 1103.75,
+  bytes: [
+    656330,
+  ],
+  topLogprobs: [
+    {
+      token: "<value>",
+      logprob: 1381.83,
+      bytes: [
+        196582,
+      ],
+    },
+  ],
+};
+```
 
 ## Fields
 

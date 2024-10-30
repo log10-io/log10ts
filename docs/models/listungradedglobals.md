@@ -1,5 +1,12 @@
 # ListUngradedGlobals
 
+## Example Usage
+
+```typescript
+import { ListUngradedGlobals } from "log10ts";
+
+let value: ListUngradedGlobals = {};
+```
 
 ## Fields
 

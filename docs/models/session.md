@@ -1,5 +1,12 @@
 # Session
 
+## Example Usage
+
+```typescript
+import { Session } from "log10ts";
+
+let value: Session = {};
+```
 
 ## Fields
 

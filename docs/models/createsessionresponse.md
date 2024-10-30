@@ -1,5 +1,19 @@
 # CreateSessionResponse
 
+## Example Usage
+
+```typescript
+import { CreateSessionResponse } from "log10ts";
+
+let value: CreateSessionResponse = {
+  httpMeta: {
+    response: new Response("{\"message\": \"hello world\"}", {
+      headers: { "Content-Type": "application/json" },
+    }),
+    request: new Request("https://example.com"),
+  },
+};
+```
 
 ## Fields
 

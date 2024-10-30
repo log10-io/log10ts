@@ -1,5 +1,14 @@
 # ImageUrl
 
+## Example Usage
+
+```typescript
+import { ImageUrl } from "log10ts";
+
+let value: ImageUrl = {
+  url: "https://glass-pigpen.com",
+};
+```
 
 ## Fields
 

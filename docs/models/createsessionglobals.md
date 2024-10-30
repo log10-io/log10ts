@@ -1,5 +1,12 @@
 # CreateSessionGlobals
 
+## Example Usage
+
+```typescript
+import { CreateSessionGlobals } from "log10ts";
+
+let value: CreateSessionGlobals = {};
+```
 
 ## Fields
 

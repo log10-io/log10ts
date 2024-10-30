@@ -1,5 +1,17 @@
 # ChatCompletionTool
 
+## Example Usage
+
+```typescript
+import { ChatCompletionTool, ChatCompletionToolType } from "log10ts";
+
+let value: ChatCompletionTool = {
+  type: ChatCompletionToolType.Function,
+  function: {
+    name: "<value>",
+  },
+};
+```
 
 ## Fields
 

@@ -1,5 +1,16 @@
 # ChatCompletionRequestToolMessage
 
+## Example Usage
+
+```typescript
+import { ChatCompletionRequestToolMessage, ChatCompletionRole } from "log10ts";
+
+let value: ChatCompletionRequestToolMessage = {
+  role: ChatCompletionRole.Function,
+  content: "<value>",
+  toolCallId: "<id>",
+};
+```
 
 ## Fields
 

@@ -4,6 +4,16 @@ Deprecated and replaced by `tool_calls`. The name and arguments of a function th
 
 > :warning: **DEPRECATED**: This will be removed in a future release, please migrate away from it as soon as possible.
 
+## Example Usage
+
+```typescript
+import { ChatCompletionResponseMessageFunctionCall } from "log10ts";
+
+let value: ChatCompletionResponseMessageFunctionCall = {
+  arguments: "<value>",
+  name: "<value>",
+};
+```
 
 ## Fields
 

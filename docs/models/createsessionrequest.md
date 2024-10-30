@@ -1,5 +1,12 @@
 # CreateSessionRequest
 
+## Example Usage
+
+```typescript
+import { CreateSessionRequest } from "log10ts";
+
+let value: CreateSessionRequest = {};
+```
 
 ## Fields
 

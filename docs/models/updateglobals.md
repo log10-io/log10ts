@@ -1,5 +1,12 @@
 # UpdateGlobals
 
+## Example Usage
+
+```typescript
+import { UpdateGlobals } from "log10ts";
+
+let value: UpdateGlobals = {};
+```
 
 ## Fields
 

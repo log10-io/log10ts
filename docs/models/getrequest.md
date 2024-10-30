@@ -1,5 +1,14 @@
 # GetRequest
 
+## Example Usage
+
+```typescript
+import { GetRequest } from "log10ts";
+
+let value: GetRequest = {
+  feedbackId: "<id>",
+};
+```
 
 ## Fields
 

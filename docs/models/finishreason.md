@@ -6,6 +6,13 @@ The reason the model stopped generating tokens. This will be `stop` if the model
 `tool_calls` if the model called a tool, or `function_call` (deprecated) if the model called a function.
 
 
+## Example Usage
+
+```typescript
+import { FinishReason } from "log10ts";
+
+let value: FinishReason = FinishReason.ContentFilter;
+```
 
 ## Values
 

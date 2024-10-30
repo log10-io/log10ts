@@ -1,5 +1,15 @@
 # ChatCompletionRequestMessageContentPartText
 
+## Example Usage
+
+```typescript
+import { ChatCompletionRequestMessageContentPartText, Type } from "log10ts";
+
+let value: ChatCompletionRequestMessageContentPartText = {
+  type: Type.Text,
+  text: "<value>",
+};
+```
 
 ## Fields
 

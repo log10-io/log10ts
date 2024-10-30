@@ -6,12 +6,20 @@
 ### `models.ChatCompletionRequestMessageContentPartText`
 
 ```typescript
-const value: models.ChatCompletionRequestMessageContentPartText = /* values here */
+const value: models.ChatCompletionRequestMessageContentPartText = {
+  type: Type.Text,
+  text: "<value>",
+};
 ```
 
 ### `models.ChatCompletionRequestMessageContentPartImage`
 
 ```typescript
-const value: models.ChatCompletionRequestMessageContentPartImage = /* values here */
+const value: models.ChatCompletionRequestMessageContentPartImage = {
+  type: ChatCompletionRequestMessageContentPartImageType.ImageUrl,
+  imageUrl: {
+    url: "https://favorite-lid.com",
+  },
+};
 ```
 
