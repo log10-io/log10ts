@@ -12,11 +12,11 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
 typescript:
-  version: 0.3.10
+  version: 0.3.11
   additionalDependencies:
     dependencies:
-      "openai": "^4.69.0"
-      "axios": "^1.7.7"
+      axios: ^1.7.7
+      openai: ^4.69.0
     devDependencies: {}
     peerDependencies: {}
   additionalPackageJSON: {}
