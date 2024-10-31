@@ -1,6 +1,7 @@
 ## 2024-10-31
 ### Changes
 - Reintroducing wrapper example
+- Fix wrapper example
 
 ## 2024-10-30
 ### Changes
