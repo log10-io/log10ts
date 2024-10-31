@@ -56,6 +56,9 @@ components:
           description: The completion tag matching with this task i.e. surfaced as needing feedback.
           items:
             type: string
+        organization_id:
+          type: string
+          description: The unique identifier for the organization.
     Feedback:
       type: object
       required:

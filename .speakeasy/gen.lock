@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: ca95c839-5377-4981-9bcb-4cedc7e35f2b
 management:
-  docChecksum: b791bbf62c27339b6611ba1a4e3e262b
+  docChecksum: 8b07d2e04b9a76316900b7207752e9ad
   docVersion: 1.0.0
   speakeasyVersion: 1.423.5
   generationVersion: 2.445.1
-  releaseVersion: 0.3.19
-  configChecksum: 1406ab4adcac79ea5bc17f105b7cbdf3
+  releaseVersion: 0.3.20
+  configChecksum: 7e6a255ed7f73eadd65d8bc0667a18b5
   repoURL: https://github.com/log10-io/log10ts.git
   installationURL: https://github.com/log10-io/log10ts
   published: true

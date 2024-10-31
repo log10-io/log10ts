@@ -35,6 +35,10 @@ export type Task = {
    * The completion tag matching with this task i.e. surfaced as needing feedback.
    */
   completionTagsSelector: Array<string>;
+  /**
+   * The unique identifier for the organization.
+   */
+  organizationId?: string | undefined;
 };
 
 /** @internal */
@@ -76,11 +80,13 @@ export const Task$inboundSchema: z.ZodType<Task, z.ZodTypeDef, unknown> = z
     name: z.string(),
     instruction: z.string(),
     completion_tags_selector: z.array(z.string()),
+    organization_id: z.string().optional(),
   }).transform((v) => {
     return remap$(v, {
       "created_at_ms": "createdAtMs",
       "json_schema": "jsonSchema",
       "completion_tags_selector": "completionTagsSelector",
+      "organization_id": "organizationId",
     });
   });
 
@@ -92,6 +98,7 @@ export type Task$Outbound = {
   name: string;
   instruction: string;
   completion_tags_selector: Array<string>;
+  organization_id?: string | undefined;
 };
 
 /** @internal */
@@ -103,11 +110,13 @@ export const Task$outboundSchema: z.ZodType<Task$Outbound, z.ZodTypeDef, Task> =
     name: z.string(),
     instruction: z.string(),
     completionTagsSelector: z.array(z.string()),
+    organizationId: z.string().optional(),
   }).transform((v) => {
     return remap$(v, {
       createdAtMs: "created_at_ms",
       jsonSchema: "json_schema",
       completionTagsSelector: "completion_tags_selector",
+      organizationId: "organization_id",
     });
   });
 
