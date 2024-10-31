@@ -10,11 +10,6 @@ import { remap as remap$ } from "../lib/primitives.js";
  */
 export type JsonSchema = {};
 
-/**
- * The completion tag matching with this task i.e. surfaced as needing feedback.
- */
-export type CompletionTagsSelector = {};
-
 export type Task = {
   /**
    * The unique identifier for this task.
@@ -39,7 +34,7 @@ export type Task = {
   /**
    * The completion tag matching with this task i.e. surfaced as needing feedback.
    */
-  completionTagsSelector: CompletionTagsSelector;
+  completionTagsSelector: Array<string>;
 };
 
 /** @internal */
@@ -73,36 +68,6 @@ export namespace JsonSchema$ {
 }
 
 /** @internal */
-export const CompletionTagsSelector$inboundSchema: z.ZodType<
-  CompletionTagsSelector,
-  z.ZodTypeDef,
-  unknown
-> = z.object({});
-
-/** @internal */
-export type CompletionTagsSelector$Outbound = {};
-
-/** @internal */
-export const CompletionTagsSelector$outboundSchema: z.ZodType<
-  CompletionTagsSelector$Outbound,
-  z.ZodTypeDef,
-  CompletionTagsSelector
-> = z.object({});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CompletionTagsSelector$ {
-  /** @deprecated use `CompletionTagsSelector$inboundSchema` instead. */
-  export const inboundSchema = CompletionTagsSelector$inboundSchema;
-  /** @deprecated use `CompletionTagsSelector$outboundSchema` instead. */
-  export const outboundSchema = CompletionTagsSelector$outboundSchema;
-  /** @deprecated use `CompletionTagsSelector$Outbound` instead. */
-  export type Outbound = CompletionTagsSelector$Outbound;
-}
-
-/** @internal */
 export const Task$inboundSchema: z.ZodType<Task, z.ZodTypeDef, unknown> = z
   .object({
     id: z.string().optional(),
@@ -110,9 +75,7 @@ export const Task$inboundSchema: z.ZodType<Task, z.ZodTypeDef, unknown> = z
     json_schema: z.lazy(() => JsonSchema$inboundSchema),
     name: z.string(),
     instruction: z.string(),
-    completion_tags_selector: z.lazy(() =>
-      CompletionTagsSelector$inboundSchema
-    ),
+    completion_tags_selector: z.array(z.string()),
   }).transform((v) => {
     return remap$(v, {
       "created_at_ms": "createdAtMs",
@@ -128,7 +91,7 @@ export type Task$Outbound = {
   json_schema: JsonSchema$Outbound;
   name: string;
   instruction: string;
-  completion_tags_selector: CompletionTagsSelector$Outbound;
+  completion_tags_selector: Array<string>;
 };
 
 /** @internal */
@@ -139,7 +102,7 @@ export const Task$outboundSchema: z.ZodType<Task$Outbound, z.ZodTypeDef, Task> =
     jsonSchema: z.lazy(() => JsonSchema$outboundSchema),
     name: z.string(),
     instruction: z.string(),
-    completionTagsSelector: z.lazy(() => CompletionTagsSelector$outboundSchema),
+    completionTagsSelector: z.array(z.string()),
   }).transform((v) => {
     return remap$(v, {
       createdAtMs: "created_at_ms",

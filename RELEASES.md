@@ -3,6 +3,7 @@
 - Reintroducing wrapper example
 - Fix wrapper example
 - Forcing release (v3)
+- Fix type of completionTagsSelector
 
 ## 2024-10-30
 ### Changes

@@ -1,7 +1,7 @@
 lockVersion: 2.0.0
 id: ca95c839-5377-4981-9bcb-4cedc7e35f2b
 management:
-  docChecksum: afd320be35d7ac594f72868b9cbd0ef4
+  docChecksum: b791bbf62c27339b6611ba1a4e3e262b
   docVersion: 1.0.0
   speakeasyVersion: 1.423.5
   generationVersion: 2.445.1
@@ -70,7 +70,6 @@ generatedFiles:
   - docs/models/chatcompletiontooltype.md
   - docs/models/choices.md
   - docs/models/completion.md
-  - docs/models/completiontagsselector.md
   - docs/models/completionusage.md
   - docs/models/content.md
   - docs/models/createchatcompletionrequest.md
@@ -269,12 +268,12 @@ examples:
     speakeasy-default-list-feedback-tasks:
       responses:
         "200":
-          application/json: [{"name": "<value>", "instruction": "<value>"}, {"name": "<value>", "instruction": "<value>"}, {"name": "<value>", "instruction": "<value>"}]
+          application/json: [{"name": "<value>", "instruction": "<value>", "completion_tags_selector": ["<value>", "<value>", "<value>"]}, {"name": "<value>", "instruction": "<value>", "completion_tags_selector": ["<value>", "<value>"]}, {"name": "<value>", "instruction": "<value>", "completion_tags_selector": ["<value>", "<value>"]}]
   createFeedbackTask:
     speakeasy-default-create-feedback-task:
       responses:
         "200":
-          application/json: {"name": "<value>", "instruction": "<value>"}
+          application/json: {"name": "<value>", "instruction": "<value>", "completion_tags_selector": ["<value>"]}
   getFeedbackTask:
     speakeasy-default-get-feedback-task:
       parameters:
@@ -282,4 +281,4 @@ examples:
           taskId: "<id>"
       responses:
         "200":
-          application/json: {"name": "<value>", "instruction": "<value>"}
+          application/json: {"name": "<value>", "instruction": "<value>", "completion_tags_selector": ["<value>", "<value>"]}

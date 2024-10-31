@@ -68,6 +68,8 @@ yarn add log10ts zod
 
 ## Example
 
+Here is a regular OpenAI call, traced with log10.
+
 ```typescript
 import OpenAI from "openai";
 
@@ -97,6 +99,8 @@ async function main() {
 
 main();
 ```
+
+
 
 <!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage
