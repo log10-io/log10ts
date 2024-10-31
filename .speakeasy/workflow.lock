@@ -6,6 +6,7 @@ sources:
         sourceBlobDigest: sha256:c13f7e04d3e31e9a68796aacb367c7a7ad1da620aa60987dd621222194c7197e
         tags:
             - latest
+            - main
 targets:
     my-first-target:
         source: default
