@@ -4,6 +4,7 @@
 - Fix wrapper example
 - Forcing release (v3)
 - Fix type of completionTagsSelector
+- Add organization id to feedback task
 
 ## 2024-10-30
 ### Changes

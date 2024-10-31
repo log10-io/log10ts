@@ -2,8 +2,8 @@ speakeasyVersion: 1.423.5
 sources:
     default:
         sourceNamespace: default
-        sourceRevisionDigest: sha256:1e78ef045e32b1cec6387a7360a47634b0cdb9176118cfba90b0533ed84a0ffb
-        sourceBlobDigest: sha256:4d80634925a359552431e0011cd224a44b56cf378555d1befc1eefd23d11cd2b
+        sourceRevisionDigest: sha256:cb412b5be91f4a67960bbbaee588b23513ec8aec76a3eb6687b5a7d233dfcaeb
+        sourceBlobDigest: sha256:9ebe87f0c34176eb2a30a87675dd170ff52fe361fb1d760fb0443b483666b38f
         tags:
             - latest
             - main
