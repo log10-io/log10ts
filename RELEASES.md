@@ -2,7 +2,7 @@
 ### Changes
 - Reintroducing wrapper example
 - Fix wrapper example
-- Forcing release (v2)
+- Forcing release (v3)
 
 ## 2024-10-30
 ### Changes
