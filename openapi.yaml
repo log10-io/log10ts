@@ -52,7 +52,7 @@ components:
           type: string
           description: The instructions for this task.
         completion_tags_selector:
-          type: object
+          type: array
           description: The completion tag matching with this task i.e. surfaced as needing feedback.
           items:
             type: string
