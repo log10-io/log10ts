@@ -2,7 +2,7 @@ speakeasyVersion: 1.423.5
 sources:
     default:
         sourceNamespace: default
-        sourceRevisionDigest: sha256:06b0543c6c6f34bfe23d353baee105b102660a3bcc1970ca972cc0b92a247277
+        sourceRevisionDigest: sha256:bee47e3033fc7425bda195b9ca043fb3899ae8a98e2729402645589e37da7c84
         sourceBlobDigest: sha256:1a3a702e1bf694c61ea10bf87b43794730a3dd3d4bf8d0af4add37467ff0af76
         tags:
             - latest
@@ -10,10 +10,10 @@ targets:
     my-first-target:
         source: default
         sourceNamespace: default
-        sourceRevisionDigest: sha256:06b0543c6c6f34bfe23d353baee105b102660a3bcc1970ca972cc0b92a247277
+        sourceRevisionDigest: sha256:bee47e3033fc7425bda195b9ca043fb3899ae8a98e2729402645589e37da7c84
         sourceBlobDigest: sha256:1a3a702e1bf694c61ea10bf87b43794730a3dd3d4bf8d0af4add37467ff0af76
         codeSamplesNamespace: default-code-samples
-        codeSamplesRevisionDigest: sha256:c3d75760c1d3c53864f1bc4ad32b68a8a30aeff6b14cc633f770bb450722bbee
+        codeSamplesRevisionDigest: sha256:6b1804e85f000042904a13afe53a03b9657497caece117d2c879dd815e675095
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
