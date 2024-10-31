@@ -69,11 +69,10 @@ yarn add log10ts zod
 ## Example
 
 ```typescript
-// Usage example
 import OpenAI from "openai";
 
-import { SDKOptions } from "../src";
-import { Log10Wrapper } from "../src/wrapper";
+import { SDKOptions } from "log10ts";
+import { Log10Wrapper } from "log10ts/wrapper";
 
 const options: SDKOptions = {
   log10Token: process.env["LOG10_TOKEN"] || "",
@@ -86,7 +85,6 @@ const client = new OpenAI({
 });
 const wrapper = new Log10Wrapper(options);
 wrapper.wrap(client);
-
 
 async function main() {
   const response = await client.chat.completions.create({
