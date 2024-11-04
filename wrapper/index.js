@@ -53,7 +53,6 @@ class Log10Wrapper {
             console.error("Error logging completion:", error);
         }
     }
-
     async *wrappedResponse(response, request) {
         try {
             let lastChunk = { choices: [{ delta: { content: "" } }] };
@@ -80,7 +79,6 @@ class Log10Wrapper {
             console.error("Error logging completion:", error);
         }
     }
-
     wrap(client) {
         const ref = client.chat.completions.create;
         client.chat.completions.create = async (...args) => {
