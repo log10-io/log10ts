@@ -5,11 +5,6 @@
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
 
-/**
- * The values of the feedback. Must be valid JSON according to the task schema.
- */
-export type JsonValues = {};
-
 export type Feedback = {
   /**
    * The unique identifier for this feedback.
@@ -26,47 +21,21 @@ export type Feedback = {
   /**
    * The values of the feedback. Must be valid JSON according to the task schema.
    */
-  jsonValues: JsonValues;
+  jsonValues: { [k: string]: any };
   /**
    * The matched completion ids associated with this feedback.
    */
-  matchedCompletionIds: Array<string>;
+  matchedCompletionIds?: Array<string> | undefined;
   /**
    * The comment associated with this feedback.
    */
   comment: string;
   completionsSummary?: string | undefined;
+  /**
+   * The unique identifier for the organization.
+   */
+  organizationId: string;
 };
-
-/** @internal */
-export const JsonValues$inboundSchema: z.ZodType<
-  JsonValues,
-  z.ZodTypeDef,
-  unknown
-> = z.object({});
-
-/** @internal */
-export type JsonValues$Outbound = {};
-
-/** @internal */
-export const JsonValues$outboundSchema: z.ZodType<
-  JsonValues$Outbound,
-  z.ZodTypeDef,
-  JsonValues
-> = z.object({});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace JsonValues$ {
-  /** @deprecated use `JsonValues$inboundSchema` instead. */
-  export const inboundSchema = JsonValues$inboundSchema;
-  /** @deprecated use `JsonValues$outboundSchema` instead. */
-  export const outboundSchema = JsonValues$outboundSchema;
-  /** @deprecated use `JsonValues$Outbound` instead. */
-  export type Outbound = JsonValues$Outbound;
-}
 
 /** @internal */
 export const Feedback$inboundSchema: z.ZodType<
@@ -77,10 +46,11 @@ export const Feedback$inboundSchema: z.ZodType<
   id: z.string().optional(),
   created_at_ms: z.number().optional(),
   task_id: z.string(),
-  json_values: z.lazy(() => JsonValues$inboundSchema),
-  matched_completion_ids: z.array(z.string()),
+  json_values: z.record(z.any()),
+  matched_completion_ids: z.array(z.string()).optional(),
   comment: z.string(),
   completions_summary: z.string().optional(),
+  organization_id: z.string(),
 }).transform((v) => {
   return remap$(v, {
     "created_at_ms": "createdAtMs",
@@ -88,6 +58,7 @@ export const Feedback$inboundSchema: z.ZodType<
     "json_values": "jsonValues",
     "matched_completion_ids": "matchedCompletionIds",
     "completions_summary": "completionsSummary",
+    "organization_id": "organizationId",
   });
 });
 
@@ -96,10 +67,11 @@ export type Feedback$Outbound = {
   id?: string | undefined;
   created_at_ms?: number | undefined;
   task_id: string;
-  json_values: JsonValues$Outbound;
-  matched_completion_ids: Array<string>;
+  json_values: { [k: string]: any };
+  matched_completion_ids?: Array<string> | undefined;
   comment: string;
   completions_summary?: string | undefined;
+  organization_id: string;
 };
 
 /** @internal */
@@ -111,10 +83,11 @@ export const Feedback$outboundSchema: z.ZodType<
   id: z.string().optional(),
   createdAtMs: z.number().optional(),
   taskId: z.string(),
-  jsonValues: z.lazy(() => JsonValues$outboundSchema),
-  matchedCompletionIds: z.array(z.string()),
+  jsonValues: z.record(z.any()),
+  matchedCompletionIds: z.array(z.string()).optional(),
   comment: z.string(),
   completionsSummary: z.string().optional(),
+  organizationId: z.string(),
 }).transform((v) => {
   return remap$(v, {
     createdAtMs: "created_at_ms",
@@ -122,6 +95,7 @@ export const Feedback$outboundSchema: z.ZodType<
     jsonValues: "json_values",
     matchedCompletionIds: "matched_completion_ids",
     completionsSummary: "completions_summary",
+    organizationId: "organization_id",
   });
 });
 

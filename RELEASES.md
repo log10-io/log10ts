@@ -1,3 +1,7 @@
+## 2024-11-04
+### Changes
+- Fix feedback upload
+
 ## 2024-10-31
 ### Changes
 - Reintroducing wrapper example
@@ -136,3 +140,23 @@ Based on:
 - [typescript v0.3.21] .
 ### Releases
 - [NPM v0.3.21] https://www.npmjs.com/package/log10ts/v/0.3.21 - .
+
+## 2024-11-04 16:19:33
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.424.0 (2.445.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v0.3.22] .
+### Releases
+- [NPM v0.3.22] https://www.npmjs.com/package/log10ts/v/0.3.22 - .
+
+## 2024-11-04 16:41:21
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.424.0 (2.445.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v0.3.23] .
+### Releases
+- [NPM v0.3.23] https://www.npmjs.com/package/log10ts/v/0.3.23 - .

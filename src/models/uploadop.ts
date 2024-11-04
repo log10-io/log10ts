@@ -21,11 +21,6 @@ export type UploadGlobals = {
   xLog10Organization?: string | undefined;
 };
 
-/**
- * The values of the feedback. Must be valid JSON according to the task schema.
- */
-export type UploadRequestBodyJsonValues = {};
-
 export type Two = {
   /**
    * The unique identifier for this feedback.
@@ -42,26 +37,25 @@ export type Two = {
   /**
    * The values of the feedback. Must be valid JSON according to the task schema.
    */
-  jsonValues: UploadRequestBodyJsonValues;
+  jsonValues: { [k: string]: any };
   /**
    * The matched completion ids associated with this feedback.
    */
-  matchedCompletionIds: Array<string>;
+  matchedCompletionIds?: Array<string> | undefined;
   /**
    * The comment associated with this feedback.
    */
   comment: string;
   completionsSummary?: string | undefined;
   /**
+   * The unique identifier for the organization.
+   */
+  organizationId: string;
+  /**
    * The completion ids to associate with this feedback.
    */
   completionIds: Array<string>;
 };
-
-/**
- * The values of the feedback. Must be valid JSON according to the task schema.
- */
-export type RequestBodyJsonValues = {};
 
 export type RequestBody1 = {
   /**
@@ -79,16 +73,20 @@ export type RequestBody1 = {
   /**
    * The values of the feedback. Must be valid JSON according to the task schema.
    */
-  jsonValues: RequestBodyJsonValues;
+  jsonValues: { [k: string]: any };
   /**
    * The matched completion ids associated with this feedback.
    */
-  matchedCompletionIds: Array<string>;
+  matchedCompletionIds?: Array<string> | undefined;
   /**
    * The comment associated with this feedback.
    */
   comment: string;
   completionsSummary?: string | undefined;
+  /**
+   * The unique identifier for the organization.
+   */
+  organizationId: string;
   /**
    * Whether to allow unmatched feedback. Defaults to false.
    */
@@ -163,45 +161,16 @@ export namespace UploadGlobals$ {
 }
 
 /** @internal */
-export const UploadRequestBodyJsonValues$inboundSchema: z.ZodType<
-  UploadRequestBodyJsonValues,
-  z.ZodTypeDef,
-  unknown
-> = z.object({});
-
-/** @internal */
-export type UploadRequestBodyJsonValues$Outbound = {};
-
-/** @internal */
-export const UploadRequestBodyJsonValues$outboundSchema: z.ZodType<
-  UploadRequestBodyJsonValues$Outbound,
-  z.ZodTypeDef,
-  UploadRequestBodyJsonValues
-> = z.object({});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UploadRequestBodyJsonValues$ {
-  /** @deprecated use `UploadRequestBodyJsonValues$inboundSchema` instead. */
-  export const inboundSchema = UploadRequestBodyJsonValues$inboundSchema;
-  /** @deprecated use `UploadRequestBodyJsonValues$outboundSchema` instead. */
-  export const outboundSchema = UploadRequestBodyJsonValues$outboundSchema;
-  /** @deprecated use `UploadRequestBodyJsonValues$Outbound` instead. */
-  export type Outbound = UploadRequestBodyJsonValues$Outbound;
-}
-
-/** @internal */
 export const Two$inboundSchema: z.ZodType<Two, z.ZodTypeDef, unknown> = z
   .object({
     id: z.string().optional(),
     created_at_ms: z.number().optional(),
     task_id: z.string(),
-    json_values: z.lazy(() => UploadRequestBodyJsonValues$inboundSchema),
-    matched_completion_ids: z.array(z.string()),
+    json_values: z.record(z.any()),
+    matched_completion_ids: z.array(z.string()).optional(),
     comment: z.string(),
     completions_summary: z.string().optional(),
+    organization_id: z.string(),
     completion_ids: z.array(z.string()),
   }).transform((v) => {
     return remap$(v, {
@@ -210,6 +179,7 @@ export const Two$inboundSchema: z.ZodType<Two, z.ZodTypeDef, unknown> = z
       "json_values": "jsonValues",
       "matched_completion_ids": "matchedCompletionIds",
       "completions_summary": "completionsSummary",
+      "organization_id": "organizationId",
       "completion_ids": "completionIds",
     });
   });
@@ -219,10 +189,11 @@ export type Two$Outbound = {
   id?: string | undefined;
   created_at_ms?: number | undefined;
   task_id: string;
-  json_values: UploadRequestBodyJsonValues$Outbound;
-  matched_completion_ids: Array<string>;
+  json_values: { [k: string]: any };
+  matched_completion_ids?: Array<string> | undefined;
   comment: string;
   completions_summary?: string | undefined;
+  organization_id: string;
   completion_ids: Array<string>;
 };
 
@@ -232,10 +203,11 @@ export const Two$outboundSchema: z.ZodType<Two$Outbound, z.ZodTypeDef, Two> = z
     id: z.string().optional(),
     createdAtMs: z.number().optional(),
     taskId: z.string(),
-    jsonValues: z.lazy(() => UploadRequestBodyJsonValues$outboundSchema),
-    matchedCompletionIds: z.array(z.string()),
+    jsonValues: z.record(z.any()),
+    matchedCompletionIds: z.array(z.string()).optional(),
     comment: z.string(),
     completionsSummary: z.string().optional(),
+    organizationId: z.string(),
     completionIds: z.array(z.string()),
   }).transform((v) => {
     return remap$(v, {
@@ -244,6 +216,7 @@ export const Two$outboundSchema: z.ZodType<Two$Outbound, z.ZodTypeDef, Two> = z
       jsonValues: "json_values",
       matchedCompletionIds: "matched_completion_ids",
       completionsSummary: "completions_summary",
+      organizationId: "organization_id",
       completionIds: "completion_ids",
     });
   });
@@ -262,36 +235,6 @@ export namespace Two$ {
 }
 
 /** @internal */
-export const RequestBodyJsonValues$inboundSchema: z.ZodType<
-  RequestBodyJsonValues,
-  z.ZodTypeDef,
-  unknown
-> = z.object({});
-
-/** @internal */
-export type RequestBodyJsonValues$Outbound = {};
-
-/** @internal */
-export const RequestBodyJsonValues$outboundSchema: z.ZodType<
-  RequestBodyJsonValues$Outbound,
-  z.ZodTypeDef,
-  RequestBodyJsonValues
-> = z.object({});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace RequestBodyJsonValues$ {
-  /** @deprecated use `RequestBodyJsonValues$inboundSchema` instead. */
-  export const inboundSchema = RequestBodyJsonValues$inboundSchema;
-  /** @deprecated use `RequestBodyJsonValues$outboundSchema` instead. */
-  export const outboundSchema = RequestBodyJsonValues$outboundSchema;
-  /** @deprecated use `RequestBodyJsonValues$Outbound` instead. */
-  export type Outbound = RequestBodyJsonValues$Outbound;
-}
-
-/** @internal */
 export const RequestBody1$inboundSchema: z.ZodType<
   RequestBody1,
   z.ZodTypeDef,
@@ -300,10 +243,11 @@ export const RequestBody1$inboundSchema: z.ZodType<
   id: z.string().optional(),
   created_at_ms: z.number().optional(),
   task_id: z.string(),
-  json_values: z.lazy(() => RequestBodyJsonValues$inboundSchema),
-  matched_completion_ids: z.array(z.string()),
+  json_values: z.record(z.any()),
+  matched_completion_ids: z.array(z.string()).optional(),
   comment: z.string(),
   completions_summary: z.string().optional(),
+  organization_id: z.string(),
   allow_unmatched_feedback: z.boolean().default(false),
   max_matched_completions: z.number().int().default(100),
   completion_tags_selector: z.array(z.string()),
@@ -314,6 +258,7 @@ export const RequestBody1$inboundSchema: z.ZodType<
     "json_values": "jsonValues",
     "matched_completion_ids": "matchedCompletionIds",
     "completions_summary": "completionsSummary",
+    "organization_id": "organizationId",
     "allow_unmatched_feedback": "allowUnmatchedFeedback",
     "max_matched_completions": "maxMatchedCompletions",
     "completion_tags_selector": "completionTagsSelector",
@@ -325,10 +270,11 @@ export type RequestBody1$Outbound = {
   id?: string | undefined;
   created_at_ms?: number | undefined;
   task_id: string;
-  json_values: RequestBodyJsonValues$Outbound;
-  matched_completion_ids: Array<string>;
+  json_values: { [k: string]: any };
+  matched_completion_ids?: Array<string> | undefined;
   comment: string;
   completions_summary?: string | undefined;
+  organization_id: string;
   allow_unmatched_feedback: boolean;
   max_matched_completions: number;
   completion_tags_selector: Array<string>;
@@ -343,10 +289,11 @@ export const RequestBody1$outboundSchema: z.ZodType<
   id: z.string().optional(),
   createdAtMs: z.number().optional(),
   taskId: z.string(),
-  jsonValues: z.lazy(() => RequestBodyJsonValues$outboundSchema),
-  matchedCompletionIds: z.array(z.string()),
+  jsonValues: z.record(z.any()),
+  matchedCompletionIds: z.array(z.string()).optional(),
   comment: z.string(),
   completionsSummary: z.string().optional(),
+  organizationId: z.string(),
   allowUnmatchedFeedback: z.boolean().default(false),
   maxMatchedCompletions: z.number().int().default(100),
   completionTagsSelector: z.array(z.string()),
@@ -357,6 +304,7 @@ export const RequestBody1$outboundSchema: z.ZodType<
     jsonValues: "json_values",
     matchedCompletionIds: "matched_completion_ids",
     completionsSummary: "completions_summary",
+    organizationId: "organization_id",
     allowUnmatchedFeedback: "allow_unmatched_feedback",
     maxMatchedCompletions: "max_matched_completions",
     completionTagsSelector: "completion_tags_selector",
