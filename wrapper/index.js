@@ -42,54 +42,10 @@ class Log10Wrapper {
                     "Content-Type": "application/json",
                 },
             });
-            console.log("Completion logged successfully:", response.data);
+            console.debug("Completion logged successfully:", response.data);
         }
         catch (error) {
             console.error("Error logging completion:", error);
-        }
-    }
-    async createFeedbackTask(taskSchema, name) {
-        try {
-            const response = await axios_1.default.post(`${this.options$.serverURL}/api/v1/feedback_task`, {
-                json_schema: taskSchema,
-                name: name,
-                organization_id: this.options$.xLog10Organization,
-            }, {
-                headers: {
-                    "x-log10-token": typeof this.options$.log10Token === "function"
-                        ? await this.options$.log10Token()
-                        : this.options$.log10Token,
-                    "x-log10-organization": this.options$.xLog10Organization,
-                    "Content-Type": "application/json",
-                },
-            });
-            return response.data.id;
-        }
-        catch (error) {
-            console.error("Error creating feedback task:", error);
-            throw error;
-        }
-    }
-    async createFeedback(taskId, values, completionTagsSelector) {
-        try {
-            await axios_1.default.post(`${this.options$.serverURL}/api/v1/feedback`, {
-                task_id: taskId,
-                json_values: values,
-                completion_tags_selector: completionTagsSelector,
-                organization_id: this.options$.xLog10Organization,
-            }, {
-                headers: {
-                    "x-log10-token": typeof this.options$.log10Token === "function"
-                        ? await this.options$.log10Token()
-                        : this.options$.log10Token,
-                    "x-log10-organization": this.options$.xLog10Organization,
-                    "Content-Type": "application/json",
-                },
-            });
-        }
-        catch (error) {
-            console.error("Error creating feedback:", error);
-            throw error;
         }
     }
     wrap(client) {
