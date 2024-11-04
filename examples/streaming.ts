@@ -17,11 +17,14 @@ wrapper.wrap(client);
 
 async function main() {
   const response = await client.chat.completions.create({
-    messages: [{ role: "user", content: "Knock knock - who is there?" }],
+    messages: [{ role: "user", content: "Count to 10" }],
     model: "gpt-3.5-turbo",
+    stream: true,
   });
 
-  console.log(response.choices[0].message.content);
+  for await (const chunk of response) {
+    process.stdout.write(chunk.choices[0].delta.content || "\n");
+  }
 }
 
 main();
