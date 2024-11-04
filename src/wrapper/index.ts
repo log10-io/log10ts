@@ -105,6 +105,11 @@ class Log10Wrapper {
         return this.wrappedResponse(response, args[0]);
       }
 
+      this.logCompletion({
+        request: args[0],
+        response: { ...response, system_fingerprint: "" },
+      });
+
       return response;
     };
   }

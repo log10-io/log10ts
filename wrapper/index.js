@@ -87,6 +87,10 @@ class Log10Wrapper {
                 // Start consuming the AsyncGenerator in a background async function
                 return this.wrappedResponse(response, args[0]);
             }
+            this.logCompletion({
+                request: args[0],
+                response: { ...response, system_fingerprint: "" },
+            });
             return response;
         };
     }
