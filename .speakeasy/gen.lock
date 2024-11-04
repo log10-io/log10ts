@@ -5,8 +5,8 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.424.0
   generationVersion: 2.445.1
-  releaseVersion: 0.3.23
-  configChecksum: 5352adb20cd049e53ae17e445d981d40
+  releaseVersion: 0.3.22
+  configChecksum: 70e7ac83c225f451399d345c60d4ed42
   repoURL: https://github.com/log10-io/log10ts.git
   installationURL: https://github.com/log10-io/log10ts
   published: true
