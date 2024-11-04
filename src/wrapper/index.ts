@@ -5,6 +5,16 @@ import axios from "axios";
 import { SDKOptions } from "..";
 import { SDKHooks } from "../hooks/hooks";
 
+function isStreamable(
+  obj: any
+): obj is { iterator: AsyncGeneratorFunction; controller: AbortController } {
+  return (
+    obj &&
+    typeof obj.iterator === "function" &&
+    obj.iterator.constructor.name === "AsyncGeneratorFunction" &&
+    obj.controller instanceof AbortController
+  );
+}
 class Log10Wrapper {
   private readonly options$: SDKOptions & { hooks?: SDKHooks };
   private readonly tags: string[] = [];
@@ -30,7 +40,7 @@ class Log10Wrapper {
 
   async logCompletion(completion: any): Promise<void> {
     try {
-      const response = await axios.post(
+      return axios.post(
         `${this.options$.serverURL}/api/v1/completions`,
         {
           ...completion,
@@ -50,8 +60,36 @@ class Log10Wrapper {
           },
         }
       );
+    } catch (error) {
+      console.error("Error logging completion:", error);
+    }
+  }
 
-      console.debug("Completion logged successfully:", response.data);
+  async *wrappedResponse(response: any, request: any) {
+    try {
+      let lastChunk: any = { choices: [{ delta: { content: "" } }] };
+      let buffer = "";
+      for await (const chunk of response.iterator()) {
+        lastChunk = chunk;
+        buffer += chunk.choices[0].delta.content || "";
+
+        yield chunk;
+      }
+
+      const finalResponse = {
+        ...lastChunk,
+        system_fingerprint: "",
+        object: "chat.completion",
+        created: 0
+      };
+
+      finalResponse.choices[0].message = {content: buffer, role: "assistant"};
+      delete finalResponse.choices[0].delta;
+
+      this.logCompletion({
+        request,
+        response: { ...finalResponse, system_fingerprint: "" },
+      });
     } catch (error) {
       console.error("Error logging completion:", error);
     }
@@ -61,6 +99,11 @@ class Log10Wrapper {
     const ref = client.chat.completions.create;
     client.chat.completions.create = async (...args: any) => {
       const response = await ref.call(client.chat.completions, ...args);
+
+      if (isStreamable(response)) {
+        // Start consuming the AsyncGenerator in a background async function
+        return this.wrappedResponse(response, args[0]);
+      }
 
       this.logCompletion({
         request: args[0],

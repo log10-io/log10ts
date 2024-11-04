@@ -7,6 +7,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Log10Wrapper = void 0;
 const axios_1 = __importDefault(require("axios"));
 const hooks_1 = require("../hooks/hooks");
+function isStreamable(obj) {
+    return (obj &&
+        typeof obj.iterator === "function" &&
+        obj.iterator.constructor.name === "AsyncGeneratorFunction" &&
+        obj.controller instanceof AbortController);
+}
 class Log10Wrapper {
     constructor(options = {}, tags) {
         this.tags = [];
@@ -27,7 +33,7 @@ class Log10Wrapper {
     }
     async logCompletion(completion) {
         try {
-            const response = await axios_1.default.post(`${this.options$.serverURL}/api/v1/completions`, {
+            return axios_1.default.post(`${this.options$.serverURL}/api/v1/completions`, {
                 ...completion,
                 organization_id: this.options$.xLog10Organization,
                 kind: "chat",
@@ -42,16 +48,47 @@ class Log10Wrapper {
                     "Content-Type": "application/json",
                 },
             });
-            console.debug("Completion logged successfully:", response.data);
         }
         catch (error) {
             console.error("Error logging completion:", error);
         }
     }
+
+    async *wrappedResponse(response, request) {
+        try {
+            let lastChunk = { choices: [{ delta: { content: "" } }] };
+            let buffer = "";
+            for await (const chunk of response.iterator()) {
+                lastChunk = chunk;
+                buffer += chunk.choices[0].delta.content || "";
+                yield chunk;
+            }
+            const finalResponse = {
+                ...lastChunk,
+                system_fingerprint: "",
+                object: "chat.completion",
+                created: 0
+            };
+            finalResponse.choices[0].message = { content: buffer, role: "assistant" };
+            delete finalResponse.choices[0].delta;
+            this.logCompletion({
+                request,
+                response: { ...finalResponse, system_fingerprint: "" },
+            });
+        }
+        catch (error) {
+            console.error("Error logging completion:", error);
+        }
+    }
+
     wrap(client) {
         const ref = client.chat.completions.create;
         client.chat.completions.create = async (...args) => {
             const response = await ref.call(client.chat.completions, ...args);
+            if (isStreamable(response)) {
+                // Start consuming the AsyncGenerator in a background async function
+                return this.wrappedResponse(response, args[0]);
+            }
             this.logCompletion({
                 request: args[0],
                 response: { ...response, system_fingerprint: "" },
