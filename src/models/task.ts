@@ -5,11 +5,6 @@
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
 
-/**
- * The schema of the task. Must be valid JSON Schema.
- */
-export type JsonSchema = {};
-
 export type Task = {
   /**
    * The unique identifier for this task.
@@ -22,7 +17,7 @@ export type Task = {
   /**
    * The schema of the task. Must be valid JSON Schema.
    */
-  jsonSchema: JsonSchema;
+  jsonSchema: { [k: string]: any };
   /**
    * The name of the task.
    */
@@ -38,49 +33,19 @@ export type Task = {
   /**
    * The unique identifier for the organization.
    */
-  organizationId?: string | undefined;
+  organizationId: string;
 };
-
-/** @internal */
-export const JsonSchema$inboundSchema: z.ZodType<
-  JsonSchema,
-  z.ZodTypeDef,
-  unknown
-> = z.object({});
-
-/** @internal */
-export type JsonSchema$Outbound = {};
-
-/** @internal */
-export const JsonSchema$outboundSchema: z.ZodType<
-  JsonSchema$Outbound,
-  z.ZodTypeDef,
-  JsonSchema
-> = z.object({});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace JsonSchema$ {
-  /** @deprecated use `JsonSchema$inboundSchema` instead. */
-  export const inboundSchema = JsonSchema$inboundSchema;
-  /** @deprecated use `JsonSchema$outboundSchema` instead. */
-  export const outboundSchema = JsonSchema$outboundSchema;
-  /** @deprecated use `JsonSchema$Outbound` instead. */
-  export type Outbound = JsonSchema$Outbound;
-}
 
 /** @internal */
 export const Task$inboundSchema: z.ZodType<Task, z.ZodTypeDef, unknown> = z
   .object({
     id: z.string().optional(),
     created_at_ms: z.number().optional(),
-    json_schema: z.lazy(() => JsonSchema$inboundSchema),
+    json_schema: z.record(z.any()),
     name: z.string(),
     instruction: z.string(),
     completion_tags_selector: z.array(z.string()),
-    organization_id: z.string().optional(),
+    organization_id: z.string(),
   }).transform((v) => {
     return remap$(v, {
       "created_at_ms": "createdAtMs",
@@ -94,11 +59,11 @@ export const Task$inboundSchema: z.ZodType<Task, z.ZodTypeDef, unknown> = z
 export type Task$Outbound = {
   id?: string | undefined;
   created_at_ms?: number | undefined;
-  json_schema: JsonSchema$Outbound;
+  json_schema: { [k: string]: any };
   name: string;
   instruction: string;
   completion_tags_selector: Array<string>;
-  organization_id?: string | undefined;
+  organization_id: string;
 };
 
 /** @internal */
@@ -106,11 +71,11 @@ export const Task$outboundSchema: z.ZodType<Task$Outbound, z.ZodTypeDef, Task> =
   z.object({
     id: z.string().optional(),
     createdAtMs: z.number().optional(),
-    jsonSchema: z.lazy(() => JsonSchema$outboundSchema),
+    jsonSchema: z.record(z.any()),
     name: z.string(),
     instruction: z.string(),
     completionTagsSelector: z.array(z.string()),
-    organizationId: z.string().optional(),
+    organizationId: z.string(),
   }).transform((v) => {
     return remap$(v, {
       createdAtMs: "created_at_ms",

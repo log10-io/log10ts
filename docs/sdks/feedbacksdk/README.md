@@ -99,11 +99,11 @@ const log10 = new Log10({
 async function run() {
   const result = await log10.feedback.upload({
     taskId: "<id>",
-    jsonValues: {},
-    matchedCompletionIds: [
-      "<value>",
-    ],
+    jsonValues: {
+      "key": "<value>",
+    },
     comment: "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+    organizationId: "<id>",
     completionTagsSelector: [
       "<value>",
     ],
@@ -133,11 +133,11 @@ const log10 = new Log10Core({
 async function run() {
   const res = await feedbackUpload(log10, {
     taskId: "<id>",
-    jsonValues: {},
-    matchedCompletionIds: [
-      "<value>",
-    ],
+    jsonValues: {
+      "key": "<value>",
+    },
     comment: "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+    organizationId: "<id>",
     completionIds: [
       "<value>",
     ],

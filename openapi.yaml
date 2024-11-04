@@ -35,6 +35,7 @@ components:
         - instruction
         - json_schema
         - completion_tags_selector
+        - organization_id
       properties:
         id:
           type: string
@@ -45,6 +46,7 @@ components:
         json_schema:
           type: object
           description: The schema of the task. Must be valid JSON Schema.
+          additionalProperties: true
         name:
           type: string
           description: The name of the task.
@@ -64,8 +66,8 @@ components:
       required:
         - task_id
         - json_values
-        - matched_completion_ids
         - comment
+        - organization_id
       properties:
         id:
           type: string
@@ -79,6 +81,7 @@ components:
         json_values:
           type: object
           description: The values of the feedback. Must be valid JSON according to the task schema.
+          additionalProperties: true
         matched_completion_ids:
           type: array
           description: The matched completion ids associated with this feedback.
@@ -89,6 +92,9 @@ components:
           description: The comment associated with this feedback.
         completions_summary:
           type: string
+        organization_id:
+          type: string
+          description: The unique identifier for the organization.
     Completion:
       type: object
       required:
