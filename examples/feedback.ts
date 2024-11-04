@@ -19,7 +19,7 @@ async function run() {
       coherence: 6,
     },
     comment: "",
-    completionTagsSelector: ["foobar"],
+    completionTagsSelector: ["unique-tag-id"],
   };
 
   const result = await log10.feedbackSDK.upload(feedback);
