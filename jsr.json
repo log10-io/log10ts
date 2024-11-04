@@ -2,7 +2,7 @@
 
 {
   "name": "log10ts",
-  "version": "0.3.22",
+  "version": "0.3.23",
   "exports": {
     ".": "./src/index.ts",    
     "./models": "./src/models/index.ts",
