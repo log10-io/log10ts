@@ -85,7 +85,7 @@ const options: SDKOptions = {
 const client = new OpenAI({
   apiKey: process.env["OPENAI_API_KEY"],
 });
-const wrapper = new Log10Wrapper(options);
+const wrapper = new Log10Wrapper(options, ["unique-tag-id"]);
 wrapper.wrap(client);
 
 async function main() {
@@ -100,7 +100,100 @@ async function main() {
 main();
 ```
 
+### Adding feedback
 
+Start by adding a feedback task. This is a logical grouping of feedback and defines the expected feedback schema i.e. acceptable values.
+
+```typescript
+import { Log10, SDKOptions } from "log10ts";
+
+const options: SDKOptions = {
+  log10Token: process.env["LOG10_TOKEN"] || "",
+  xLog10Organization: process.env["LOG10_ORG_ID"] || "",
+  serverURL: "https://log10.io",
+};
+
+const log10 = new Log10(options);
+
+async function run() {
+  const taskSchema = {
+    $schema: "http://json-schema.org/draft-07/schema#",
+    title: "Summary Evaluation",
+    type: "object",
+    properties: {
+      relevance: {
+        type: "integer",
+        minimum: 1,
+        maximum: 7,
+        description:
+          "The relevance of the summary to the content being summarized, rated from 1 (least relevant) to 7 (most relevant)",
+      },
+      coherence: {
+        type: "integer",
+        minimum: 1,
+        maximum: 7,
+        description:
+          "The coherence and logical flow of the summary, rated from 1 (least coherent) to 7 (most coherent)",
+      },
+    },
+    required: ["relevance", "coherence"],
+    additionalProperties: false,
+  };
+
+  const task = {
+    organizationId: process.env["LOG10_ORG_ID"] || "",
+    jsonSchema: taskSchema,
+    name: "Test Task",
+    instruction: "Test Instruction",
+    completionTagsSelector: ["test"],
+  };
+
+  const result = await log10.feedbackTasks.create(task);
+
+  // Handle the result
+  console.log("Task id: ", result?.task?.id);
+}
+
+run();
+```
+
+This should create a task and print out the id. Save this for adding feedback.
+
+Now, with a task and logged completion, you can now add feedback:
+
+```typescript
+import { Log10, SDKOptions } from "log10ts";
+
+const options: SDKOptions = {
+  log10Token: process.env["LOG10_TOKEN"] || "",
+  xLog10Organization: process.env["LOG10_ORG_ID"] || "",
+  serverURL: "https://log10.io",
+};
+
+const log10 = new Log10(options);
+
+async function run() {
+  const taskID = "<<REPLACE WITH YOUR TASK ID>>";
+
+  const feedback = {
+    organizationId: process.env["LOG10_ORG_ID"] || "",
+    taskId: taskID,
+    jsonValues: {
+      relevance: 5,
+      coherence: 6,
+    },
+    comment: "",
+    completionTagsSelector: ["unique-tag-id"],
+  };
+
+  const result = await log10.feedbackSDK.upload(feedback);
+
+  // Handle the result
+  console.log("Result: ", result);
+}
+
+run();
+```
 
 <!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage
