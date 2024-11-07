@@ -11,8 +11,8 @@ const options: SDKOptions = {
 };
 
 const client = new BedrockRuntimeClient({ 
-    region: "us-west-2",
-    credentials: fromIni({ profile: "default" }) // Load credentials from your AWS profile
+  region: "us-west-2",
+  credentials: fromIni({ profile: "default" }) // Load credentials from your AWS profile
  });
 const wrapper = new Log10Wrapper(options, ["bedrock-claude-tag"]);
 wrapper.wrapBedrock(client);
@@ -36,13 +36,13 @@ async function main() {
   });
 
   try {
-  const response = await client.send(command);
-  console.log(response);
-  const responseBody = JSON.parse(new TextDecoder().decode(response.body));
-  console.log(responseBody.content[0].text);
+    const response = await client.send(command);
+    console.log(response);
+    const responseBody = JSON.parse(new TextDecoder().decode(response.body));
+    console.log(responseBody.content[0].text);
   } catch (error) {
     console.error(error);
   }  
 }
 
-main(); 
+main();

@@ -9,9 +9,9 @@ const options: SDKOptions = {
   serverURL: "https://log10.io",
 };
 
-const client = new BedrockRuntimeClient({ 
-    region: "us-west-2",
-    credentials: fromIni({ profile: "default" })
+const client = new BedrockRuntimeClient({
+  region: "us-west-2",
+  credentials: fromIni({ profile: "default" })
 });
 const wrapper = new Log10Wrapper(options, ["bedrock-claude-streaming-tag"]);
 wrapper.wrapBedrock(client);
@@ -48,4 +48,4 @@ async function main() {
   }
 }
 
-main(); 
+main();
