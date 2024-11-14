@@ -267,9 +267,9 @@ If a HTTP request fails, an operation my also throw an error from the `models/ht
 
 In addition, when custom error responses are specified for an operation, the SDK may throw their associated Error type. You can refer to respective *Errors* tables in SDK docs for more details on possible error types for each operation. For example, the `create` method may throw the following errors:
 
-| Error Type      | Status Code     | Content Type    |
-| --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| Error Type      | Status Code | Content Type |
+| --------------- | ----------- | ------------ |
+| models.SDKError | 4XX, 5XX    | \*/\*        |
 
 ```typescript
 import {
@@ -466,192 +466,9 @@ Validation errors can also occur when either method arguments or data returned f
 <!-- Start Server Selection [server] -->
 ## Server Selection
 
-### Select Server by Index
-
-You can override the default server globally by passing a server index to the `serverIdx` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
-
-| # | Server | Variables |
-| - | ------ | --------- |
-| 0 | `https://log10.io` | None |
-
-```typescript
-import {
-  ChatCompletionRole,
-  CreateChatCompletionRequestType,
-  FinishReason,
-  Kind,
-  Log10,
-  ObjectT,
-} from "log10ts";
-
-const log10 = new Log10({
-  serverIdx: 0,
-  log10Token: "<YOUR_API_KEY_HERE>",
-});
-
-async function run() {
-  const result = await log10.completions.create({
-    organizationId: "<id>",
-    kind: Kind.Chat,
-    request: {
-      messages: [
-        {
-          role: ChatCompletionRole.System,
-        },
-        {
-          content: "<value>",
-          role: ChatCompletionRole.Tool,
-        },
-      ],
-      model: "gpt-4-turbo",
-      n: 1,
-      responseFormat: {
-        type: CreateChatCompletionRequestType.JsonObject,
-      },
-      temperature: 1,
-      topP: 1,
-      user: "user-1234",
-    },
-    response: {
-      id: "<id>",
-      choices: [
-        {
-          finishReason: FinishReason.Stop,
-          index: 169727,
-          message: {
-            content: "<value>",
-            role: ChatCompletionRole.System,
-          },
-          logprobs: {
-            content: [
-              {
-                token: "<value>",
-                logprob: 8165.87,
-                bytes: [
-                  752438,
-                  957409,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 2596.30,
-                    bytes: [
-                      486589,
-                    ],
-                  },
-                ],
-              },
-              {
-                token: "<value>",
-                logprob: 2303.13,
-                bytes: [
-                  638424,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 4174.58,
-                    bytes: [
-                      134365,
-                    ],
-                  },
-                ],
-              },
-              {
-                token: "<value>",
-                logprob: 3229.97,
-                bytes: [
-                  69025,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 7964.74,
-                    bytes: [
-                      951062,
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        {
-          finishReason: FinishReason.Stop,
-          index: 651985,
-          message: {
-            content: "<value>",
-            role: ChatCompletionRole.User,
-          },
-          logprobs: {
-            content: [
-              {
-                token: "<value>",
-                logprob: 0.87,
-                bytes: [
-                  169727,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 899.64,
-                    bytes: [
-                      792620,
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        {
-          finishReason: FinishReason.ContentFilter,
-          index: 650237,
-          message: {
-            content: "<value>",
-            role: ChatCompletionRole.User,
-          },
-          logprobs: {
-            content: [
-              {
-                token: "<value>",
-                logprob: 8165.87,
-                bytes: [
-                  586220,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 7524.37,
-                    bytes: [
-                      957409,
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        },
-      ],
-      created: 523523,
-      model: "gpt-4-turbo",
-      object: ObjectT.ChatCompletion,
-    },
-  });
-
-  // Handle the result
-  console.log(result);
-}
-
-run();
-
-```
-
-
 ### Override Server URL Per-Client
 
-The default server can also be overridden globally by passing a URL to the `serverURL` optional parameter when initializing the SDK client instance. For example:
-
+The default server can also be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
 ```typescript
 import {
   ChatCompletionRole,
@@ -882,9 +699,9 @@ const sdk = new Log10({ httpClient });
 
 This SDK supports the following security scheme globally:
 
-| Name         | Type         | Scheme       |
-| ------------ | ------------ | ------------ |
-| `log10Token` | apiKey       | API key      |
+| Name         | Type   | Scheme  |
+| ------------ | ------ | ------- |
+| `log10Token` | apiKey | API key |
 
 To authenticate with the API the `log10Token` parameter must be set when initializing the SDK client instance. For example:
 ```typescript
