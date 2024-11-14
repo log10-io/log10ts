@@ -3,10 +3,10 @@ id: ca95c839-5377-4981-9bcb-4cedc7e35f2b
 management:
   docChecksum: a058442e2285e2bda8bab4de417fed87
   docVersion: 1.0.0
-  speakeasyVersion: 1.425.1
-  generationVersion: 2.446.5
-  releaseVersion: 0.3.24
-  configChecksum: 63200c702f99cbab3f3ecdd0434632a1
+  speakeasyVersion: 1.438.3
+  generationVersion: 2.457.9
+  releaseVersion: 0.4.0
+  configChecksum: 790483d06b380c1098bfc15df50855c0
   repoURL: https://github.com/log10-io/log10ts.git
   installationURL: https://github.com/log10-io/log10ts
   published: true
@@ -14,7 +14,7 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.11
-    core: 3.18.3
+    core: 3.18.4
     defaultEnabledRetries: 0.1.0
     deprecations: 2.81.1
     enumUnions: 0.1.0
@@ -30,9 +30,9 @@ features:
     nullables: 0.1.0
     responseFormat: 0.2.3
     retries: 2.83.0
-    sdkHooks: 0.1.0
+    sdkHooks: 0.2.0
     typeOverrides: 2.81.1
-    unions: 2.85.7
+    unions: 2.85.8
 generatedFiles:
   - .eslintrc.cjs
   - .gitattributes
