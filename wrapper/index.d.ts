@@ -6,6 +6,8 @@ declare class Log10Wrapper {
     logCompletion(completion: any): Promise<void>;
     wrappedResponse(response: any, request: any): AsyncGenerator<any, void, unknown>;
     wrap(client: any): void;
+    wrappedBedrockResponse(response: any, request: any): AsyncGenerator<any, void, unknown>;
+    wrapBedrock(client: any): void;
 }
 export { Log10Wrapper };
 //# sourceMappingURL=index.d.ts.map

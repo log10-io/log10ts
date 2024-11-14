@@ -26,6 +26,8 @@
     "zod": "^3.23.4"
   },
   "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.686.0",
+    "@aws-sdk/credential-providers": "^3.687.0",
     "axios": "^1.7.7",
     "openai": "^4.69.0"
   }
