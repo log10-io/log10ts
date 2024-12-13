@@ -1,3 +1,8 @@
+## 2024-12-13
+### Changes
+- Bedrock image support
+- Filter out large images
+
 ## 2024-11-04
 ### Changes
 - Fix feedback upload
