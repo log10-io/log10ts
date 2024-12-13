@@ -1,7 +1,10 @@
 // log10.ts
 
 import axios from "axios";
-import { InvokeModelCommand, InvokeModelWithResponseStreamCommand } from "@aws-sdk/client-bedrock-runtime";
+import {
+  InvokeModelCommand,
+  InvokeModelWithResponseStreamCommand,
+} from "@aws-sdk/client-bedrock-runtime";
 
 import { SDKOptions } from "..";
 import { SDKHooks } from "../hooks/hooks";
@@ -38,6 +41,76 @@ class Log10Wrapper {
     this.tags = tags || [];
     void this.options$;
   }
+
+  // Image types need to be transformed
+  //
+  // Bedrock looks like this:
+  // messages: [
+  // {
+  //   role: "user",
+  //   content: [
+  //     {
+  //       type: "image",
+  //       source: {
+  //         type: "base64",
+  //         media_type: "image/png",
+  //         data: image_data
+  //       }
+  //     }
+  //   ]
+  // }
+  // ]
+  //
+  // OpenAI looks like this:
+  //   messages: [
+  //     {
+  //         "role": "user",
+  //         "content": [
+  //             {
+  //                 "type": "text",
+  //                 "text": "What are in these image?",
+  //             },
+  //             {
+  //                 "type": "image_url",
+  //                 "image_url": {"url": `data:image/png;base64,{image_data}`},
+  //             },
+  //         ],
+  //     }
+  // ],
+  imageTransformFragment = (fragment: any) => {
+    // Filter out images above 1MB
+    if (
+      fragment?.type === "image" &&
+      fragment?.source?.type === "base64" &&
+      fragment?.source?.data.length > 1024 * 1024
+    ) {
+      return {
+        type: "text",
+        text: "Image too large to capture\n\n",
+      };
+    }
+
+    if (fragment?.type === "image" && fragment?.source?.type === "base64") {
+      return {
+        type: "image_url",
+        image_url: {
+          url: `data:${fragment.source.media_type};base64,${fragment.source.data}`,
+        },
+      };
+    }
+    return fragment;
+  };
+
+  imageTransformMessage = (message: any) => {
+    // Check for message.content being an array
+    if (Array.isArray(message?.content)) {
+      message.content = message.content.map(this.imageTransformFragment);
+    } else {
+      message.content = this.imageTransformFragment(message.content);
+    }
+
+    return message;
+  };
 
   async logCompletion(completion: any): Promise<void> {
     try {
@@ -81,10 +154,10 @@ class Log10Wrapper {
         ...lastChunk,
         system_fingerprint: "",
         object: "chat.completion",
-        created: 0
+        created: 0,
       };
 
-      finalResponse.choices[0].message = {content: buffer, role: "assistant"};
+      finalResponse.choices[0].message = { content: buffer, role: "assistant" };
       delete finalResponse.choices[0].delta;
 
       this.logCompletion({
@@ -121,29 +194,31 @@ class Log10Wrapper {
       for await (const chunk of response.body) {
         const decoded = new TextDecoder().decode(chunk.chunk?.bytes);
         const parsed = JSON.parse(decoded);
-        if (parsed.type === 'content_block_delta') {
-          buffer += parsed.delta?.text || '';
+        if (parsed.type === "content_block_delta") {
+          buffer += parsed.delta?.text || "";
         }
         yield chunk;
       }
 
       // Transform the request/response for logging
       const requestBody = JSON.parse(
-        typeof request.input.body === 'string' 
-          ? request.input.body 
+        typeof request.input.body === "string"
+          ? request.input.body
           : new TextDecoder().decode(
-              request.input.body instanceof Uint8Array 
-                ? request.input.body 
+              request.input.body instanceof Uint8Array
+                ? request.input.body
                 : new Uint8Array(request.input.body as ArrayBuffer)
             )
       );
-      
+
       const transformedRequest = {
         model: request.input.modelId,
-        messages: requestBody.messages || [{
-          role: "user",
-          content: requestBody.prompt
-        }],
+        messages: requestBody.messages || [
+          {
+            role: "user",
+            content: requestBody.prompt,
+          },
+        ],
         max_tokens: requestBody.max_tokens,
         temperature: requestBody.temperature,
       };
@@ -151,7 +226,7 @@ class Log10Wrapper {
       if (requestBody.system) {
         transformedRequest.messages.unshift({
           role: "system",
-          content: requestBody.system
+          content: requestBody.system,
         });
       }
 
@@ -160,21 +235,33 @@ class Log10Wrapper {
         object: "chat.completion",
         created: Date.now(),
         model: request.input.modelId,
-        choices: [{
-          message: {
-            role: "assistant",
-            content: buffer
+        choices: [
+          {
+            message: {
+              role: "assistant",
+              content: buffer,
+            },
+            logprobs: null,
+            index: 0,
+            finish_reason: "stop",
           },
-          logprobs: null,
-          index: 0,
-          finish_reason: "stop"
-        }],
+        ],
         usage: {
           prompt_tokens: -1,
           completion_tokens: -1,
-          total_tokens: -1
-        }
+          total_tokens: -1,
+        },
       };
+
+      // Post process the messages to transform images
+      transformedRequest.messages = transformedRequest.messages.map(
+        this.imageTransformMessage
+      );
+      if (transformedResponse?.choices[0]?.message) {
+        transformedResponse.choices[0].message = this.imageTransformMessage(
+          transformedResponse.choices[0].message
+        );
+      }
 
       this.logCompletion({
         request: transformedRequest,
@@ -187,10 +274,12 @@ class Log10Wrapper {
 
   wrapBedrock(client: any) {
     const originalSend = client.send;
-    
+
     client.send = async (command: any, ...args: any[]) => {
-      if (!(command instanceof InvokeModelCommand) && 
-          !(command instanceof InvokeModelWithResponseStreamCommand)) {
+      if (
+        !(command instanceof InvokeModelCommand) &&
+        !(command instanceof InvokeModelWithResponseStreamCommand)
+      ) {
         return originalSend.call(client, command, ...args);
       }
 
@@ -200,31 +289,31 @@ class Log10Wrapper {
       if (command instanceof InvokeModelWithResponseStreamCommand) {
         return {
           ...response,
-          body: this.wrappedBedrockResponse(response, command)
+          body: this.wrappedBedrockResponse(response, command),
         };
       }
 
       // Handle non-streaming response
       const requestBody = JSON.parse(
-        typeof command.input.body === 'string' 
-          ? command.input.body 
+        typeof command.input.body === "string"
+          ? command.input.body
           : new TextDecoder().decode(
-              command.input.body instanceof Uint8Array 
-                ? command.input.body 
+              command.input.body instanceof Uint8Array
+                ? command.input.body
                 : new Uint8Array(command.input.body as ArrayBuffer)
             )
       );
-      const responseBody = JSON.parse(
-        new TextDecoder().decode(response.body)
-      );
+      const responseBody = JSON.parse(new TextDecoder().decode(response.body));
 
       // Transform Bedrock format to OpenAI-like format for logging
       const transformedRequest = {
         model: command.input.modelId,
-        messages: requestBody.messages || [{
-          role: "user",
-          content: requestBody.prompt
-        }],
+        messages: requestBody.messages || [
+          {
+            role: "user",
+            content: requestBody.prompt,
+          },
+        ],
         max_tokens: requestBody.max_tokens,
         temperature: requestBody.temperature,
       };
@@ -232,7 +321,7 @@ class Log10Wrapper {
       if (requestBody.system) {
         transformedRequest.messages.unshift({
           role: "system",
-          content: requestBody.system
+          content: requestBody.system,
         });
       }
 
@@ -241,21 +330,33 @@ class Log10Wrapper {
         object: "chat.completion",
         created: Date.now(),
         model: command.input.modelId,
-        choices: [{
-          message: {
-            role: "assistant",
-            content: responseBody.content?.[0]?.text || responseBody.completion
+        choices: [
+          {
+            message: {
+              role: "assistant",
+              content:
+                responseBody.content?.[0]?.text || responseBody.completion,
+            },
+            logprobs: null,
+            index: 0,
+            finish_reason: "stop",
           },
-          logprobs: null,
-          index: 0,
-          finish_reason: "stop"
-        }],
+        ],
         usage: {
           prompt_tokens: -1,
           completion_tokens: -1,
-          total_tokens: -1
-        }
+          total_tokens: -1,
+        },
       };
+
+      transformedRequest.messages = transformedRequest.messages.map(
+        this.imageTransformMessage
+      );
+      if (transformedResponse?.choices[0]?.message) {
+        transformedResponse.choices[0].message = this.imageTransformMessage(
+          transformedResponse.choices[0].message
+        );
+      }
 
       this.logCompletion({
         request: transformedRequest,
