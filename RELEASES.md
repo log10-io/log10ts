@@ -1,3 +1,7 @@
+## 2024-12-16
+### Changes
+- Add bedrock dependencies for speakeasy build
+
 ## 2024-12-13
 ### Changes
 - Bedrock image support
