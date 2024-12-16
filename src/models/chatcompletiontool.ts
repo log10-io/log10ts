@@ -3,12 +3,15 @@
  */
 
 import * as z from "zod";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   FunctionObject,
   FunctionObject$inboundSchema,
   FunctionObject$Outbound,
   FunctionObject$outboundSchema,
 } from "./functionobject.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 /**
  * The type of the tool. Currently, only `function` is supported.
@@ -83,4 +86,22 @@ export namespace ChatCompletionTool$ {
   export const outboundSchema = ChatCompletionTool$outboundSchema;
   /** @deprecated use `ChatCompletionTool$Outbound` instead. */
   export type Outbound = ChatCompletionTool$Outbound;
+}
+
+export function chatCompletionToolToJSON(
+  chatCompletionTool: ChatCompletionTool,
+): string {
+  return JSON.stringify(
+    ChatCompletionTool$outboundSchema.parse(chatCompletionTool),
+  );
+}
+
+export function chatCompletionToolFromJSON(
+  jsonString: string,
+): SafeParseResult<ChatCompletionTool, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ChatCompletionTool$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChatCompletionTool' from JSON`,
+  );
 }

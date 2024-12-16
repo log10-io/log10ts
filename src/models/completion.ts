@@ -4,6 +4,8 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   CreateChatCompletionRequest,
   CreateChatCompletionRequest$inboundSchema,
@@ -16,6 +18,7 @@ import {
   CreateChatCompletionResponse$Outbound,
   CreateChatCompletionResponse$outboundSchema,
 } from "./createchatcompletionresponse.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 /**
  * The kind of completion i.e. chat messages or prompt
@@ -185,6 +188,20 @@ export namespace Stacktrace$ {
   export type Outbound = Stacktrace$Outbound;
 }
 
+export function stacktraceToJSON(stacktrace: Stacktrace): string {
+  return JSON.stringify(Stacktrace$outboundSchema.parse(stacktrace));
+}
+
+export function stacktraceFromJSON(
+  jsonString: string,
+): SafeParseResult<Stacktrace, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Stacktrace$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Stacktrace' from JSON`,
+  );
+}
+
 /** @internal */
 export const Completion$inboundSchema: z.ZodType<
   Completion,
@@ -266,4 +283,18 @@ export namespace Completion$ {
   export const outboundSchema = Completion$outboundSchema;
   /** @deprecated use `Completion$Outbound` instead. */
   export type Outbound = Completion$Outbound;
+}
+
+export function completionToJSON(completion: Completion): string {
+  return JSON.stringify(Completion$outboundSchema.parse(completion));
+}
+
+export function completionFromJSON(
+  jsonString: string,
+): SafeParseResult<Completion, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Completion$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Completion' from JSON`,
+  );
 }

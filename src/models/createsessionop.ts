@@ -4,12 +4,15 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   HTTPMetadata,
   HTTPMetadata$inboundSchema,
   HTTPMetadata$Outbound,
   HTTPMetadata$outboundSchema,
 } from "./httpmetadata.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 import {
   Session,
   Session$inboundSchema,
@@ -84,6 +87,24 @@ export namespace CreateSessionGlobals$ {
   export type Outbound = CreateSessionGlobals$Outbound;
 }
 
+export function createSessionGlobalsToJSON(
+  createSessionGlobals: CreateSessionGlobals,
+): string {
+  return JSON.stringify(
+    CreateSessionGlobals$outboundSchema.parse(createSessionGlobals),
+  );
+}
+
+export function createSessionGlobalsFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateSessionGlobals, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateSessionGlobals$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateSessionGlobals' from JSON`,
+  );
+}
+
 /** @internal */
 export const CreateSessionRequest$inboundSchema: z.ZodType<
   CreateSessionRequest,
@@ -128,6 +149,24 @@ export namespace CreateSessionRequest$ {
   export type Outbound = CreateSessionRequest$Outbound;
 }
 
+export function createSessionRequestToJSON(
+  createSessionRequest: CreateSessionRequest,
+): string {
+  return JSON.stringify(
+    CreateSessionRequest$outboundSchema.parse(createSessionRequest),
+  );
+}
+
+export function createSessionRequestFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateSessionRequest, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateSessionRequest$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateSessionRequest' from JSON`,
+  );
+}
+
 /** @internal */
 export const CreateSessionResponseBody$inboundSchema: z.ZodType<
   CreateSessionResponseBody,
@@ -162,6 +201,24 @@ export namespace CreateSessionResponseBody$ {
   export const outboundSchema = CreateSessionResponseBody$outboundSchema;
   /** @deprecated use `CreateSessionResponseBody$Outbound` instead. */
   export type Outbound = CreateSessionResponseBody$Outbound;
+}
+
+export function createSessionResponseBodyToJSON(
+  createSessionResponseBody: CreateSessionResponseBody,
+): string {
+  return JSON.stringify(
+    CreateSessionResponseBody$outboundSchema.parse(createSessionResponseBody),
+  );
+}
+
+export function createSessionResponseBodyFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateSessionResponseBody, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateSessionResponseBody$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateSessionResponseBody' from JSON`,
+  );
 }
 
 /** @internal */
@@ -209,4 +266,22 @@ export namespace CreateSessionResponse$ {
   export const outboundSchema = CreateSessionResponse$outboundSchema;
   /** @deprecated use `CreateSessionResponse$Outbound` instead. */
   export type Outbound = CreateSessionResponse$Outbound;
+}
+
+export function createSessionResponseToJSON(
+  createSessionResponse: CreateSessionResponse,
+): string {
+  return JSON.stringify(
+    CreateSessionResponse$outboundSchema.parse(createSessionResponse),
+  );
+}
+
+export function createSessionResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateSessionResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateSessionResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateSessionResponse' from JSON`,
+  );
 }

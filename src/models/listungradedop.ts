@@ -4,6 +4,8 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   Completion,
   Completion$inboundSchema,
@@ -16,6 +18,7 @@ import {
   HTTPMetadata$Outbound,
   HTTPMetadata$outboundSchema,
 } from "./httpmetadata.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 export type ListUngradedGlobals = {
   xLog10Organization?: string | undefined;
@@ -84,6 +87,24 @@ export namespace ListUngradedGlobals$ {
   export type Outbound = ListUngradedGlobals$Outbound;
 }
 
+export function listUngradedGlobalsToJSON(
+  listUngradedGlobals: ListUngradedGlobals,
+): string {
+  return JSON.stringify(
+    ListUngradedGlobals$outboundSchema.parse(listUngradedGlobals),
+  );
+}
+
+export function listUngradedGlobalsFromJSON(
+  jsonString: string,
+): SafeParseResult<ListUngradedGlobals, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListUngradedGlobals$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListUngradedGlobals' from JSON`,
+  );
+}
+
 /** @internal */
 export const ListUngradedRequest$inboundSchema: z.ZodType<
   ListUngradedRequest,
@@ -128,6 +149,24 @@ export namespace ListUngradedRequest$ {
   export type Outbound = ListUngradedRequest$Outbound;
 }
 
+export function listUngradedRequestToJSON(
+  listUngradedRequest: ListUngradedRequest,
+): string {
+  return JSON.stringify(
+    ListUngradedRequest$outboundSchema.parse(listUngradedRequest),
+  );
+}
+
+export function listUngradedRequestFromJSON(
+  jsonString: string,
+): SafeParseResult<ListUngradedRequest, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListUngradedRequest$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListUngradedRequest' from JSON`,
+  );
+}
+
 /** @internal */
 export const ListUngradedResponseBody$inboundSchema: z.ZodType<
   ListUngradedResponseBody,
@@ -162,6 +201,24 @@ export namespace ListUngradedResponseBody$ {
   export const outboundSchema = ListUngradedResponseBody$outboundSchema;
   /** @deprecated use `ListUngradedResponseBody$Outbound` instead. */
   export type Outbound = ListUngradedResponseBody$Outbound;
+}
+
+export function listUngradedResponseBodyToJSON(
+  listUngradedResponseBody: ListUngradedResponseBody,
+): string {
+  return JSON.stringify(
+    ListUngradedResponseBody$outboundSchema.parse(listUngradedResponseBody),
+  );
+}
+
+export function listUngradedResponseBodyFromJSON(
+  jsonString: string,
+): SafeParseResult<ListUngradedResponseBody, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListUngradedResponseBody$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListUngradedResponseBody' from JSON`,
+  );
 }
 
 /** @internal */
@@ -209,4 +266,22 @@ export namespace ListUngradedResponse$ {
   export const outboundSchema = ListUngradedResponse$outboundSchema;
   /** @deprecated use `ListUngradedResponse$Outbound` instead. */
   export type Outbound = ListUngradedResponse$Outbound;
+}
+
+export function listUngradedResponseToJSON(
+  listUngradedResponse: ListUngradedResponse,
+): string {
+  return JSON.stringify(
+    ListUngradedResponse$outboundSchema.parse(listUngradedResponse),
+  );
+}
+
+export function listUngradedResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ListUngradedResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListUngradedResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListUngradedResponse' from JSON`,
+  );
 }

@@ -3,12 +3,15 @@
  */
 
 import * as z from "zod";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   ChatCompletionNamedToolChoice,
   ChatCompletionNamedToolChoice$inboundSchema,
   ChatCompletionNamedToolChoice$Outbound,
   ChatCompletionNamedToolChoice$outboundSchema,
 } from "./chatcompletionnamedtoolchoice.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 /**
  * `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `required` means the model must call one or more tools.
@@ -93,4 +96,24 @@ export namespace ChatCompletionToolChoiceOption$ {
   export const outboundSchema = ChatCompletionToolChoiceOption$outboundSchema;
   /** @deprecated use `ChatCompletionToolChoiceOption$Outbound` instead. */
   export type Outbound = ChatCompletionToolChoiceOption$Outbound;
+}
+
+export function chatCompletionToolChoiceOptionToJSON(
+  chatCompletionToolChoiceOption: ChatCompletionToolChoiceOption,
+): string {
+  return JSON.stringify(
+    ChatCompletionToolChoiceOption$outboundSchema.parse(
+      chatCompletionToolChoiceOption,
+    ),
+  );
+}
+
+export function chatCompletionToolChoiceOptionFromJSON(
+  jsonString: string,
+): SafeParseResult<ChatCompletionToolChoiceOption, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ChatCompletionToolChoiceOption$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChatCompletionToolChoiceOption' from JSON`,
+  );
 }

@@ -13,19 +13,20 @@ generation:
     oAuth2ClientCredentialsEnabled: false
     oAuth2PasswordEnabled: false
 typescript:
-  version: 0.4.0
+  version: 0.4.1
   additionalDependencies:
     dependencies:
+      '@aws-sdk/client-bedrock-runtime': ^3.709.0
+      '@aws-sdk/credential-providers': ^3.687.0
       axios: ^1.7.7
       openai: ^4.69.0
-      "@aws-sdk/client-bedrock-runtime": "^3.709.0"
-      "@aws-sdk/credential-providers": "^3.687.0"
     devDependencies: {}
     peerDependencies: {}
   additionalPackageJSON: {}
   author: Speakeasy
   clientServerStatusCodesAsErrors: true
   defaultErrorName: SDKError
+  enableReactQuery: false
   enumFormat: enum
   flattenGlobalSecurity: true
   flatteningOrder: body-first

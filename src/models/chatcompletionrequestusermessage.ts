@@ -3,6 +3,8 @@
  */
 
 import * as z from "zod";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   ChatCompletionRequestMessageContentPart,
   ChatCompletionRequestMessageContentPart$inboundSchema,
@@ -14,6 +16,7 @@ import {
   ChatCompletionRole$inboundSchema,
   ChatCompletionRole$outboundSchema,
 } from "./chatcompletionrole.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 /**
  * The contents of the user message.
@@ -74,6 +77,20 @@ export namespace Content$ {
   export type Outbound = Content$Outbound;
 }
 
+export function contentToJSON(content: Content): string {
+  return JSON.stringify(Content$outboundSchema.parse(content));
+}
+
+export function contentFromJSON(
+  jsonString: string,
+): SafeParseResult<Content, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Content$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Content' from JSON`,
+  );
+}
+
 /** @internal */
 export const ChatCompletionRequestUserMessage$inboundSchema: z.ZodType<
   ChatCompletionRequestUserMessage,
@@ -120,4 +137,24 @@ export namespace ChatCompletionRequestUserMessage$ {
   export const outboundSchema = ChatCompletionRequestUserMessage$outboundSchema;
   /** @deprecated use `ChatCompletionRequestUserMessage$Outbound` instead. */
   export type Outbound = ChatCompletionRequestUserMessage$Outbound;
+}
+
+export function chatCompletionRequestUserMessageToJSON(
+  chatCompletionRequestUserMessage: ChatCompletionRequestUserMessage,
+): string {
+  return JSON.stringify(
+    ChatCompletionRequestUserMessage$outboundSchema.parse(
+      chatCompletionRequestUserMessage,
+    ),
+  );
+}
+
+export function chatCompletionRequestUserMessageFromJSON(
+  jsonString: string,
+): SafeParseResult<ChatCompletionRequestUserMessage, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ChatCompletionRequestUserMessage$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChatCompletionRequestUserMessage' from JSON`,
+  );
 }

@@ -15,5 +15,5 @@ targets:
                 token: $npm_token
         codeSamples:
             registry:
-                location: registry.speakeasyapi.dev/log10/log10/default-code-samples
+                location: registry.speakeasyapi.dev/log10/log10/default-typescript-code-samples
             blocking: false

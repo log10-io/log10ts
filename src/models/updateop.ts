@@ -4,6 +4,8 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   Completion,
   Completion$inboundSchema,
@@ -16,6 +18,7 @@ import {
   HTTPMetadata$Outbound,
   HTTPMetadata$outboundSchema,
 } from "./httpmetadata.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 export type UpdateGlobals = {
   xLog10Organization?: string | undefined;
@@ -82,6 +85,20 @@ export namespace UpdateGlobals$ {
   export type Outbound = UpdateGlobals$Outbound;
 }
 
+export function updateGlobalsToJSON(updateGlobals: UpdateGlobals): string {
+  return JSON.stringify(UpdateGlobals$outboundSchema.parse(updateGlobals));
+}
+
+export function updateGlobalsFromJSON(
+  jsonString: string,
+): SafeParseResult<UpdateGlobals, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => UpdateGlobals$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'UpdateGlobals' from JSON`,
+  );
+}
+
 /** @internal */
 export const UpdateRequest$inboundSchema: z.ZodType<
   UpdateRequest,
@@ -134,6 +151,20 @@ export namespace UpdateRequest$ {
   export type Outbound = UpdateRequest$Outbound;
 }
 
+export function updateRequestToJSON(updateRequest: UpdateRequest): string {
+  return JSON.stringify(UpdateRequest$outboundSchema.parse(updateRequest));
+}
+
+export function updateRequestFromJSON(
+  jsonString: string,
+): SafeParseResult<UpdateRequest, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => UpdateRequest$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'UpdateRequest' from JSON`,
+  );
+}
+
 /** @internal */
 export const UpdateResponse$inboundSchema: z.ZodType<
   UpdateResponse,
@@ -181,4 +212,18 @@ export namespace UpdateResponse$ {
   export const outboundSchema = UpdateResponse$outboundSchema;
   /** @deprecated use `UpdateResponse$Outbound` instead. */
   export type Outbound = UpdateResponse$Outbound;
+}
+
+export function updateResponseToJSON(updateResponse: UpdateResponse): string {
+  return JSON.stringify(UpdateResponse$outboundSchema.parse(updateResponse));
+}
+
+export function updateResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<UpdateResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => UpdateResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'UpdateResponse' from JSON`,
+  );
 }
