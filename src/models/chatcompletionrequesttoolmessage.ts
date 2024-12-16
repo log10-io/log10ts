@@ -4,11 +4,14 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   ChatCompletionRole,
   ChatCompletionRole$inboundSchema,
   ChatCompletionRole$outboundSchema,
 } from "./chatcompletionrole.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 export type ChatCompletionRequestToolMessage = {
   /**
@@ -73,4 +76,24 @@ export namespace ChatCompletionRequestToolMessage$ {
   export const outboundSchema = ChatCompletionRequestToolMessage$outboundSchema;
   /** @deprecated use `ChatCompletionRequestToolMessage$Outbound` instead. */
   export type Outbound = ChatCompletionRequestToolMessage$Outbound;
+}
+
+export function chatCompletionRequestToolMessageToJSON(
+  chatCompletionRequestToolMessage: ChatCompletionRequestToolMessage,
+): string {
+  return JSON.stringify(
+    ChatCompletionRequestToolMessage$outboundSchema.parse(
+      chatCompletionRequestToolMessage,
+    ),
+  );
+}
+
+export function chatCompletionRequestToolMessageFromJSON(
+  jsonString: string,
+): SafeParseResult<ChatCompletionRequestToolMessage, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ChatCompletionRequestToolMessage$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChatCompletionRequestToolMessage' from JSON`,
+  );
 }

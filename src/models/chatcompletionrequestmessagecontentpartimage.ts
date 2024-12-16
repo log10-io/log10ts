@@ -4,6 +4,9 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 /**
  * The type of the content part.
@@ -121,6 +124,20 @@ export namespace ImageUrl$ {
   export type Outbound = ImageUrl$Outbound;
 }
 
+export function imageUrlToJSON(imageUrl: ImageUrl): string {
+  return JSON.stringify(ImageUrl$outboundSchema.parse(imageUrl));
+}
+
+export function imageUrlFromJSON(
+  jsonString: string,
+): SafeParseResult<ImageUrl, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ImageUrl$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ImageUrl' from JSON`,
+  );
+}
+
 /** @internal */
 export const ChatCompletionRequestMessageContentPartImage$inboundSchema:
   z.ZodType<
@@ -170,4 +187,31 @@ export namespace ChatCompletionRequestMessageContentPartImage$ {
     ChatCompletionRequestMessageContentPartImage$outboundSchema;
   /** @deprecated use `ChatCompletionRequestMessageContentPartImage$Outbound` instead. */
   export type Outbound = ChatCompletionRequestMessageContentPartImage$Outbound;
+}
+
+export function chatCompletionRequestMessageContentPartImageToJSON(
+  chatCompletionRequestMessageContentPartImage:
+    ChatCompletionRequestMessageContentPartImage,
+): string {
+  return JSON.stringify(
+    ChatCompletionRequestMessageContentPartImage$outboundSchema.parse(
+      chatCompletionRequestMessageContentPartImage,
+    ),
+  );
+}
+
+export function chatCompletionRequestMessageContentPartImageFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ChatCompletionRequestMessageContentPartImage,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ChatCompletionRequestMessageContentPartImage$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ChatCompletionRequestMessageContentPartImage' from JSON`,
+  );
 }

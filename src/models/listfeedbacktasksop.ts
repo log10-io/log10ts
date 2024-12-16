@@ -4,12 +4,15 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   HTTPMetadata,
   HTTPMetadata$inboundSchema,
   HTTPMetadata$Outbound,
   HTTPMetadata$outboundSchema,
 } from "./httpmetadata.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 import {
   Task,
   Task$inboundSchema,
@@ -72,4 +75,22 @@ export namespace ListFeedbackTasksResponse$ {
   export const outboundSchema = ListFeedbackTasksResponse$outboundSchema;
   /** @deprecated use `ListFeedbackTasksResponse$Outbound` instead. */
   export type Outbound = ListFeedbackTasksResponse$Outbound;
+}
+
+export function listFeedbackTasksResponseToJSON(
+  listFeedbackTasksResponse: ListFeedbackTasksResponse,
+): string {
+  return JSON.stringify(
+    ListFeedbackTasksResponse$outboundSchema.parse(listFeedbackTasksResponse),
+  );
+}
+
+export function listFeedbackTasksResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ListFeedbackTasksResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListFeedbackTasksResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListFeedbackTasksResponse' from JSON`,
+  );
 }

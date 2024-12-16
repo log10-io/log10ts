@@ -4,6 +4,8 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   Completion,
   Completion$inboundSchema,
@@ -16,6 +18,7 @@ import {
   HTTPMetadata$Outbound,
   HTTPMetadata$outboundSchema,
 } from "./httpmetadata.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 export type CreateGlobals = {
   xLog10Organization?: string | undefined;
@@ -82,6 +85,20 @@ export namespace CreateGlobals$ {
   export type Outbound = CreateGlobals$Outbound;
 }
 
+export function createGlobalsToJSON(createGlobals: CreateGlobals): string {
+  return JSON.stringify(CreateGlobals$outboundSchema.parse(createGlobals));
+}
+
+export function createGlobalsFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateGlobals, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateGlobals$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateGlobals' from JSON`,
+  );
+}
+
 /** @internal */
 export const CreateRequest$inboundSchema: z.ZodType<
   CreateRequest,
@@ -129,6 +146,20 @@ export namespace CreateRequest$ {
   export const outboundSchema = CreateRequest$outboundSchema;
   /** @deprecated use `CreateRequest$Outbound` instead. */
   export type Outbound = CreateRequest$Outbound;
+}
+
+export function createRequestToJSON(createRequest: CreateRequest): string {
+  return JSON.stringify(CreateRequest$outboundSchema.parse(createRequest));
+}
+
+export function createRequestFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateRequest, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateRequest$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateRequest' from JSON`,
+  );
 }
 
 /** @internal */
@@ -181,4 +212,18 @@ export namespace CreateResponse$ {
   export const outboundSchema = CreateResponse$outboundSchema;
   /** @deprecated use `CreateResponse$Outbound` instead. */
   export type Outbound = CreateResponse$Outbound;
+}
+
+export function createResponseToJSON(createResponse: CreateResponse): string {
+  return JSON.stringify(CreateResponse$outboundSchema.parse(createResponse));
+}
+
+export function createResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateResponse' from JSON`,
+  );
 }

@@ -4,6 +4,9 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 export type Feedback = {
   /**
@@ -110,4 +113,18 @@ export namespace Feedback$ {
   export const outboundSchema = Feedback$outboundSchema;
   /** @deprecated use `Feedback$Outbound` instead. */
   export type Outbound = Feedback$Outbound;
+}
+
+export function feedbackToJSON(feedback: Feedback): string {
+  return JSON.stringify(Feedback$outboundSchema.parse(feedback));
+}
+
+export function feedbackFromJSON(
+  jsonString: string,
+): SafeParseResult<Feedback, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Feedback$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Feedback' from JSON`,
+  );
 }

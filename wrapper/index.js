@@ -17,6 +17,72 @@ function isStreamable(obj) {
 class Log10Wrapper {
     constructor(options = {}, tags) {
         this.tags = [];
+        // Image types need to be transformed
+        //
+        // Bedrock looks like this:
+        // messages: [
+        // {
+        //   role: "user",
+        //   content: [
+        //     {
+        //       type: "image",
+        //       source: {
+        //         type: "base64",
+        //         media_type: "image/png",
+        //         data: image_data
+        //       }
+        //     }
+        //   ]
+        // }
+        // ]
+        //
+        // OpenAI looks like this:
+        //   messages: [
+        //     {
+        //         "role": "user",
+        //         "content": [
+        //             {
+        //                 "type": "text",
+        //                 "text": "What are in these image?",
+        //             },
+        //             {
+        //                 "type": "image_url",
+        //                 "image_url": {"url": `data:image/png;base64,{image_data}`},
+        //             },
+        //         ],
+        //     }
+        // ],
+        this.imageTransformFragment = (fragment) => {
+            var _a, _b, _c;
+            // Filter out images above 1MB
+            if ((fragment === null || fragment === void 0 ? void 0 : fragment.type) === "image" &&
+                ((_a = fragment === null || fragment === void 0 ? void 0 : fragment.source) === null || _a === void 0 ? void 0 : _a.type) === "base64" &&
+                ((_b = fragment === null || fragment === void 0 ? void 0 : fragment.source) === null || _b === void 0 ? void 0 : _b.data.length) > 1024 * 1024) {
+                return {
+                    type: "text",
+                    text: "Image too large to capture\n\n",
+                };
+            }
+            if ((fragment === null || fragment === void 0 ? void 0 : fragment.type) === "image" && ((_c = fragment === null || fragment === void 0 ? void 0 : fragment.source) === null || _c === void 0 ? void 0 : _c.type) === "base64") {
+                return {
+                    type: "image_url",
+                    image_url: {
+                        url: `data:${fragment.source.media_type};base64,${fragment.source.data}`,
+                    },
+                };
+            }
+            return fragment;
+        };
+        this.imageTransformMessage = (message) => {
+            // Check for message.content being an array
+            if (Array.isArray(message === null || message === void 0 ? void 0 : message.content)) {
+                message.content = message.content.map(this.imageTransformFragment);
+            }
+            else {
+                message.content = this.imageTransformFragment(message.content);
+            }
+            return message;
+        };
         const opt = options;
         let hooks;
         if (typeof opt === "object" &&
@@ -33,23 +99,6 @@ class Log10Wrapper {
         void this.options$;
     }
     async logCompletion(completion) {
-        var _a, _b;
-        // Filter large images in the request
-        if ((_b = (_a = completion === null || completion === void 0 ? void 0 : completion.request) === null || _a === void 0 ? void 0 : _a.messages) === null || _b === void 0 ? void 0 : _b.length) {
-            completion.request.messages = completion.request.messages.map((message) => {
-                // type: image, source: {type: base64, data: ...}
-                if (message.content &&
-                    message.content.type === "image" &&
-                    message.content.source.type === "base64") {
-                    // If the image is larger than 1MB, filter it out
-                    if (message.content.source.data.length > 1e6) {
-                        message.content = "[Image]";
-                    }
-                    return message;
-                }
-                return message;
-            });
-        }
         try {
             return axios_1.default.post(`${this.options$.serverURL}/api/v1/completions`, {
                 ...completion,
@@ -113,7 +162,7 @@ class Log10Wrapper {
         };
     }
     async *wrappedBedrockResponse(response, request) {
-        var _a, _b;
+        var _a, _b, _c;
         try {
             let buffer = "";
             for await (const chunk of response.body) {
@@ -169,80 +218,11 @@ class Log10Wrapper {
                     total_tokens: -1,
                 },
             };
-            console.log("##### SOL #####");
-            // Image types need to be transformed
-            // Bedrock looks like this:
-            // messages: [
-            // {
-            //   role: "user",
-            //   content: [
-            //     {
-            //       type: "image",
-            //       source: {
-            //         type: "base64",
-            //         media_type: "image/png",
-            //         data: image_data
-            //       }
-            //     }
-            //   ]
-            // }
-            // ]
-            // OpenAI looks like this:
-            //   messages: [
-            //     {
-            //         "role": "user",
-            //         "content": [
-            //             {
-            //                 "type": "text",
-            //                 "text": "What are in these image?",
-            //             },
-            //             {
-            //                 "type": "image_url",
-            //                 "image_url": {"url": `data:image/png;base64,{image_data}`},
-            //             },
-            //         ],
-            //     }
-            // ],
-            const imageTransform = (message) => {
-                console.log("##### message.content:", message.content);
-                if (message.content &&
-                    message.content.type === "image" &&
-                    message.content.source.type === "base64") {
-                    console.log("##### message.content.source.data.length:", message.content.source.data.length);
-                    // If the image is larger than 1MB, filter it out
-                    if (message.content.source.data.length > 1e6) {
-                        message.content = "[Image]";
-                    }
-                    else {
-                        // Tramsform the image to OpenAI-like format
-                        message.content = [
-                            {
-                                type: "text",
-                                text: message.content.text,
-                            },
-                            {
-                                type: "image_url",
-                                image_url: {
-                                    url: `data:${message.content.source.media_type};base64,${message.content.source.data}`,
-                                },
-                            },
-                        ];
-                    }
-                }
-                return message;
-            };
-            transformedRequest.messages = transformedRequest.messages.map((message) => {
-                if (Array.isArray(message.content)) {
-                    return {
-                        ...message,
-                        content: message.content.map(imageTransform),
-                    };
-                }
-                else {
-                    return imageTransform(message);
-                }
-            });
-            // TODO: Transform the response as well
+            // Post process the messages to transform images
+            transformedRequest.messages = transformedRequest.messages.map(this.imageTransformMessage);
+            if ((_c = transformedResponse === null || transformedResponse === void 0 ? void 0 : transformedResponse.choices[0]) === null || _c === void 0 ? void 0 : _c.message) {
+                transformedResponse.choices[0].message = this.imageTransformMessage(transformedResponse.choices[0].message);
+            }
             this.logCompletion({
                 request: transformedRequest,
                 response: transformedResponse,
@@ -255,7 +235,7 @@ class Log10Wrapper {
     wrapBedrock(client) {
         const originalSend = client.send;
         client.send = async (command, ...args) => {
-            var _a, _b;
+            var _a, _b, _c;
             if (!(command instanceof client_bedrock_runtime_1.InvokeModelCommand) &&
                 !(command instanceof client_bedrock_runtime_1.InvokeModelWithResponseStreamCommand)) {
                 return originalSend.call(client, command, ...args);
@@ -315,6 +295,10 @@ class Log10Wrapper {
                     total_tokens: -1,
                 },
             };
+            transformedRequest.messages = transformedRequest.messages.map(this.imageTransformMessage);
+            if ((_c = transformedResponse === null || transformedResponse === void 0 ? void 0 : transformedResponse.choices[0]) === null || _c === void 0 ? void 0 : _c.message) {
+                transformedResponse.choices[0].message = this.imageTransformMessage(transformedResponse.choices[0].message);
+            }
             this.logCompletion({
                 request: transformedRequest,
                 response: transformedResponse,

@@ -3,11 +3,14 @@
  */
 
 import * as z from "zod";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   ChatCompletionRole,
   ChatCompletionRole$inboundSchema,
   ChatCompletionRole$outboundSchema,
 } from "./chatcompletionrole.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 export type ChatCompletionRequestSystemMessage = {
   /**
@@ -65,4 +68,25 @@ export namespace ChatCompletionRequestSystemMessage$ {
     ChatCompletionRequestSystemMessage$outboundSchema;
   /** @deprecated use `ChatCompletionRequestSystemMessage$Outbound` instead. */
   export type Outbound = ChatCompletionRequestSystemMessage$Outbound;
+}
+
+export function chatCompletionRequestSystemMessageToJSON(
+  chatCompletionRequestSystemMessage: ChatCompletionRequestSystemMessage,
+): string {
+  return JSON.stringify(
+    ChatCompletionRequestSystemMessage$outboundSchema.parse(
+      chatCompletionRequestSystemMessage,
+    ),
+  );
+}
+
+export function chatCompletionRequestSystemMessageFromJSON(
+  jsonString: string,
+): SafeParseResult<ChatCompletionRequestSystemMessage, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ChatCompletionRequestSystemMessage$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChatCompletionRequestSystemMessage' from JSON`,
+  );
 }

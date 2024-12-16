@@ -4,6 +4,9 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 export type TopLogprobs = {
   /**
@@ -81,6 +84,20 @@ export namespace TopLogprobs$ {
   export type Outbound = TopLogprobs$Outbound;
 }
 
+export function topLogprobsToJSON(topLogprobs: TopLogprobs): string {
+  return JSON.stringify(TopLogprobs$outboundSchema.parse(topLogprobs));
+}
+
+export function topLogprobsFromJSON(
+  jsonString: string,
+): SafeParseResult<TopLogprobs, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => TopLogprobs$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TopLogprobs' from JSON`,
+  );
+}
+
 /** @internal */
 export const ChatCompletionTokenLogprob$inboundSchema: z.ZodType<
   ChatCompletionTokenLogprob,
@@ -132,4 +149,22 @@ export namespace ChatCompletionTokenLogprob$ {
   export const outboundSchema = ChatCompletionTokenLogprob$outboundSchema;
   /** @deprecated use `ChatCompletionTokenLogprob$Outbound` instead. */
   export type Outbound = ChatCompletionTokenLogprob$Outbound;
+}
+
+export function chatCompletionTokenLogprobToJSON(
+  chatCompletionTokenLogprob: ChatCompletionTokenLogprob,
+): string {
+  return JSON.stringify(
+    ChatCompletionTokenLogprob$outboundSchema.parse(chatCompletionTokenLogprob),
+  );
+}
+
+export function chatCompletionTokenLogprobFromJSON(
+  jsonString: string,
+): SafeParseResult<ChatCompletionTokenLogprob, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ChatCompletionTokenLogprob$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChatCompletionTokenLogprob' from JSON`,
+  );
 }

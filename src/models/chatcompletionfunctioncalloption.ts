@@ -3,6 +3,9 @@
  */
 
 import * as z from "zod";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 /**
  * Specifying a particular function via `{"name": "my_function"}` forces the model to call that function.
@@ -50,4 +53,24 @@ export namespace ChatCompletionFunctionCallOption$ {
   export const outboundSchema = ChatCompletionFunctionCallOption$outboundSchema;
   /** @deprecated use `ChatCompletionFunctionCallOption$Outbound` instead. */
   export type Outbound = ChatCompletionFunctionCallOption$Outbound;
+}
+
+export function chatCompletionFunctionCallOptionToJSON(
+  chatCompletionFunctionCallOption: ChatCompletionFunctionCallOption,
+): string {
+  return JSON.stringify(
+    ChatCompletionFunctionCallOption$outboundSchema.parse(
+      chatCompletionFunctionCallOption,
+    ),
+  );
+}
+
+export function chatCompletionFunctionCallOptionFromJSON(
+  jsonString: string,
+): SafeParseResult<ChatCompletionFunctionCallOption, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ChatCompletionFunctionCallOption$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChatCompletionFunctionCallOption' from JSON`,
+  );
 }

@@ -4,6 +4,9 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 /**
  * Options for streaming response. Only set this when you set `stream: true`.
@@ -61,4 +64,24 @@ export namespace ChatCompletionStreamOptions$ {
   export const outboundSchema = ChatCompletionStreamOptions$outboundSchema;
   /** @deprecated use `ChatCompletionStreamOptions$Outbound` instead. */
   export type Outbound = ChatCompletionStreamOptions$Outbound;
+}
+
+export function chatCompletionStreamOptionsToJSON(
+  chatCompletionStreamOptions: ChatCompletionStreamOptions,
+): string {
+  return JSON.stringify(
+    ChatCompletionStreamOptions$outboundSchema.parse(
+      chatCompletionStreamOptions,
+    ),
+  );
+}
+
+export function chatCompletionStreamOptionsFromJSON(
+  jsonString: string,
+): SafeParseResult<ChatCompletionStreamOptions, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ChatCompletionStreamOptions$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChatCompletionStreamOptions' from JSON`,
+  );
 }

@@ -4,6 +4,8 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   Feedback,
   Feedback$inboundSchema,
@@ -16,6 +18,7 @@ import {
   HTTPMetadata$Outbound,
   HTTPMetadata$outboundSchema,
 } from "./httpmetadata.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 export type UploadGlobals = {
   xLog10Organization?: string | undefined;
@@ -160,6 +163,20 @@ export namespace UploadGlobals$ {
   export type Outbound = UploadGlobals$Outbound;
 }
 
+export function uploadGlobalsToJSON(uploadGlobals: UploadGlobals): string {
+  return JSON.stringify(UploadGlobals$outboundSchema.parse(uploadGlobals));
+}
+
+export function uploadGlobalsFromJSON(
+  jsonString: string,
+): SafeParseResult<UploadGlobals, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => UploadGlobals$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'UploadGlobals' from JSON`,
+  );
+}
+
 /** @internal */
 export const Two$inboundSchema: z.ZodType<Two, z.ZodTypeDef, unknown> = z
   .object({
@@ -232,6 +249,20 @@ export namespace Two$ {
   export const outboundSchema = Two$outboundSchema;
   /** @deprecated use `Two$Outbound` instead. */
   export type Outbound = Two$Outbound;
+}
+
+export function twoToJSON(two: Two): string {
+  return JSON.stringify(Two$outboundSchema.parse(two));
+}
+
+export function twoFromJSON(
+  jsonString: string,
+): SafeParseResult<Two, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Two$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Two' from JSON`,
+  );
 }
 
 /** @internal */
@@ -324,6 +355,20 @@ export namespace RequestBody1$ {
   export type Outbound = RequestBody1$Outbound;
 }
 
+export function requestBody1ToJSON(requestBody1: RequestBody1): string {
+  return JSON.stringify(RequestBody1$outboundSchema.parse(requestBody1));
+}
+
+export function requestBody1FromJSON(
+  jsonString: string,
+): SafeParseResult<RequestBody1, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => RequestBody1$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'RequestBody1' from JSON`,
+  );
+}
+
 /** @internal */
 export const UploadRequestBody$inboundSchema: z.ZodType<
   UploadRequestBody,
@@ -358,6 +403,24 @@ export namespace UploadRequestBody$ {
   export const outboundSchema = UploadRequestBody$outboundSchema;
   /** @deprecated use `UploadRequestBody$Outbound` instead. */
   export type Outbound = UploadRequestBody$Outbound;
+}
+
+export function uploadRequestBodyToJSON(
+  uploadRequestBody: UploadRequestBody,
+): string {
+  return JSON.stringify(
+    UploadRequestBody$outboundSchema.parse(uploadRequestBody),
+  );
+}
+
+export function uploadRequestBodyFromJSON(
+  jsonString: string,
+): SafeParseResult<UploadRequestBody, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => UploadRequestBody$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'UploadRequestBody' from JSON`,
+  );
 }
 
 /** @internal */
@@ -415,6 +478,20 @@ export namespace UploadRequest$ {
   export type Outbound = UploadRequest$Outbound;
 }
 
+export function uploadRequestToJSON(uploadRequest: UploadRequest): string {
+  return JSON.stringify(UploadRequest$outboundSchema.parse(uploadRequest));
+}
+
+export function uploadRequestFromJSON(
+  jsonString: string,
+): SafeParseResult<UploadRequest, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => UploadRequest$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'UploadRequest' from JSON`,
+  );
+}
+
 /** @internal */
 export const UploadResponse$inboundSchema: z.ZodType<
   UploadResponse,
@@ -462,4 +539,18 @@ export namespace UploadResponse$ {
   export const outboundSchema = UploadResponse$outboundSchema;
   /** @deprecated use `UploadResponse$Outbound` instead. */
   export type Outbound = UploadResponse$Outbound;
+}
+
+export function uploadResponseToJSON(uploadResponse: UploadResponse): string {
+  return JSON.stringify(UploadResponse$outboundSchema.parse(uploadResponse));
+}
+
+export function uploadResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<UploadResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => UploadResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'UploadResponse' from JSON`,
+  );
 }

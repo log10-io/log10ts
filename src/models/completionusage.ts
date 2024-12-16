@@ -4,6 +4,9 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 /**
  * Usage statistics for the completion request.
@@ -75,4 +78,20 @@ export namespace CompletionUsage$ {
   export const outboundSchema = CompletionUsage$outboundSchema;
   /** @deprecated use `CompletionUsage$Outbound` instead. */
   export type Outbound = CompletionUsage$Outbound;
+}
+
+export function completionUsageToJSON(
+  completionUsage: CompletionUsage,
+): string {
+  return JSON.stringify(CompletionUsage$outboundSchema.parse(completionUsage));
+}
+
+export function completionUsageFromJSON(
+  jsonString: string,
+): SafeParseResult<CompletionUsage, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CompletionUsage$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CompletionUsage' from JSON`,
+  );
 }

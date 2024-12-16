@@ -3,6 +3,9 @@
  */
 
 import * as z from "zod";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 /**
  * @deprecated class: This will be removed in a future release, please migrate away from it as soon as possible.
@@ -66,4 +69,22 @@ export namespace ChatCompletionFunctions$ {
   export const outboundSchema = ChatCompletionFunctions$outboundSchema;
   /** @deprecated use `ChatCompletionFunctions$Outbound` instead. */
   export type Outbound = ChatCompletionFunctions$Outbound;
+}
+
+export function chatCompletionFunctionsToJSON(
+  chatCompletionFunctions: ChatCompletionFunctions,
+): string {
+  return JSON.stringify(
+    ChatCompletionFunctions$outboundSchema.parse(chatCompletionFunctions),
+  );
+}
+
+export function chatCompletionFunctionsFromJSON(
+  jsonString: string,
+): SafeParseResult<ChatCompletionFunctions, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ChatCompletionFunctions$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChatCompletionFunctions' from JSON`,
+  );
 }

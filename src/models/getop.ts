@@ -4,6 +4,8 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   Feedback,
   Feedback$inboundSchema,
@@ -16,6 +18,7 @@ import {
   HTTPMetadata$Outbound,
   HTTPMetadata$outboundSchema,
 } from "./httpmetadata.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 export type GetGlobals = {
   xLog10Organization?: string | undefined;
@@ -81,6 +84,20 @@ export namespace GetGlobals$ {
   export type Outbound = GetGlobals$Outbound;
 }
 
+export function getGlobalsToJSON(getGlobals: GetGlobals): string {
+  return JSON.stringify(GetGlobals$outboundSchema.parse(getGlobals));
+}
+
+export function getGlobalsFromJSON(
+  jsonString: string,
+): SafeParseResult<GetGlobals, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetGlobals$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetGlobals' from JSON`,
+  );
+}
+
 /** @internal */
 export const GetRequest$inboundSchema: z.ZodType<
   GetRequest,
@@ -126,6 +143,20 @@ export namespace GetRequest$ {
   export const outboundSchema = GetRequest$outboundSchema;
   /** @deprecated use `GetRequest$Outbound` instead. */
   export type Outbound = GetRequest$Outbound;
+}
+
+export function getRequestToJSON(getRequest: GetRequest): string {
+  return JSON.stringify(GetRequest$outboundSchema.parse(getRequest));
+}
+
+export function getRequestFromJSON(
+  jsonString: string,
+): SafeParseResult<GetRequest, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetRequest$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetRequest' from JSON`,
+  );
 }
 
 /** @internal */
@@ -175,4 +206,18 @@ export namespace GetResponse$ {
   export const outboundSchema = GetResponse$outboundSchema;
   /** @deprecated use `GetResponse$Outbound` instead. */
   export type Outbound = GetResponse$Outbound;
+}
+
+export function getResponseToJSON(getResponse: GetResponse): string {
+  return JSON.stringify(GetResponse$outboundSchema.parse(getResponse));
+}
+
+export function getResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<GetResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetResponse' from JSON`,
+  );
 }

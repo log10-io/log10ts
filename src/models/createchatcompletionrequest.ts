@@ -4,6 +4,8 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   ChatCompletionFunctionCallOption,
   ChatCompletionFunctionCallOption$inboundSchema,
@@ -40,6 +42,7 @@ import {
   ChatCompletionToolChoiceOption$Outbound,
   ChatCompletionToolChoiceOption$outboundSchema,
 } from "./chatcompletiontoolchoiceoption.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 /**
  * Must be one of `text` or `json_object`.
@@ -317,6 +320,20 @@ export namespace ResponseFormat$ {
   export type Outbound = ResponseFormat$Outbound;
 }
 
+export function responseFormatToJSON(responseFormat: ResponseFormat): string {
+  return JSON.stringify(ResponseFormat$outboundSchema.parse(responseFormat));
+}
+
+export function responseFormatFromJSON(
+  jsonString: string,
+): SafeParseResult<ResponseFormat, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ResponseFormat$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ResponseFormat' from JSON`,
+  );
+}
+
 /** @internal */
 export const Stop$inboundSchema: z.ZodType<Stop, z.ZodTypeDef, unknown> = z
   .union([z.string(), z.array(z.string())]);
@@ -339,6 +356,20 @@ export namespace Stop$ {
   export const outboundSchema = Stop$outboundSchema;
   /** @deprecated use `Stop$Outbound` instead. */
   export type Outbound = Stop$Outbound;
+}
+
+export function stopToJSON(stop: Stop): string {
+  return JSON.stringify(Stop$outboundSchema.parse(stop));
+}
+
+export function stopFromJSON(
+  jsonString: string,
+): SafeParseResult<Stop, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Stop$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Stop' from JSON`,
+  );
 }
 
 /** @internal */
@@ -397,6 +428,33 @@ export namespace CreateChatCompletionRequestFunctionCall$ {
     CreateChatCompletionRequestFunctionCall$outboundSchema;
   /** @deprecated use `CreateChatCompletionRequestFunctionCall$Outbound` instead. */
   export type Outbound = CreateChatCompletionRequestFunctionCall$Outbound;
+}
+
+export function createChatCompletionRequestFunctionCallToJSON(
+  createChatCompletionRequestFunctionCall:
+    CreateChatCompletionRequestFunctionCall,
+): string {
+  return JSON.stringify(
+    CreateChatCompletionRequestFunctionCall$outboundSchema.parse(
+      createChatCompletionRequestFunctionCall,
+    ),
+  );
+}
+
+export function createChatCompletionRequestFunctionCallFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  CreateChatCompletionRequestFunctionCall,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      CreateChatCompletionRequestFunctionCall$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'CreateChatCompletionRequestFunctionCall' from JSON`,
+  );
 }
 
 /** @internal */
@@ -530,4 +588,24 @@ export namespace CreateChatCompletionRequest$ {
   export const outboundSchema = CreateChatCompletionRequest$outboundSchema;
   /** @deprecated use `CreateChatCompletionRequest$Outbound` instead. */
   export type Outbound = CreateChatCompletionRequest$Outbound;
+}
+
+export function createChatCompletionRequestToJSON(
+  createChatCompletionRequest: CreateChatCompletionRequest,
+): string {
+  return JSON.stringify(
+    CreateChatCompletionRequest$outboundSchema.parse(
+      createChatCompletionRequest,
+    ),
+  );
+}
+
+export function createChatCompletionRequestFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateChatCompletionRequest, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateChatCompletionRequest$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateChatCompletionRequest' from JSON`,
+  );
 }

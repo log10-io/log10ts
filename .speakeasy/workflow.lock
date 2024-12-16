@@ -1,20 +1,21 @@
-speakeasyVersion: 1.438.3
+speakeasyVersion: 1.455.7
 sources:
     default:
         sourceNamespace: default
-        sourceRevisionDigest: sha256:def283ae86dce7462d176c145f4da69def3f8b1b6ed31d9f545f6edb2dd70548
-        sourceBlobDigest: sha256:03d6e445387540037c62277f2e91d4cb1e709bae94de399891292074c28740b4
+        sourceRevisionDigest: sha256:887aabad2bfd4af42bfa05c53b4328a266e49541b71ef7c84f0fc723a4852b08
+        sourceBlobDigest: sha256:7934745bf040c030065b57bdf9f9a1b0ebc29bb1481d83cc6247d3d8540804d8
         tags:
             - latest
-            - main
+            - speakeasy-sdk-regen-1734379044
+            - 1.0.0
 targets:
     my-first-target:
         source: default
         sourceNamespace: default
-        sourceRevisionDigest: sha256:def283ae86dce7462d176c145f4da69def3f8b1b6ed31d9f545f6edb2dd70548
-        sourceBlobDigest: sha256:03d6e445387540037c62277f2e91d4cb1e709bae94de399891292074c28740b4
-        codeSamplesNamespace: default-code-samples
-        codeSamplesRevisionDigest: sha256:0faed70a86d984abcbbfb90ea0f4db64d7ae0b2527ac97f18ca8733cb4b80ffd
+        sourceRevisionDigest: sha256:887aabad2bfd4af42bfa05c53b4328a266e49541b71ef7c84f0fc723a4852b08
+        sourceBlobDigest: sha256:7934745bf040c030065b57bdf9f9a1b0ebc29bb1481d83cc6247d3d8540804d8
+        codeSamplesNamespace: default-typescript-code-samples
+        codeSamplesRevisionDigest: sha256:3b58320348f84b6f2dba136e1878e2ce8f1d710f8b8b3e30f4fa01905e27a494
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
@@ -33,5 +34,5 @@ workflow:
                     token: $npm_token
             codeSamples:
                 registry:
-                    location: registry.speakeasyapi.dev/log10/log10/default-code-samples
+                    location: registry.speakeasyapi.dev/log10/log10/default-typescript-code-samples
                 blocking: false

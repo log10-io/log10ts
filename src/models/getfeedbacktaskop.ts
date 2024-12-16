@@ -4,12 +4,15 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../lib/primitives.js";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
 import {
   HTTPMetadata,
   HTTPMetadata$inboundSchema,
   HTTPMetadata$Outbound,
   HTTPMetadata$outboundSchema,
 } from "./httpmetadata.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 import {
   Task,
   Task$inboundSchema,
@@ -68,6 +71,24 @@ export namespace GetFeedbackTaskRequest$ {
   export type Outbound = GetFeedbackTaskRequest$Outbound;
 }
 
+export function getFeedbackTaskRequestToJSON(
+  getFeedbackTaskRequest: GetFeedbackTaskRequest,
+): string {
+  return JSON.stringify(
+    GetFeedbackTaskRequest$outboundSchema.parse(getFeedbackTaskRequest),
+  );
+}
+
+export function getFeedbackTaskRequestFromJSON(
+  jsonString: string,
+): SafeParseResult<GetFeedbackTaskRequest, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetFeedbackTaskRequest$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetFeedbackTaskRequest' from JSON`,
+  );
+}
+
 /** @internal */
 export const GetFeedbackTaskResponse$inboundSchema: z.ZodType<
   GetFeedbackTaskResponse,
@@ -115,4 +136,22 @@ export namespace GetFeedbackTaskResponse$ {
   export const outboundSchema = GetFeedbackTaskResponse$outboundSchema;
   /** @deprecated use `GetFeedbackTaskResponse$Outbound` instead. */
   export type Outbound = GetFeedbackTaskResponse$Outbound;
+}
+
+export function getFeedbackTaskResponseToJSON(
+  getFeedbackTaskResponse: GetFeedbackTaskResponse,
+): string {
+  return JSON.stringify(
+    GetFeedbackTaskResponse$outboundSchema.parse(getFeedbackTaskResponse),
+  );
+}
+
+export function getFeedbackTaskResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<GetFeedbackTaskResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetFeedbackTaskResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetFeedbackTaskResponse' from JSON`,
+  );
 }

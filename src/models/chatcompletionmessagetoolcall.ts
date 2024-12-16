@@ -3,6 +3,9 @@
  */
 
 import * as z from "zod";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 /**
  * The type of the tool. Currently, only `function` is supported.
@@ -101,6 +104,20 @@ export namespace FunctionT$ {
   export type Outbound = FunctionT$Outbound;
 }
 
+export function functionToJSON(functionT: FunctionT): string {
+  return JSON.stringify(FunctionT$outboundSchema.parse(functionT));
+}
+
+export function functionFromJSON(
+  jsonString: string,
+): SafeParseResult<FunctionT, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => FunctionT$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'FunctionT' from JSON`,
+  );
+}
+
 /** @internal */
 export const ChatCompletionMessageToolCall$inboundSchema: z.ZodType<
   ChatCompletionMessageToolCall,
@@ -141,4 +158,24 @@ export namespace ChatCompletionMessageToolCall$ {
   export const outboundSchema = ChatCompletionMessageToolCall$outboundSchema;
   /** @deprecated use `ChatCompletionMessageToolCall$Outbound` instead. */
   export type Outbound = ChatCompletionMessageToolCall$Outbound;
+}
+
+export function chatCompletionMessageToolCallToJSON(
+  chatCompletionMessageToolCall: ChatCompletionMessageToolCall,
+): string {
+  return JSON.stringify(
+    ChatCompletionMessageToolCall$outboundSchema.parse(
+      chatCompletionMessageToolCall,
+    ),
+  );
+}
+
+export function chatCompletionMessageToolCallFromJSON(
+  jsonString: string,
+): SafeParseResult<ChatCompletionMessageToolCall, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ChatCompletionMessageToolCall$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChatCompletionMessageToolCall' from JSON`,
+  );
 }

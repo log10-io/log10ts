@@ -3,6 +3,9 @@
  */
 
 import * as z from "zod";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
+import { SDKValidationError } from "./sdkvalidationerror.js";
 
 /**
  * The type of the tool. Currently, only `function` is supported.
@@ -89,6 +92,27 @@ export namespace ChatCompletionNamedToolChoiceFunction$ {
   export type Outbound = ChatCompletionNamedToolChoiceFunction$Outbound;
 }
 
+export function chatCompletionNamedToolChoiceFunctionToJSON(
+  chatCompletionNamedToolChoiceFunction: ChatCompletionNamedToolChoiceFunction,
+): string {
+  return JSON.stringify(
+    ChatCompletionNamedToolChoiceFunction$outboundSchema.parse(
+      chatCompletionNamedToolChoiceFunction,
+    ),
+  );
+}
+
+export function chatCompletionNamedToolChoiceFunctionFromJSON(
+  jsonString: string,
+): SafeParseResult<ChatCompletionNamedToolChoiceFunction, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ChatCompletionNamedToolChoiceFunction$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChatCompletionNamedToolChoiceFunction' from JSON`,
+  );
+}
+
 /** @internal */
 export const ChatCompletionNamedToolChoice$inboundSchema: z.ZodType<
   ChatCompletionNamedToolChoice,
@@ -126,4 +150,24 @@ export namespace ChatCompletionNamedToolChoice$ {
   export const outboundSchema = ChatCompletionNamedToolChoice$outboundSchema;
   /** @deprecated use `ChatCompletionNamedToolChoice$Outbound` instead. */
   export type Outbound = ChatCompletionNamedToolChoice$Outbound;
+}
+
+export function chatCompletionNamedToolChoiceToJSON(
+  chatCompletionNamedToolChoice: ChatCompletionNamedToolChoice,
+): string {
+  return JSON.stringify(
+    ChatCompletionNamedToolChoice$outboundSchema.parse(
+      chatCompletionNamedToolChoice,
+    ),
+  );
+}
+
+export function chatCompletionNamedToolChoiceFromJSON(
+  jsonString: string,
+): SafeParseResult<ChatCompletionNamedToolChoice, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ChatCompletionNamedToolChoice$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChatCompletionNamedToolChoice' from JSON`,
+  );
 }

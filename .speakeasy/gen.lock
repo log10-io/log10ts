@@ -3,10 +3,10 @@ id: ca95c839-5377-4981-9bcb-4cedc7e35f2b
 management:
   docChecksum: a058442e2285e2bda8bab4de417fed87
   docVersion: 1.0.0
-  speakeasyVersion: 1.438.3
-  generationVersion: 2.457.9
-  releaseVersion: 0.4.0
-  configChecksum: 790483d06b380c1098bfc15df50855c0
+  speakeasyVersion: 1.455.7
+  generationVersion: 2.480.1
+  releaseVersion: 0.4.1
+  configChecksum: bcdbaf029508eea65e0c6c27792f89a9
   repoURL: https://github.com/log10-io/log10ts.git
   installationURL: https://github.com/log10-io/log10ts
   published: true
@@ -14,13 +14,13 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.11
-    core: 3.18.4
+    core: 3.18.11
     defaultEnabledRetries: 0.1.0
     deprecations: 2.81.1
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.1.2
     examples: 2.81.4
-    flattening: 2.82.0
+    flattening: 2.82.1
     globalSecurity: 2.82.11
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
@@ -278,3 +278,4 @@ examples:
       responses:
         "200":
           application/json: {"json_schema": {"key": "<value>", "key1": "<value>"}, "name": "<value>", "instruction": "<value>", "completion_tags_selector": ["<value>", "<value>"], "organization_id": "<id>"}
+generatedTests: {}
