@@ -83,6 +83,26 @@ class Log10Wrapper {
             }
             return message;
         };
+        // Redact images from the message
+        this.removeImagesInMessage = (message) => {
+            // Check for message.content being an array
+            const removeImages = (fragment) => {
+                if ((fragment === null || fragment === void 0 ? void 0 : fragment.type) === "image") {
+                    return {
+                        type: "text",
+                        text: "Image removed\n\n",
+                    };
+                }
+                return fragment;
+            };
+            if (Array.isArray(message === null || message === void 0 ? void 0 : message.content)) {
+                message.content = message.content.map(removeImages);
+            }
+            else {
+                message.content = removeImages(message.content);
+            }
+            return message;
+        };
         const opt = options;
         let hooks;
         if (typeof opt === "object" &&
@@ -162,7 +182,7 @@ class Log10Wrapper {
         };
     }
     async *wrappedBedrockResponse(response, request) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         try {
             let buffer = "";
             for await (const chunk of response.body) {
@@ -218,9 +238,17 @@ class Log10Wrapper {
                     total_tokens: -1,
                 },
             };
+            // If the total size of the request or response may exceed the limit, we drop all images.
+            if (JSON.stringify(transformedRequest).length > 1024 * 1024) {
+                transformedRequest.messages = transformedRequest.messages.map(this.removeImagesInMessage);
+            }
+            if (((_c = transformedResponse === null || transformedResponse === void 0 ? void 0 : transformedResponse.choices[0]) === null || _c === void 0 ? void 0 : _c.message) &&
+                JSON.stringify(transformedResponse).length > 1024 * 1024) {
+                transformedResponse.choices[0].message = this.removeImagesInMessage(transformedResponse.choices[0].message);
+            }
             // Post process the messages to transform images
             transformedRequest.messages = transformedRequest.messages.map(this.imageTransformMessage);
-            if ((_c = transformedResponse === null || transformedResponse === void 0 ? void 0 : transformedResponse.choices[0]) === null || _c === void 0 ? void 0 : _c.message) {
+            if ((_d = transformedResponse === null || transformedResponse === void 0 ? void 0 : transformedResponse.choices[0]) === null || _d === void 0 ? void 0 : _d.message) {
                 transformedResponse.choices[0].message = this.imageTransformMessage(transformedResponse.choices[0].message);
             }
             this.logCompletion({
@@ -235,7 +263,7 @@ class Log10Wrapper {
     wrapBedrock(client) {
         const originalSend = client.send;
         client.send = async (command, ...args) => {
-            var _a, _b, _c;
+            var _a, _b, _c, _d;
             if (!(command instanceof client_bedrock_runtime_1.InvokeModelCommand) &&
                 !(command instanceof client_bedrock_runtime_1.InvokeModelWithResponseStreamCommand)) {
                 return originalSend.call(client, command, ...args);
@@ -295,8 +323,16 @@ class Log10Wrapper {
                     total_tokens: -1,
                 },
             };
+            // If the total size of the request or response may exceed the limit, we drop all images.
+            if (JSON.stringify(transformedRequest).length > 1024 * 1024) {
+                transformedRequest.messages = transformedRequest.messages.map(this.removeImagesInMessage);
+            }
+            if (((_c = transformedResponse === null || transformedResponse === void 0 ? void 0 : transformedResponse.choices[0]) === null || _c === void 0 ? void 0 : _c.message) &&
+                JSON.stringify(transformedResponse).length > 1024 * 1024) {
+                transformedResponse.choices[0].message = this.removeImagesInMessage(transformedResponse.choices[0].message);
+            }
             transformedRequest.messages = transformedRequest.messages.map(this.imageTransformMessage);
-            if ((_c = transformedResponse === null || transformedResponse === void 0 ? void 0 : transformedResponse.choices[0]) === null || _c === void 0 ? void 0 : _c.message) {
+            if ((_d = transformedResponse === null || transformedResponse === void 0 ? void 0 : transformedResponse.choices[0]) === null || _d === void 0 ? void 0 : _d.message) {
                 transformedResponse.choices[0].message = this.imageTransformMessage(transformedResponse.choices[0].message);
             }
             this.logCompletion({
