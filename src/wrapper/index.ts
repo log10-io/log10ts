@@ -112,6 +112,28 @@ class Log10Wrapper {
     return message;
   };
 
+  // Redact images from the message
+  removeImagesInMessage = (message: any) => {
+    // Check for message.content being an array
+    const removeImages = (fragment: any) => {
+      if (fragment?.type === "image") {
+        return {
+          type: "text",
+          text: "Image removed\n\n",
+        };
+      }
+      return fragment;
+    };
+
+    if (Array.isArray(message?.content)) {
+      message.content = message.content.map(removeImages);
+    } else {
+      message.content = removeImages(message.content);
+    }
+
+    return message;
+  };
+
   async logCompletion(completion: any): Promise<void> {
     try {
       return axios.post(
@@ -253,6 +275,21 @@ class Log10Wrapper {
         },
       };
 
+      // If the total size of the request or response may exceed the limit, we drop all images.
+      if (JSON.stringify(transformedRequest).length > 1024 * 1024) {
+        transformedRequest.messages = transformedRequest.messages.map(
+          this.removeImagesInMessage
+        );
+      }
+      if (
+        transformedResponse?.choices[0]?.message &&
+        JSON.stringify(transformedResponse).length > 1024 * 1024
+      ) {
+        transformedResponse.choices[0].message = this.removeImagesInMessage(
+          transformedResponse.choices[0].message
+        );
+      }
+
       // Post process the messages to transform images
       transformedRequest.messages = transformedRequest.messages.map(
         this.imageTransformMessage
@@ -348,6 +385,21 @@ class Log10Wrapper {
           total_tokens: -1,
         },
       };
+
+      // If the total size of the request or response may exceed the limit, we drop all images.
+      if (JSON.stringify(transformedRequest).length > 1024 * 1024) {
+        transformedRequest.messages = transformedRequest.messages.map(
+          this.removeImagesInMessage
+        );
+      }
+      if (
+        transformedResponse?.choices[0]?.message &&
+        JSON.stringify(transformedResponse).length > 1024 * 1024
+      ) {
+        transformedResponse.choices[0].message = this.removeImagesInMessage(
+          transformedResponse.choices[0].message
+        );
+      }
 
       transformedRequest.messages = transformedRequest.messages.map(
         this.imageTransformMessage
