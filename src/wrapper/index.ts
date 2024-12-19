@@ -116,7 +116,6 @@ class Log10Wrapper {
   removeImagesInMessage = (message: any) => {
     // Check for message.content being an array
     const removeImages = (fragment: any) => {
-      console.log("fragment: ", fragment);
       if (fragment?.type === "image") {
         return {
           type: "text",
