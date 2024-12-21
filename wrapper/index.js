@@ -53,17 +53,16 @@ class Log10Wrapper {
         //     }
         // ],
         this.imageTransformFragment = (fragment) => {
-            var _a, _b, _c;
             // Filter out images above 1MB
-            if ((fragment === null || fragment === void 0 ? void 0 : fragment.type) === "image" &&
-                ((_a = fragment === null || fragment === void 0 ? void 0 : fragment.source) === null || _a === void 0 ? void 0 : _a.type) === "base64" &&
-                ((_b = fragment === null || fragment === void 0 ? void 0 : fragment.source) === null || _b === void 0 ? void 0 : _b.data.length) > 1024 * 1024) {
+            if (fragment?.type === "image" &&
+                fragment?.source?.type === "base64" &&
+                fragment?.source?.data.length > 1024 * 1024) {
                 return {
                     type: "text",
                     text: "Image too large to capture\n\n",
                 };
             }
-            if ((fragment === null || fragment === void 0 ? void 0 : fragment.type) === "image" && ((_c = fragment === null || fragment === void 0 ? void 0 : fragment.source) === null || _c === void 0 ? void 0 : _c.type) === "base64") {
+            if (fragment?.type === "image" && fragment?.source?.type === "base64") {
                 return {
                     type: "image_url",
                     image_url: {
@@ -75,7 +74,7 @@ class Log10Wrapper {
         };
         this.imageTransformMessage = (message) => {
             // Check for message.content being an array
-            if (Array.isArray(message === null || message === void 0 ? void 0 : message.content)) {
+            if (Array.isArray(message?.content)) {
                 message.content = message.content.map(this.imageTransformFragment);
             }
             else {
@@ -87,7 +86,7 @@ class Log10Wrapper {
         this.removeImagesInMessage = (message) => {
             // Check for message.content being an array
             const removeImages = (fragment) => {
-                if ((fragment === null || fragment === void 0 ? void 0 : fragment.type) === "image") {
+                if (fragment?.type === "image") {
                     return {
                         type: "text",
                         text: "Image removed\n\n",
@@ -95,7 +94,7 @@ class Log10Wrapper {
                 }
                 return fragment;
             };
-            if (Array.isArray(message === null || message === void 0 ? void 0 : message.content)) {
+            if (Array.isArray(message?.content)) {
                 message.content = message.content.map(removeImages);
             }
             else {
@@ -182,14 +181,13 @@ class Log10Wrapper {
         };
     }
     async *wrappedBedrockResponse(response, request) {
-        var _a, _b, _c, _d;
         try {
             let buffer = "";
             for await (const chunk of response.body) {
-                const decoded = new TextDecoder().decode((_a = chunk.chunk) === null || _a === void 0 ? void 0 : _a.bytes);
+                const decoded = new TextDecoder().decode(chunk.chunk?.bytes);
                 const parsed = JSON.parse(decoded);
                 if (parsed.type === "content_block_delta") {
-                    buffer += ((_b = parsed.delta) === null || _b === void 0 ? void 0 : _b.text) || "";
+                    buffer += parsed.delta?.text || "";
                 }
                 yield chunk;
             }
@@ -242,13 +240,13 @@ class Log10Wrapper {
             if (JSON.stringify(transformedRequest).length > 1024 * 1024) {
                 transformedRequest.messages = transformedRequest.messages.map(this.removeImagesInMessage);
             }
-            if (((_c = transformedResponse === null || transformedResponse === void 0 ? void 0 : transformedResponse.choices[0]) === null || _c === void 0 ? void 0 : _c.message) &&
+            if (transformedResponse?.choices[0]?.message &&
                 JSON.stringify(transformedResponse).length > 1024 * 1024) {
                 transformedResponse.choices[0].message = this.removeImagesInMessage(transformedResponse.choices[0].message);
             }
             // Post process the messages to transform images
             transformedRequest.messages = transformedRequest.messages.map(this.imageTransformMessage);
-            if ((_d = transformedResponse === null || transformedResponse === void 0 ? void 0 : transformedResponse.choices[0]) === null || _d === void 0 ? void 0 : _d.message) {
+            if (transformedResponse?.choices[0]?.message) {
                 transformedResponse.choices[0].message = this.imageTransformMessage(transformedResponse.choices[0].message);
             }
             this.logCompletion({
@@ -263,7 +261,6 @@ class Log10Wrapper {
     wrapBedrock(client) {
         const originalSend = client.send;
         client.send = async (command, ...args) => {
-            var _a, _b, _c, _d;
             if (!(command instanceof client_bedrock_runtime_1.InvokeModelCommand) &&
                 !(command instanceof client_bedrock_runtime_1.InvokeModelWithResponseStreamCommand)) {
                 return originalSend.call(client, command, ...args);
@@ -310,7 +307,7 @@ class Log10Wrapper {
                     {
                         message: {
                             role: "assistant",
-                            content: ((_b = (_a = responseBody.content) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.text) || responseBody.completion,
+                            content: responseBody.content?.[0]?.text || responseBody.completion,
                         },
                         logprobs: null,
                         index: 0,
@@ -327,12 +324,12 @@ class Log10Wrapper {
             if (JSON.stringify(transformedRequest).length > 1024 * 1024) {
                 transformedRequest.messages = transformedRequest.messages.map(this.removeImagesInMessage);
             }
-            if (((_c = transformedResponse === null || transformedResponse === void 0 ? void 0 : transformedResponse.choices[0]) === null || _c === void 0 ? void 0 : _c.message) &&
+            if (transformedResponse?.choices[0]?.message &&
                 JSON.stringify(transformedResponse).length > 1024 * 1024) {
                 transformedResponse.choices[0].message = this.removeImagesInMessage(transformedResponse.choices[0].message);
             }
             transformedRequest.messages = transformedRequest.messages.map(this.imageTransformMessage);
-            if ((_d = transformedResponse === null || transformedResponse === void 0 ? void 0 : transformedResponse.choices[0]) === null || _d === void 0 ? void 0 : _d.message) {
+            if (transformedResponse?.choices[0]?.message) {
                 transformedResponse.choices[0].message = this.imageTransformMessage(transformedResponse.choices[0].message);
             }
             this.logCompletion({
