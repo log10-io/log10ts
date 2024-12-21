@@ -209,3 +209,13 @@ Based on:
 - [typescript v0.4.2] .
 ### Releases
 - [NPM v0.4.2] https://www.npmjs.com/package/log10ts/v/0.4.2 - .
+
+## 2024-12-21 00:05:42
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.459.2 (2.483.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v0.4.3] .
+### Releases
+- [NPM v0.4.3] https://www.npmjs.com/package/log10ts/v/0.4.3 - .
