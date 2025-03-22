@@ -3,14 +3,7 @@
 ## Example Usage
 
 ```typescript
-import {
-  ChatCompletionRole,
-  Completion,
-  CreateChatCompletionRequestType,
-  FinishReason,
-  Kind,
-  ObjectT,
-} from "log10ts";
+import { ChatCompletionRole, Completion, FinishReason, Kind, ObjectT } from "log10ts";
 
 let value: Completion = {
   organizationId: "<id>",
@@ -23,12 +16,7 @@ let value: Completion = {
       },
     ],
     model: "gpt-4-turbo",
-    n: 1,
-    responseFormat: {
-      type: CreateChatCompletionRequestType.JsonObject,
-    },
-    temperature: 1,
-    topP: 1,
+    responseFormat: {},
     user: "user-1234",
   },
   response: {

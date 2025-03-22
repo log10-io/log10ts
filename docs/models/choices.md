@@ -23,7 +23,7 @@ let value: Choices = {
         topLogprobs: [
           {
             token: "<value>",
-            logprob: 2103.83,
+            logprob: 2103.82,
             bytes: [
               128926,
             ],

@@ -120,3 +120,31 @@ export function abortSignalAny(signals: AbortSignal[]): AbortSignal {
 
   return result;
 }
+
+export function compactMap<T>(
+  values: Record<string, T | undefined>,
+): Record<string, T> {
+  const out: Record<string, T> = {};
+
+  for (const [k, v] of Object.entries(values)) {
+    if (typeof v !== "undefined") {
+      out[k] = v;
+    }
+  }
+
+  return out;
+}
+
+export function allRequired<V extends Record<string, unknown>>(
+  v: V,
+):
+  | {
+      [K in keyof V]: NonNullable<V[K]>;
+    }
+  | undefined {
+  if (Object.values(v).every((x) => x == null)) {
+    return void 0;
+  }
+
+  return v as ReturnType<typeof allRequired<V>>;
+}

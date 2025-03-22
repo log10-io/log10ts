@@ -4,6 +4,7 @@
 
 import { Log10Core } from "../core.js";
 import * as M from "../lib/matchers.js";
+import { compactMap } from "../lib/primitives.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
@@ -17,15 +18,16 @@ import {
 import * as models from "../models/index.js";
 import { SDKError } from "../models/sdkerror.js";
 import { SDKValidationError } from "../models/sdkvalidationerror.js";
+import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
  * List feedback tasks.
  */
-export async function feedbackTasksList(
+export function feedbackTasksList(
   client: Log10Core,
   options?: RequestOptions,
-): Promise<
+): APIPromise<
   Result<
     models.ListFeedbackTasksResponse,
     | SDKError
@@ -37,17 +39,42 @@ export async function feedbackTasksList(
     | ConnectionError
   >
 > {
+  return new APIPromise($do(
+    client,
+    options,
+  ));
+}
+
+async function $do(
+  client: Log10Core,
+  options?: RequestOptions,
+): Promise<
+  [
+    Result<
+      models.ListFeedbackTasksResponse,
+      | SDKError
+      | SDKValidationError
+      | UnexpectedClientError
+      | InvalidRequestError
+      | RequestAbortedError
+      | RequestTimeoutError
+      | ConnectionError
+    >,
+    APICall,
+  ]
+> {
   const path = pathToFunc("/api/v1/feedback_task")();
 
-  const headers = new Headers({
+  const headers = new Headers(compactMap({
     Accept: "application/json",
-  });
+  }));
 
   const secConfig = await extractSecurity(client._options.log10Token);
   const securityInput = secConfig == null ? {} : { log10Token: secConfig };
   const requestSecurity = resolveGlobalSecurity(securityInput);
 
   const context = {
+    baseURL: options?.serverURL ?? client._baseURL ?? "",
     operationID: "listFeedbackTasks",
     oAuth2Scopes: [],
 
@@ -69,7 +96,7 @@ export async function feedbackTasksList(
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
-    return requestRes;
+    return [requestRes, { status: "invalid" }];
   }
   const req = requestRes.value;
 
@@ -80,7 +107,7 @@ export async function feedbackTasksList(
     retryCodes: context.retryCodes,
   });
   if (!doResult.ok) {
-    return doResult;
+    return [doResult, { status: "request-error", request: req }];
   }
   const response = doResult.value;
 
@@ -101,11 +128,12 @@ export async function feedbackTasksList(
     M.json(200, models.ListFeedbackTasksResponse$inboundSchema, {
       key: "Tasks",
     }),
-    M.fail(["4XX", "5XX"]),
+    M.fail("4XX"),
+    M.fail("5XX"),
   )(response, req, { extraFields: responseFields });
   if (!result.ok) {
-    return result;
+    return [result, { status: "complete", request: req, response }];
   }
 
-  return result;
+  return [result, { status: "complete", request: req, response }];
 }

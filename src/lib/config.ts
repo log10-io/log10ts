@@ -15,7 +15,7 @@ export const ServerList = [
 ] as const;
 
 export type SDKOptions = {
-  log10Token?: string | (() => Promise<string>);
+  log10Token?: string | (() => Promise<string>) | undefined;
 
   /**
    * Allows setting the xLog10Organization parameter for all supported operations
@@ -26,11 +26,11 @@ export type SDKOptions = {
   /**
    * Allows overriding the default server used by the SDK
    */
-  serverIdx?: number;
+  serverIdx?: number | undefined;
   /**
    * Allows overriding the default server URL used by the SDK
    */
-  serverURL?: string;
+  serverURL?: string | undefined;
   /**
    * Allows overriding the default retry config used by the SDK
    */
@@ -59,7 +59,7 @@ export function serverURLFromOptions(options: SDKOptions): URL | null {
 export const SDK_METADATA = {
   language: "typescript",
   openapiDocVersion: "1.0.0",
-  sdkVersion: "0.4.2",
-  genVersion: "2.481.0",
-  userAgent: "speakeasy-sdk/typescript 0.4.2 2.481.0 1.0.0 log10ts",
+  sdkVersion: "0.5.0",
+  genVersion: "2.559.0",
+  userAgent: "speakeasy-sdk/typescript 0.5.0 2.559.0 1.0.0 log10ts",
 } as const;

@@ -10,11 +10,9 @@ Setting to `{ "type": "json_object" }` enables JSON mode, which guarantees the m
 ## Example Usage
 
 ```typescript
-import { CreateChatCompletionRequestType, ResponseFormat } from "log10ts";
+import { ResponseFormat } from "log10ts";
 
-let value: ResponseFormat = {
-  type: CreateChatCompletionRequestType.JsonObject,
-};
+let value: ResponseFormat = {};
 ```
 
 ## Fields

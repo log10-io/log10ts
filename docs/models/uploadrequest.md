@@ -6,6 +6,7 @@
 import { UploadRequest } from "log10ts";
 
 let value: UploadRequest = {
+  xLog10Organization: "<value>",
   requestBody: {
     taskId: "<id>",
     jsonValues: {

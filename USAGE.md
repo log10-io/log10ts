@@ -7,7 +7,7 @@ const log10 = new Log10({
 });
 
 async function run() {
-  const result = await log10.sessions.create();
+  const result = await log10.sessions.create("<value>");
 
   // Handle the result
   console.log(result);

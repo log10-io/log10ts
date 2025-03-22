@@ -5,6 +5,7 @@
 import { Log10Core } from "../core.js";
 import { encodeJSON, encodeSimple } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
+import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
@@ -19,17 +20,18 @@ import {
 import * as models from "../models/index.js";
 import { SDKError } from "../models/sdkerror.js";
 import { SDKValidationError } from "../models/sdkvalidationerror.js";
+import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
  * Create a completion
  */
-export async function completionsCreate(
+export function completionsCreate(
   client: Log10Core,
   completion: models.Completion,
   xLog10Organization?: string | undefined,
   options?: RequestOptions,
-): Promise<
+): APIPromise<
   Result<
     models.CreateResponse,
     | SDKError
@@ -40,6 +42,34 @@ export async function completionsCreate(
     | RequestTimeoutError
     | ConnectionError
   >
+> {
+  return new APIPromise($do(
+    client,
+    completion,
+    xLog10Organization,
+    options,
+  ));
+}
+
+async function $do(
+  client: Log10Core,
+  completion: models.Completion,
+  xLog10Organization?: string | undefined,
+  options?: RequestOptions,
+): Promise<
+  [
+    Result<
+      models.CreateResponse,
+      | SDKError
+      | SDKValidationError
+      | UnexpectedClientError
+      | InvalidRequestError
+      | RequestAbortedError
+      | RequestTimeoutError
+      | ConnectionError
+    >,
+    APICall,
+  ]
 > {
   const input: models.CreateRequest = {
     completion: completion,
@@ -52,14 +82,14 @@ export async function completionsCreate(
     "Input validation failed",
   );
   if (!parsed.ok) {
-    return parsed;
+    return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
   const body = encodeJSON("body", payload.Completion, { explode: true });
 
   const path = pathToFunc("/api/v1/completions")();
 
-  const headers = new Headers({
+  const headers = new Headers(compactMap({
     "Content-Type": "application/json",
     Accept: "application/json",
     "X-Log10-Organization": encodeSimple(
@@ -67,13 +97,14 @@ export async function completionsCreate(
       payload["X-Log10-Organization"] ?? client._options.xLog10Organization,
       { explode: false, charEncoding: "none" },
     ),
-  });
+  }));
 
   const secConfig = await extractSecurity(client._options.log10Token);
   const securityInput = secConfig == null ? {} : { log10Token: secConfig };
   const requestSecurity = resolveGlobalSecurity(securityInput);
 
   const context = {
+    baseURL: options?.serverURL ?? client._baseURL ?? "",
     operationID: "create",
     oAuth2Scopes: [],
 
@@ -96,7 +127,7 @@ export async function completionsCreate(
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
-    return requestRes;
+    return [requestRes, { status: "invalid" }];
   }
   const req = requestRes.value;
 
@@ -107,7 +138,7 @@ export async function completionsCreate(
     retryCodes: context.retryCodes,
   });
   if (!doResult.ok) {
-    return doResult;
+    return [doResult, { status: "request-error", request: req }];
   }
   const response = doResult.value;
 
@@ -127,11 +158,12 @@ export async function completionsCreate(
   >(
     M.json(200, models.CreateResponse$inboundSchema, { key: "any" }),
     M.json(201, models.CreateResponse$inboundSchema, { key: "Completion" }),
-    M.fail(["4XX", "5XX"]),
+    M.fail("4XX"),
+    M.fail("5XX"),
   )(response, req, { extraFields: responseFields });
   if (!result.ok) {
-    return result;
+    return [result, { status: "complete", request: req, response }];
   }
 
-  return result;
+  return [result, { status: "complete", request: req, response }];
 }

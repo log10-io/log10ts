@@ -78,7 +78,7 @@ export class ClientSDK {
   readonly #httpClient: HTTPClient;
   readonly #hooks: SDKHooks;
   readonly #logger?: Logger | undefined;
-  protected readonly _baseURL: URL | null;
+  public readonly _baseURL: URL | null;
   public readonly _options: SDKOptions & { hooks?: SDKHooks };
 
   constructor(options: SDKOptions = {}) {
@@ -131,7 +131,10 @@ export class ClientSDK {
 
     const secQuery: string[] = [];
     for (const [k, v] of Object.entries(security?.queryParams || {})) {
-      secQuery.push(encodeForm(k, v, { charEncoding: "percent" }));
+      const q = encodeForm(k, v, { charEncoding: "percent" });
+      if (typeof q !== "undefined") {
+        secQuery.push(q);
+      }
     }
     if (secQuery.length) {
       finalQuery += `&${secQuery.join("&")}`;
@@ -188,14 +191,9 @@ export class ClientSDK {
 
     if (conf.body instanceof ReadableStream) {
       if (!fetchOptions) {
-        fetchOptions = {
-          // @ts-expect-error see https://github.com/node-fetch/node-fetch/issues/1769
-          duplex: "half",
-        };
-      } else {
-        // @ts-expect-error see https://github.com/node-fetch/node-fetch/issues/1769
-        fetchOptions.duplex = "half";
+        fetchOptions = {};
       }
+      Object.assign(fetchOptions, { duplex: "half" });
     }
 
     let input;

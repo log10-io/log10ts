@@ -18,7 +18,7 @@ let value: Logprobs = {
       topLogprobs: [
         {
           token: "<value>",
-          logprob: 6818.20,
+          logprob: 6818.2,
           bytes: [
             359508,
           ],

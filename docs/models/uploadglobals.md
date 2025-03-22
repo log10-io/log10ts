@@ -5,7 +5,9 @@
 ```typescript
 import { UploadGlobals } from "log10ts";
 
-let value: UploadGlobals = {};
+let value: UploadGlobals = {
+  xLog10Organization: "<value>",
+};
 ```
 
 ## Fields

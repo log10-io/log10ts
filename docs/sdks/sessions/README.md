@@ -23,7 +23,7 @@ const log10 = new Log10({
 });
 
 async function run() {
-  const result = await log10.sessions.create();
+  const result = await log10.sessions.create("<value>");
 
   // Handle the result
   console.log(result);
@@ -47,7 +47,7 @@ const log10 = new Log10Core({
 });
 
 async function run() {
-  const res = await sessionsCreate(log10);
+  const res = await sessionsCreate(log10, "<value>");
 
   if (!res.ok) {
     throw res.error;

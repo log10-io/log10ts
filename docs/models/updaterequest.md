@@ -6,7 +6,7 @@
 import {
   ChatCompletionRequestMessageContentPartImageType,
   ChatCompletionRole,
-  CreateChatCompletionRequestType,
+  Detail,
   FinishReason,
   Kind,
   ObjectT,
@@ -15,6 +15,7 @@ import {
 
 let value: UpdateRequest = {
   completionId: "<id>",
+  xLog10Organization: "<value>",
   completion: {
     organizationId: "<id>",
     kind: Kind.Prompt,
@@ -26,6 +27,7 @@ let value: UpdateRequest = {
               type: ChatCompletionRequestMessageContentPartImageType.ImageUrl,
               imageUrl: {
                 url: "https://orange-mozzarella.name/",
+                detail: Detail.Auto,
               },
             },
           ],
@@ -33,12 +35,7 @@ let value: UpdateRequest = {
         },
       ],
       model: "gpt-4-turbo",
-      n: 1,
-      responseFormat: {
-        type: CreateChatCompletionRequestType.JsonObject,
-      },
-      temperature: 1,
-      topP: 1,
+      responseFormat: {},
       user: "user-1234",
     },
     response: {

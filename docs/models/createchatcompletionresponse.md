@@ -21,14 +21,14 @@ let value: CreateChatCompletionResponse = {
         content: [
           {
             token: "<value>",
-            logprob: 4386.02,
+            logprob: 4386.01,
             bytes: [
               988374,
             ],
             topLogprobs: [
               {
                 token: "<value>",
-                logprob: 1020.45,
+                logprob: 1020.44,
                 bytes: [
                   208876,
                 ],

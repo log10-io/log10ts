@@ -3,16 +3,10 @@
 ## Example Usage
 
 ```typescript
-import {
-  ChatCompletionRole,
-  CreateChatCompletionRequestType,
-  CreateRequest,
-  FinishReason,
-  Kind,
-  ObjectT,
-} from "log10ts";
+import { ChatCompletionRole, CreateRequest, FinishReason, Kind, ObjectT } from "log10ts";
 
 let value: CreateRequest = {
+  xLog10Organization: "<value>",
   completion: {
     organizationId: "<id>",
     kind: Kind.Prompt,
@@ -25,12 +19,7 @@ let value: CreateRequest = {
         },
       ],
       model: "gpt-4-turbo",
-      n: 1,
-      responseFormat: {
-        type: CreateChatCompletionRequestType.JsonObject,
-      },
-      temperature: 1,
-      topP: 1,
+      responseFormat: {},
       user: "user-1234",
     },
     response: {

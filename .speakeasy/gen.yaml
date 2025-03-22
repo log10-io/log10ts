@@ -7,13 +7,15 @@ generation:
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
+    nameResolutionFeb2025: false
     parameterOrderingFeb2024: true
     requestResponseComponentNamesFeb2024: true
+    securityFeb2025: false
   auth:
     oAuth2ClientCredentialsEnabled: false
     oAuth2PasswordEnabled: false
 typescript:
-  version: 0.4.2
+  version: 0.5.0
   additionalDependencies:
     dependencies:
       '@aws-sdk/client-bedrock-runtime': ^3.709.0
@@ -26,6 +28,8 @@ typescript:
   author: Speakeasy
   clientServerStatusCodesAsErrors: true
   defaultErrorName: SDKError
+  enableCustomCodeRegions: false
+  enableMCPServer: true
   enableReactQuery: false
   enumFormat: enum
   flattenGlobalSecurity: true
@@ -40,6 +44,7 @@ typescript:
       webhooks: ""
   inputModelSuffix: input
   installationURL: https://github.com/log10-io/log10ts
+  jsonpath: legacy
   maxMethodParams: 4
   methodArguments: require-security-and-request
   moduleFormat: commonjs

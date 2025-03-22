@@ -214,7 +214,7 @@ const log10 = new Log10({
 });
 
 async function run() {
-  const result = await log10.sessions.create();
+  const result = await log10.sessions.create("<value>");
 
   // Handle the result
   console.log(result);
@@ -268,7 +268,6 @@ If the request fails due to, for example 4XX or 5XX status codes, it will throw 
 ```typescript
 import {
   ChatCompletionRole,
-  CreateChatCompletionRequestType,
   FinishReason,
   Kind,
   Log10,
@@ -297,12 +296,7 @@ async function run() {
           },
         ],
         model: "gpt-4-turbo",
-        n: 1,
-        responseFormat: {
-          type: CreateChatCompletionRequestType.JsonObject,
-        },
-        temperature: 1,
-        topP: 1,
+        responseFormat: {},
         user: "user-1234",
       },
       response: {
@@ -319,7 +313,7 @@ async function run() {
               content: [
                 {
                   token: "<value>",
-                  logprob: 8165.87,
+                  logprob: 8165.88,
                   bytes: [
                     752438,
                     957409,
@@ -327,44 +321,22 @@ async function run() {
                   topLogprobs: [
                     {
                       token: "<value>",
-                      logprob: 2596.30,
-                      bytes: [
-                        486589,
-                      ],
+                      logprob: 2596.29,
+                      bytes: [],
                     },
                   ],
                 },
                 {
                   token: "<value>",
                   logprob: 2303.13,
-                  bytes: [
-                    638424,
-                  ],
-                  topLogprobs: [
-                    {
-                      token: "<value>",
-                      logprob: 4174.58,
-                      bytes: [
-                        134365,
-                      ],
-                    },
-                  ],
+                  bytes: [],
+                  topLogprobs: [],
                 },
                 {
                   token: "<value>",
                   logprob: 3229.97,
-                  bytes: [
-                    69025,
-                  ],
-                  topLogprobs: [
-                    {
-                      token: "<value>",
-                      logprob: 7964.74,
-                      bytes: [
-                        951062,
-                      ],
-                    },
-                  ],
+                  bytes: [],
+                  topLogprobs: [],
                 },
               ],
             },
@@ -377,24 +349,7 @@ async function run() {
               role: ChatCompletionRole.User,
             },
             logprobs: {
-              content: [
-                {
-                  token: "<value>",
-                  logprob: 0.87,
-                  bytes: [
-                    169727,
-                  ],
-                  topLogprobs: [
-                    {
-                      token: "<value>",
-                      logprob: 899.64,
-                      bytes: [
-                        792620,
-                      ],
-                    },
-                  ],
-                },
-              ],
+              content: [],
             },
           },
           {
@@ -405,24 +360,7 @@ async function run() {
               role: ChatCompletionRole.User,
             },
             logprobs: {
-              content: [
-                {
-                  token: "<value>",
-                  logprob: 8165.87,
-                  bytes: [
-                    586220,
-                  ],
-                  topLogprobs: [
-                    {
-                      token: "<value>",
-                      logprob: 7524.37,
-                      bytes: [
-                        957409,
-                      ],
-                    },
-                  ],
-                },
-              ],
+              content: [],
             },
           },
         ],
@@ -430,7 +368,7 @@ async function run() {
         model: "gpt-4-turbo",
         object: ObjectT.ChatCompletion,
       },
-    });
+    }, "<value>");
 
     // Handle the result
     console.log(result);
@@ -482,11 +420,10 @@ In some rare cases, the SDK can fail to get a response from the server or even m
 
 ### Override Server URL Per-Client
 
-The default server can also be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
+The default server can be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
 ```typescript
 import {
   ChatCompletionRole,
-  CreateChatCompletionRequestType,
   FinishReason,
   Kind,
   Log10,
@@ -513,12 +450,7 @@ async function run() {
         },
       ],
       model: "gpt-4-turbo",
-      n: 1,
-      responseFormat: {
-        type: CreateChatCompletionRequestType.JsonObject,
-      },
-      temperature: 1,
-      topP: 1,
+      responseFormat: {},
       user: "user-1234",
     },
     response: {
@@ -535,7 +467,7 @@ async function run() {
             content: [
               {
                 token: "<value>",
-                logprob: 8165.87,
+                logprob: 8165.88,
                 bytes: [
                   752438,
                   957409,
@@ -543,44 +475,22 @@ async function run() {
                 topLogprobs: [
                   {
                     token: "<value>",
-                    logprob: 2596.30,
-                    bytes: [
-                      486589,
-                    ],
+                    logprob: 2596.29,
+                    bytes: [],
                   },
                 ],
               },
               {
                 token: "<value>",
                 logprob: 2303.13,
-                bytes: [
-                  638424,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 4174.58,
-                    bytes: [
-                      134365,
-                    ],
-                  },
-                ],
+                bytes: [],
+                topLogprobs: [],
               },
               {
                 token: "<value>",
                 logprob: 3229.97,
-                bytes: [
-                  69025,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 7964.74,
-                    bytes: [
-                      951062,
-                    ],
-                  },
-                ],
+                bytes: [],
+                topLogprobs: [],
               },
             ],
           },
@@ -593,24 +503,7 @@ async function run() {
             role: ChatCompletionRole.User,
           },
           logprobs: {
-            content: [
-              {
-                token: "<value>",
-                logprob: 0.87,
-                bytes: [
-                  169727,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 899.64,
-                    bytes: [
-                      792620,
-                    ],
-                  },
-                ],
-              },
-            ],
+            content: [],
           },
         },
         {
@@ -621,24 +514,7 @@ async function run() {
             role: ChatCompletionRole.User,
           },
           logprobs: {
-            content: [
-              {
-                token: "<value>",
-                logprob: 8165.87,
-                bytes: [
-                  586220,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 7524.37,
-                    bytes: [
-                      957409,
-                    ],
-                  },
-                ],
-              },
-            ],
+            content: [],
           },
         },
       ],
@@ -646,7 +522,7 @@ async function run() {
       model: "gpt-4-turbo",
       object: ObjectT.ChatCompletion,
     },
-  });
+  }, "<value>");
 
   // Handle the result
   console.log(result);
@@ -721,7 +597,6 @@ To authenticate with the API the `log10Token` parameter must be set when initial
 ```typescript
 import {
   ChatCompletionRole,
-  CreateChatCompletionRequestType,
   FinishReason,
   Kind,
   Log10,
@@ -747,12 +622,7 @@ async function run() {
         },
       ],
       model: "gpt-4-turbo",
-      n: 1,
-      responseFormat: {
-        type: CreateChatCompletionRequestType.JsonObject,
-      },
-      temperature: 1,
-      topP: 1,
+      responseFormat: {},
       user: "user-1234",
     },
     response: {
@@ -769,7 +639,7 @@ async function run() {
             content: [
               {
                 token: "<value>",
-                logprob: 8165.87,
+                logprob: 8165.88,
                 bytes: [
                   752438,
                   957409,
@@ -777,44 +647,22 @@ async function run() {
                 topLogprobs: [
                   {
                     token: "<value>",
-                    logprob: 2596.30,
-                    bytes: [
-                      486589,
-                    ],
+                    logprob: 2596.29,
+                    bytes: [],
                   },
                 ],
               },
               {
                 token: "<value>",
                 logprob: 2303.13,
-                bytes: [
-                  638424,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 4174.58,
-                    bytes: [
-                      134365,
-                    ],
-                  },
-                ],
+                bytes: [],
+                topLogprobs: [],
               },
               {
                 token: "<value>",
                 logprob: 3229.97,
-                bytes: [
-                  69025,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 7964.74,
-                    bytes: [
-                      951062,
-                    ],
-                  },
-                ],
+                bytes: [],
+                topLogprobs: [],
               },
             ],
           },
@@ -827,24 +675,7 @@ async function run() {
             role: ChatCompletionRole.User,
           },
           logprobs: {
-            content: [
-              {
-                token: "<value>",
-                logprob: 0.87,
-                bytes: [
-                  169727,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 899.64,
-                    bytes: [
-                      792620,
-                    ],
-                  },
-                ],
-              },
-            ],
+            content: [],
           },
         },
         {
@@ -855,24 +686,7 @@ async function run() {
             role: ChatCompletionRole.User,
           },
           logprobs: {
-            content: [
-              {
-                token: "<value>",
-                logprob: 8165.87,
-                bytes: [
-                  586220,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 7524.37,
-                    bytes: [
-                      957409,
-                    ],
-                  },
-                ],
-              },
-            ],
+            content: [],
           },
         },
       ],
@@ -880,7 +694,7 @@ async function run() {
       model: "gpt-4-turbo",
       object: ObjectT.ChatCompletion,
     },
-  });
+  }, "<value>");
 
   // Handle the result
   console.log(result);
@@ -928,7 +742,6 @@ To change the default retry strategy for a single API call, simply provide a ret
 ```typescript
 import {
   ChatCompletionRole,
-  CreateChatCompletionRequestType,
   FinishReason,
   Kind,
   Log10,
@@ -940,165 +753,108 @@ const log10 = new Log10({
 });
 
 async function run() {
-  const result = await log10.completions.create({
-    organizationId: "<id>",
-    kind: Kind.Chat,
-    request: {
-      messages: [
-        {
-          role: ChatCompletionRole.System,
-        },
-        {
-          content: "<value>",
-          role: ChatCompletionRole.Tool,
-        },
-      ],
-      model: "gpt-4-turbo",
-      n: 1,
-      responseFormat: {
-        type: CreateChatCompletionRequestType.JsonObject,
-      },
-      temperature: 1,
-      topP: 1,
-      user: "user-1234",
-    },
-    response: {
-      id: "<id>",
-      choices: [
-        {
-          finishReason: FinishReason.Stop,
-          index: 169727,
-          message: {
-            content: "<value>",
+  const result = await log10.completions.create(
+    {
+      organizationId: "<id>",
+      kind: Kind.Chat,
+      request: {
+        messages: [
+          {
             role: ChatCompletionRole.System,
           },
-          logprobs: {
-            content: [
-              {
-                token: "<value>",
-                logprob: 8165.87,
-                bytes: [
-                  752438,
-                  957409,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 2596.30,
-                    bytes: [
-                      486589,
-                    ],
-                  },
-                ],
-              },
-              {
-                token: "<value>",
-                logprob: 2303.13,
-                bytes: [
-                  638424,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 4174.58,
-                    bytes: [
-                      134365,
-                    ],
-                  },
-                ],
-              },
-              {
-                token: "<value>",
-                logprob: 3229.97,
-                bytes: [
-                  69025,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 7964.74,
-                    bytes: [
-                      951062,
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        {
-          finishReason: FinishReason.Stop,
-          index: 651985,
-          message: {
+          {
             content: "<value>",
-            role: ChatCompletionRole.User,
+            role: ChatCompletionRole.Tool,
           },
-          logprobs: {
-            content: [
-              {
-                token: "<value>",
-                logprob: 0.87,
-                bytes: [
-                  169727,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 899.64,
-                    bytes: [
-                      792620,
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        {
-          finishReason: FinishReason.ContentFilter,
-          index: 650237,
-          message: {
-            content: "<value>",
-            role: ChatCompletionRole.User,
-          },
-          logprobs: {
-            content: [
-              {
-                token: "<value>",
-                logprob: 8165.87,
-                bytes: [
-                  586220,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 7524.37,
-                    bytes: [
-                      957409,
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        },
-      ],
-      created: 523523,
-      model: "gpt-4-turbo",
-      object: ObjectT.ChatCompletion,
-    },
-  }, {
-    retries: {
-      strategy: "backoff",
-      backoff: {
-        initialInterval: 1,
-        maxInterval: 50,
-        exponent: 1.1,
-        maxElapsedTime: 100,
+        ],
+        model: "gpt-4-turbo",
+        responseFormat: {},
+        user: "user-1234",
       },
-      retryConnectionErrors: false,
+      response: {
+        id: "<id>",
+        choices: [
+          {
+            finishReason: FinishReason.Stop,
+            index: 169727,
+            message: {
+              content: "<value>",
+              role: ChatCompletionRole.System,
+            },
+            logprobs: {
+              content: [
+                {
+                  token: "<value>",
+                  logprob: 8165.88,
+                  bytes: [
+                    752438,
+                    957409,
+                  ],
+                  topLogprobs: [
+                    {
+                      token: "<value>",
+                      logprob: 2596.29,
+                      bytes: [],
+                    },
+                  ],
+                },
+                {
+                  token: "<value>",
+                  logprob: 2303.13,
+                  bytes: [],
+                  topLogprobs: [],
+                },
+                {
+                  token: "<value>",
+                  logprob: 3229.97,
+                  bytes: [],
+                  topLogprobs: [],
+                },
+              ],
+            },
+          },
+          {
+            finishReason: FinishReason.Stop,
+            index: 651985,
+            message: {
+              content: "<value>",
+              role: ChatCompletionRole.User,
+            },
+            logprobs: {
+              content: [],
+            },
+          },
+          {
+            finishReason: FinishReason.ContentFilter,
+            index: 650237,
+            message: {
+              content: "<value>",
+              role: ChatCompletionRole.User,
+            },
+            logprobs: {
+              content: [],
+            },
+          },
+        ],
+        created: 523523,
+        model: "gpt-4-turbo",
+        object: ObjectT.ChatCompletion,
+      },
     },
-  });
+    "<value>",
+    {
+      retries: {
+        strategy: "backoff",
+        backoff: {
+          initialInterval: 1,
+          maxInterval: 50,
+          exponent: 1.1,
+          maxElapsedTime: 100,
+        },
+        retryConnectionErrors: false,
+      },
+    },
+  );
 
   // Handle the result
   console.log(result);
@@ -1112,7 +868,6 @@ If you'd like to override the default retry strategy for all operations that sup
 ```typescript
 import {
   ChatCompletionRole,
-  CreateChatCompletionRequestType,
   FinishReason,
   Kind,
   Log10,
@@ -1148,12 +903,7 @@ async function run() {
         },
       ],
       model: "gpt-4-turbo",
-      n: 1,
-      responseFormat: {
-        type: CreateChatCompletionRequestType.JsonObject,
-      },
-      temperature: 1,
-      topP: 1,
+      responseFormat: {},
       user: "user-1234",
     },
     response: {
@@ -1170,7 +920,7 @@ async function run() {
             content: [
               {
                 token: "<value>",
-                logprob: 8165.87,
+                logprob: 8165.88,
                 bytes: [
                   752438,
                   957409,
@@ -1178,44 +928,22 @@ async function run() {
                 topLogprobs: [
                   {
                     token: "<value>",
-                    logprob: 2596.30,
-                    bytes: [
-                      486589,
-                    ],
+                    logprob: 2596.29,
+                    bytes: [],
                   },
                 ],
               },
               {
                 token: "<value>",
                 logprob: 2303.13,
-                bytes: [
-                  638424,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 4174.58,
-                    bytes: [
-                      134365,
-                    ],
-                  },
-                ],
+                bytes: [],
+                topLogprobs: [],
               },
               {
                 token: "<value>",
                 logprob: 3229.97,
-                bytes: [
-                  69025,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 7964.74,
-                    bytes: [
-                      951062,
-                    ],
-                  },
-                ],
+                bytes: [],
+                topLogprobs: [],
               },
             ],
           },
@@ -1228,24 +956,7 @@ async function run() {
             role: ChatCompletionRole.User,
           },
           logprobs: {
-            content: [
-              {
-                token: "<value>",
-                logprob: 0.87,
-                bytes: [
-                  169727,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 899.64,
-                    bytes: [
-                      792620,
-                    ],
-                  },
-                ],
-              },
-            ],
+            content: [],
           },
         },
         {
@@ -1256,24 +967,7 @@ async function run() {
             role: ChatCompletionRole.User,
           },
           logprobs: {
-            content: [
-              {
-                token: "<value>",
-                logprob: 8165.87,
-                bytes: [
-                  586220,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 7524.37,
-                    bytes: [
-                      957409,
-                    ],
-                  },
-                ],
-              },
-            ],
+            content: [],
           },
         },
       ],
@@ -1281,7 +975,7 @@ async function run() {
       model: "gpt-4-turbo",
       object: ObjectT.ChatCompletion,
     },
-  });
+  }, "<value>");
 
   // Handle the result
   console.log(result);

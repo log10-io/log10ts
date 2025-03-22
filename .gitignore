@@ -1,3 +1,7 @@
+/mcp-server
+/bin
+/.eslintcache
+/.speakeasy/reports
 /react-query
 /funcs
 /core.*

@@ -5,7 +5,9 @@
 ```typescript
 import { CreateSessionRequest } from "log10ts";
 
-let value: CreateSessionRequest = {};
+let value: CreateSessionRequest = {
+  xLog10Organization: "<value>",
+};
 ```
 
 ## Fields

@@ -5,7 +5,9 @@
 ```typescript
 import { ListUngradedRequest } from "log10ts";
 
-let value: ListUngradedRequest = {};
+let value: ListUngradedRequest = {
+  xLog10Organization: "<value>",
+};
 ```
 
 ## Fields

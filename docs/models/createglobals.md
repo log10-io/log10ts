@@ -5,7 +5,9 @@
 ```typescript
 import { CreateGlobals } from "log10ts";
 
-let value: CreateGlobals = {};
+let value: CreateGlobals = {
+  xLog10Organization: "<value>",
+};
 ```
 
 ## Fields

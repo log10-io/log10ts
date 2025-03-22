@@ -7,6 +7,7 @@ import { GetRequest } from "log10ts";
 
 let value: GetRequest = {
   feedbackId: "<id>",
+  xLog10Organization: "<value>",
 };
 ```
 

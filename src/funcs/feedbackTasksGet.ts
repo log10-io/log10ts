@@ -5,6 +5,7 @@
 import { Log10Core } from "../core.js";
 import { encodeSimple } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
+import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
@@ -19,16 +20,17 @@ import {
 import * as models from "../models/index.js";
 import { SDKError } from "../models/sdkerror.js";
 import { SDKValidationError } from "../models/sdkvalidationerror.js";
+import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
  * Retrieves feedback task `taskId`.
  */
-export async function feedbackTasksGet(
+export function feedbackTasksGet(
   client: Log10Core,
   taskId: string,
   options?: RequestOptions,
-): Promise<
+): APIPromise<
   Result<
     models.GetFeedbackTaskResponse,
     | SDKError
@@ -40,6 +42,32 @@ export async function feedbackTasksGet(
     | ConnectionError
   >
 > {
+  return new APIPromise($do(
+    client,
+    taskId,
+    options,
+  ));
+}
+
+async function $do(
+  client: Log10Core,
+  taskId: string,
+  options?: RequestOptions,
+): Promise<
+  [
+    Result<
+      models.GetFeedbackTaskResponse,
+      | SDKError
+      | SDKValidationError
+      | UnexpectedClientError
+      | InvalidRequestError
+      | RequestAbortedError
+      | RequestTimeoutError
+      | ConnectionError
+    >,
+    APICall,
+  ]
+> {
   const input: models.GetFeedbackTaskRequest = {
     taskId: taskId,
   };
@@ -50,7 +78,7 @@ export async function feedbackTasksGet(
     "Input validation failed",
   );
   if (!parsed.ok) {
-    return parsed;
+    return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
   const body = null;
@@ -64,15 +92,16 @@ export async function feedbackTasksGet(
 
   const path = pathToFunc("/api/v1/feedback_task/{taskId}")(pathParams);
 
-  const headers = new Headers({
+  const headers = new Headers(compactMap({
     Accept: "application/json",
-  });
+  }));
 
   const secConfig = await extractSecurity(client._options.log10Token);
   const securityInput = secConfig == null ? {} : { log10Token: secConfig };
   const requestSecurity = resolveGlobalSecurity(securityInput);
 
   const context = {
+    baseURL: options?.serverURL ?? client._baseURL ?? "",
     operationID: "getFeedbackTask",
     oAuth2Scopes: [],
 
@@ -95,7 +124,7 @@ export async function feedbackTasksGet(
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
-    return requestRes;
+    return [requestRes, { status: "invalid" }];
   }
   const req = requestRes.value;
 
@@ -106,7 +135,7 @@ export async function feedbackTasksGet(
     retryCodes: context.retryCodes,
   });
   if (!doResult.ok) {
-    return doResult;
+    return [doResult, { status: "request-error", request: req }];
   }
   const response = doResult.value;
 
@@ -125,11 +154,12 @@ export async function feedbackTasksGet(
     | ConnectionError
   >(
     M.json(200, models.GetFeedbackTaskResponse$inboundSchema, { key: "Task" }),
-    M.fail(["4XX", "5XX"]),
+    M.fail("4XX"),
+    M.fail("5XX"),
   )(response, req, { extraFields: responseFields });
   if (!result.ok) {
-    return result;
+    return [result, { status: "complete", request: req, response }];
   }
 
-  return result;
+  return [result, { status: "complete", request: req, response }];
 }

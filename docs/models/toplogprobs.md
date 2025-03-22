@@ -7,7 +7,7 @@ import { TopLogprobs } from "log10ts";
 
 let value: TopLogprobs = {
   token: "<value>",
-  logprob: 2444.26,
+  logprob: 2444.25,
   bytes: [
     158969,
   ],

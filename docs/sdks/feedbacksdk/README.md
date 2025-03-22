@@ -24,7 +24,7 @@ const log10 = new Log10({
 });
 
 async function run() {
-  const result = await log10.feedback.get("<id>");
+  const result = await log10.feedback.get("<id>", "<value>");
 
   // Handle the result
   console.log(result);
@@ -48,7 +48,7 @@ const log10 = new Log10Core({
 });
 
 async function run() {
-  const res = await feedbackGet(log10, "<id>");
+  const res = await feedbackGet(log10, "<id>", "<value>");
 
   if (!res.ok) {
     throw res.error;
@@ -101,13 +101,16 @@ async function run() {
     taskId: "<id>",
     jsonValues: {
       "key": "<value>",
+      "key1": "<value>",
     },
     comment: "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
     organizationId: "<id>",
+    allowUnmatchedFeedback: false,
+    maxMatchedCompletions: 100,
     completionTagsSelector: [
       "<value>",
     ],
-  });
+  }, "<value>");
 
   // Handle the result
   console.log(result);
@@ -135,13 +138,16 @@ async function run() {
     taskId: "<id>",
     jsonValues: {
       "key": "<value>",
+      "key1": "<value>",
     },
-    comment: "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+    comment: "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
     organizationId: "<id>",
-    completionIds: [
+    allowUnmatchedFeedback: false,
+    maxMatchedCompletions: 100,
+    completionTagsSelector: [
       "<value>",
     ],
-  });
+  }, "<value>");
 
   if (!res.ok) {
     throw res.error;

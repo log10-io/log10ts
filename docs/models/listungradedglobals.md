@@ -5,7 +5,9 @@
 ```typescript
 import { ListUngradedGlobals } from "log10ts";
 
-let value: ListUngradedGlobals = {};
+let value: ListUngradedGlobals = {
+  xLog10Organization: "<value>",
+};
 ```
 
 ## Fields

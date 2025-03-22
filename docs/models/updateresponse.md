@@ -3,14 +3,7 @@
 ## Example Usage
 
 ```typescript
-import {
-  ChatCompletionRole,
-  CreateChatCompletionRequestType,
-  FinishReason,
-  Kind,
-  ObjectT,
-  UpdateResponse,
-} from "log10ts";
+import { ChatCompletionRole, FinishReason, Kind, ObjectT, UpdateResponse } from "log10ts";
 
 let value: UpdateResponse = {
   httpMeta: {
@@ -31,12 +24,7 @@ let value: UpdateResponse = {
         },
       ],
       model: "gpt-4-turbo",
-      n: 1,
-      responseFormat: {
-        type: CreateChatCompletionRequestType.JsonObject,
-      },
-      temperature: 1,
-      topP: 1,
+      responseFormat: {},
       user: "user-1234",
     },
     response: {
@@ -53,7 +41,7 @@ let value: UpdateResponse = {
             content: [
               {
                 token: "<value>",
-                logprob: 6439.90,
+                logprob: 6439.9,
                 bytes: [
                   423855,
                 ],

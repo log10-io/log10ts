@@ -18,14 +18,7 @@ Create a completion
 ### Example Usage
 
 ```typescript
-import {
-  ChatCompletionRole,
-  CreateChatCompletionRequestType,
-  FinishReason,
-  Kind,
-  Log10,
-  ObjectT,
-} from "log10ts";
+import { ChatCompletionRole, FinishReason, Kind, Log10, ObjectT } from "log10ts";
 
 const log10 = new Log10({
   log10Token: "<YOUR_API_KEY_HERE>",
@@ -46,12 +39,7 @@ async function run() {
         },
       ],
       model: "gpt-4-turbo",
-      n: 1,
-      responseFormat: {
-        type: CreateChatCompletionRequestType.JsonObject,
-      },
-      temperature: 1,
-      topP: 1,
+      responseFormat: {},
       user: "user-1234",
     },
     response: {
@@ -68,7 +56,7 @@ async function run() {
             content: [
               {
                 token: "<value>",
-                logprob: 8165.87,
+                logprob: 8165.88,
                 bytes: [
                   752438,
                   957409,
@@ -76,9 +64,9 @@ async function run() {
                 topLogprobs: [
                   {
                     token: "<value>",
-                    logprob: 2596.30,
+                    logprob: 2596.29,
                     bytes: [
-                      486589,
+
                     ],
                   },
                 ],
@@ -87,32 +75,20 @@ async function run() {
                 token: "<value>",
                 logprob: 2303.13,
                 bytes: [
-                  638424,
+
                 ],
                 topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 4174.58,
-                    bytes: [
-                      134365,
-                    ],
-                  },
+
                 ],
               },
               {
                 token: "<value>",
                 logprob: 3229.97,
                 bytes: [
-                  69025,
+
                 ],
                 topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 7964.74,
-                    bytes: [
-                      951062,
-                    ],
-                  },
+
                 ],
               },
             ],
@@ -127,22 +103,7 @@ async function run() {
           },
           logprobs: {
             content: [
-              {
-                token: "<value>",
-                logprob: 0.87,
-                bytes: [
-                  169727,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 899.64,
-                    bytes: [
-                      792620,
-                    ],
-                  },
-                ],
-              },
+
             ],
           },
         },
@@ -155,22 +116,7 @@ async function run() {
           },
           logprobs: {
             content: [
-              {
-                token: "<value>",
-                logprob: 8165.87,
-                bytes: [
-                  586220,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 7524.37,
-                    bytes: [
-                      957409,
-                    ],
-                  },
-                ],
-              },
+
             ],
           },
         },
@@ -179,7 +125,7 @@ async function run() {
       model: "gpt-4-turbo",
       object: ObjectT.ChatCompletion,
     },
-  });
+  }, "<value>");
 
   // Handle the result
   console.log(result);
@@ -193,7 +139,7 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ChatCompletionRole, CreateChatCompletionRequestType, FinishReason, Kind, ObjectT } from "log10ts";
+import { ChatCompletionRole, FinishReason, Kind, ObjectT } from "log10ts";
 import { Log10Core } from "log10ts/core.js";
 import { completionsCreate } from "log10ts/funcs/completionsCreate.js";
 
@@ -218,12 +164,7 @@ async function run() {
         },
       ],
       model: "gpt-4-turbo",
-      n: 1,
-      responseFormat: {
-        type: CreateChatCompletionRequestType.JsonObject,
-      },
-      temperature: 1,
-      topP: 1,
+      responseFormat: {},
       user: "user-1234",
     },
     response: {
@@ -240,7 +181,7 @@ async function run() {
             content: [
               {
                 token: "<value>",
-                logprob: 8165.87,
+                logprob: 8165.88,
                 bytes: [
                   752438,
                   957409,
@@ -248,9 +189,9 @@ async function run() {
                 topLogprobs: [
                   {
                     token: "<value>",
-                    logprob: 2596.30,
+                    logprob: 2596.29,
                     bytes: [
-                      200664,
+  
                     ],
                   },
                 ],
@@ -259,32 +200,20 @@ async function run() {
                 token: "<value>",
                 logprob: 2303.13,
                 bytes: [
-                  15552,
+  
                 ],
                 topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 5235.23,
-                    bytes: [
-                      27619,
-                    ],
-                  },
+  
                 ],
               },
               {
                 token: "<value>",
                 logprob: 3229.97,
                 bytes: [
-                  659682,
+  
                 ],
                 topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 5504.83,
-                    bytes: [
-                      906537,
-                    ],
-                  },
+  
                 ],
               },
             ],
@@ -299,22 +228,7 @@ async function run() {
           },
           logprobs: {
             content: [
-              {
-                token: "<value>",
-                logprob: 4522.24,
-                bytes: [
-                  496323,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 2597.72,
-                    bytes: [
-                      782367,
-                    ],
-                  },
-                ],
-              },
+  
             ],
           },
         },
@@ -327,22 +241,7 @@ async function run() {
           },
           logprobs: {
             content: [
-              {
-                token: "<value>",
-                logprob: 1373.24,
-                bytes: [
-                  703441,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 9209.94,
-                    bytes: [
-                      780486,
-                    ],
-                  },
-                ],
-              },
+  
             ],
           },
         },
@@ -351,7 +250,7 @@ async function run() {
       model: "gpt-4-turbo",
       object: ObjectT.ChatCompletion,
     },
-  });
+  }, "<value>");
 
   if (!res.ok) {
     throw res.error;
@@ -396,7 +295,7 @@ Update completion by id.
 import {
   ChatCompletionRequestMessageContentPartImageType,
   ChatCompletionRole,
-  CreateChatCompletionRequestType,
+  Detail,
   FinishReason,
   Kind,
   Log10,
@@ -424,6 +323,7 @@ async function run() {
               type: ChatCompletionRequestMessageContentPartImageType.ImageUrl,
               imageUrl: {
                 url: "https://unlucky-hydrolyze.biz/",
+                detail: Detail.Auto,
               },
             },
           ],
@@ -435,12 +335,7 @@ async function run() {
         },
       ],
       model: "gpt-4-turbo",
-      n: 1,
-      responseFormat: {
-        type: CreateChatCompletionRequestType.JsonObject,
-      },
-      temperature: 1,
-      topP: 1,
+      responseFormat: {},
       user: "user-1234",
     },
     response: {
@@ -459,12 +354,12 @@ async function run() {
                 token: "<value>",
                 logprob: 4042.65,
                 bytes: [
-                  857478,
+
                 ],
                 topLogprobs: [
                   {
                     token: "<value>",
-                    logprob: 8108.76,
+                    logprob: 8108.77,
                     bytes: [
                       501135,
                     ],
@@ -473,7 +368,7 @@ async function run() {
                     token: "<value>",
                     logprob: 1111.58,
                     bytes: [
-                      597129,
+
                     ],
                   },
                   {
@@ -505,9 +400,9 @@ async function run() {
                   },
                   {
                     token: "<value>",
-                    logprob: 6567.75,
+                    logprob: 6567.76,
                     bytes: [
-                      344620,
+
                     ],
                   },
                 ],
@@ -524,22 +419,7 @@ async function run() {
           },
           logprobs: {
             content: [
-              {
-                token: "<value>",
-                logprob: 9914.64,
-                bytes: [
-                  627690,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 4888.52,
-                    bytes: [
-                      984008,
-                    ],
-                  },
-                ],
-              },
+
             ],
           },
         },
@@ -577,7 +457,7 @@ async function run() {
       model: "gpt-4-turbo",
       object: ObjectT.ChatCompletion,
     },
-  }, "<id>");
+  }, "<id>", "<value>");
 
   // Handle the result
   console.log(result);
@@ -594,7 +474,7 @@ The standalone function version of this method:
 import {
   ChatCompletionRequestMessageContentPartImageType,
   ChatCompletionRole,
-  CreateChatCompletionRequestType,
+  Detail,
   FinishReason,
   Kind,
   ObjectT,
@@ -625,6 +505,7 @@ async function run() {
               type: ChatCompletionRequestMessageContentPartImageType.ImageUrl,
               imageUrl: {
                 url: "https://unlucky-hydrolyze.biz/",
+                detail: Detail.Auto,
               },
             },
           ],
@@ -636,12 +517,7 @@ async function run() {
         },
       ],
       model: "gpt-4-turbo",
-      n: 1,
-      responseFormat: {
-        type: CreateChatCompletionRequestType.JsonObject,
-      },
-      temperature: 1,
-      topP: 1,
+      responseFormat: {},
       user: "user-1234",
     },
     response: {
@@ -660,12 +536,12 @@ async function run() {
                 token: "<value>",
                 logprob: 4042.65,
                 bytes: [
-                  889838,
+  
                 ],
                 topLogprobs: [
                   {
                     token: "<value>",
-                    logprob: 8108.76,
+                    logprob: 8108.77,
                     bytes: [
                       501135,
                     ],
@@ -674,7 +550,7 @@ async function run() {
                     token: "<value>",
                     logprob: 1111.58,
                     bytes: [
-                      302461,
+  
                     ],
                   },
                   {
@@ -706,9 +582,9 @@ async function run() {
                   },
                   {
                     token: "<value>",
-                    logprob: 6567.75,
+                    logprob: 6567.76,
                     bytes: [
-                      464385,
+  
                     ],
                   },
                 ],
@@ -725,22 +601,7 @@ async function run() {
           },
           logprobs: {
             content: [
-              {
-                token: "<value>",
-                logprob: 7712.03,
-                bytes: [
-                  693508,
-                ],
-                topLogprobs: [
-                  {
-                    token: "<value>",
-                    logprob: 4042.65,
-                    bytes: [
-                      33980,
-                    ],
-                  },
-                ],
-              },
+  
             ],
           },
         },
@@ -778,7 +639,7 @@ async function run() {
       model: "gpt-4-turbo",
       object: ObjectT.ChatCompletion,
     },
-  }, "<id>");
+  }, "<id>", "<value>");
 
   if (!res.ok) {
     throw res.error;
@@ -828,7 +689,7 @@ const log10 = new Log10({
 });
 
 async function run() {
-  const result = await log10.completions.listUngraded();
+  const result = await log10.completions.listUngraded("<value>");
 
   // Handle the result
   console.log(result);
@@ -852,7 +713,7 @@ const log10 = new Log10Core({
 });
 
 async function run() {
-  const res = await completionsListUngraded(log10);
+  const res = await completionsListUngraded(log10, "<value>");
 
   if (!res.ok) {
     throw res.error;
